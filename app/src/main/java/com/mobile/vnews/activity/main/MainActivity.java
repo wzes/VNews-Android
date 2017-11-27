@@ -1,7 +1,9 @@
-package com.mobile.vnews;
+package com.mobile.vnews.activity.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.mobile.vnews.R;
 
 public class MainActivity extends AppCompatActivity {
 

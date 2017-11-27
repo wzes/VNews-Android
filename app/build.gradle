@@ -33,6 +33,7 @@ dependencies {
 
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
 
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanaryandroidVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanaryandroidnoopVersion"
 
