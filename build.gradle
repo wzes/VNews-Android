@@ -1,0 +1,48 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.0-alpha03'
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        maven { url 'https://jitpack.io' }
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 26
+    compileSdkVersion = 26
+
+    supportLibraryVersion = '26.0.2'
+    guavaVersion = '18.0'
+    junitVersion = '4.12'
+    runnerVersion = '1.0.1'
+    espressoVersion = '3.0.1'
+    bannerVersion = '1.4.10'
+    appintroVersion = 'v4.2.2'
+    circleImageViewVersion = '2.2.0'
+    leakcanaryandroidVersion = '1.5.4'
+    leakcanaryandroidnoopVersion = '1.5.4'
+}

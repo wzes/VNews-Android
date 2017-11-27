@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "org.tjsliders.slidinginputmethod"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            postprocessing {
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
+                proguardFile 'proguard-rules.pro'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+
+    implementation "com.google.guava:guava:$rootProject.guavaVersion"
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanaryandroidVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanaryandroidnoopVersion"
+
+
+    implementation("com.github.apl-devs:appintro:$rootProject.ext.appintroVersion") {
+        // This library depends on the support library(probably a different version of my project)
+        // Exclude the support library in the compilation of this library to avoid incompatibility
+        exclude group: 'com.android.support'
+    }
+    // Dependencies for local unit tests
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+
+    // Dependencies for Android unit tests
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+
+    // Espresso UI testing
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+
+}
