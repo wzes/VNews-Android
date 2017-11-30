@@ -1,4 +1,4 @@
-package com.mobile.vnews.fragment.news;
+package com.mobile.vnews.fragment.mine;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobile.vnews.fragment.BaseFragment;
+import com.mobile.vnews.fragment.news.NewsContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -15,12 +16,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by xuantang on 11/27/17.
  */
 
-public class NewsFragment extends BaseFragment implements NewsContract.View {
+public class MineFragment extends BaseFragment implements MineContract.View {
 
-    private NewsContract.Presenter presenter;
+    private MineContract.Presenter presenter;
 
-    public static NewsFragment getInstance() {
-        return new NewsFragment();
+    public static MineFragment getInstance() {
+        return new MineFragment();
     }
 
     @Override
@@ -33,6 +34,12 @@ public class NewsFragment extends BaseFragment implements NewsContract.View {
         super.onActivityCreated(savedInstanceState);
     }
 
+
+    @Override
+    public void setPresenter(MineContract.Presenter presenter) {
+        this.presenter = checkNotNull(presenter);
+    }
+
     @Override
     protected int getLayoutId() {
         return 0;
@@ -41,10 +48,5 @@ public class NewsFragment extends BaseFragment implements NewsContract.View {
     @Override
     protected void init(Bundle savedInstanceState) {
 
-    }
-
-    @Override
-    public void setPresenter(NewsContract.Presenter presenter) {
-        this.presenter = checkNotNull(presenter);
     }
 }

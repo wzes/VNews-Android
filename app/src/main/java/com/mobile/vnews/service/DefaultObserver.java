@@ -1,6 +1,7 @@
 package com.mobile.vnews.service;
 
 import android.app.Activity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 
 import com.google.gson.JsonParseException;
@@ -9,6 +10,7 @@ import com.mobile.vnews.R;
 import com.mobile.vnews.module.BasicResponse;
 import com.mobile.vnews.util.CommonDialogUtils;
 import com.mobile.vnews.util.LogUtils;
+import com.mobile.vnews.util.SwipeRefreshLayoutUtils;
 import com.mobile.vnews.util.ToastUtils;
 
 import org.json.JSONException;
@@ -33,20 +35,68 @@ import static com.mobile.vnews.service.DefaultObserver.ExceptionReason.UNKNOWN_E
 
 public abstract class DefaultObserver<T extends BasicResponse> implements Observer<T> {
     private Activity activity;
-    //  Activity 是否在执行onStop()时取消订阅
+    // Activity 是否在执行onStop()时取消订阅
     private boolean isAddInStop = false;
+    private boolean isAddDialog = false;
+    private boolean isAddSwipeRefreshLayout = false;
+
     private CommonDialogUtils dialogUtils;
+    private SwipeRefreshLayoutUtils swipeRefreshLayoutUtils;
+
+    /**
+     *
+     * @param activity
+     */
     public DefaultObserver(Activity activity) {
         this.activity = activity;
-        dialogUtils=new CommonDialogUtils();
-        dialogUtils.showProgress(activity);
+        if (isAddDialog) {
+            dialogUtils = new CommonDialogUtils();
+            dialogUtils.showProgress(activity);
+        }
+
     }
 
-    public DefaultObserver(Activity activity, boolean isShowLoading) {
+    /**
+     *
+     * @param activity
+     * @param swipeRefreshLayout
+     */
+    public DefaultObserver(Activity activity, SwipeRefreshLayout swipeRefreshLayout) {
         this.activity = activity;
-        dialogUtils=new CommonDialogUtils();
-        if (isShowLoading) {
-            dialogUtils.showProgress(activity,"Loading...");
+        this.isAddSwipeRefreshLayout = true;
+        swipeRefreshLayoutUtils = new SwipeRefreshLayoutUtils();
+        swipeRefreshLayoutUtils.showProgress(swipeRefreshLayout);
+    }
+
+    /**
+     *
+     * @param activity
+     * @param isAddDialog
+     */
+    public DefaultObserver(Activity activity, boolean isAddDialog) {
+        this.activity = activity;
+        this.isAddDialog = isAddDialog;
+        if (isAddDialog) {
+            dialogUtils = new CommonDialogUtils();
+            dialogUtils.showProgress(activity);
+        }
+
+    }
+
+    /**
+     *
+     * @param activity
+     * @param isAddDialog
+     * @param isShowLoading
+     */
+    public DefaultObserver(Activity activity, boolean isAddDialog, boolean isShowLoading) {
+        this.activity = activity;
+        this.isAddDialog = isAddDialog;
+        if (isAddDialog) {
+            dialogUtils=new CommonDialogUtils();
+            if (isShowLoading) {
+                dialogUtils.showProgress(activity,"Loading...");
+            }
         }
     }
 
@@ -58,21 +108,27 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
     @Override
     public void onNext(T response) {
         dismissProgress();
-        if (!response.isError()) {
+//        if (!response.isError()) {
+//            onSuccess(response);
+//        } else {
+//            onFail(response);
+//        }
+        if (response.getCode() == 200) {
             onSuccess(response);
         } else {
             onFail(response);
         }
-        /*if (response.getCode() == 200) {
-            onSuccess(response);
-        } else {
-            onFail(response);
-        }*/
     }
 
+    /**
+     * Dismiss
+     */
     private void dismissProgress(){
-        if(dialogUtils!=null){
+        if(dialogUtils != null){
             dialogUtils.dismissProgress();
+        }
+        if(isAddSwipeRefreshLayout) {
+            swipeRefreshLayoutUtils.dismissProgress();
         }
     }
 
@@ -85,7 +141,7 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
         } else if (e instanceof ConnectException
                 || e instanceof UnknownHostException) {   //   连接错误
             onException(CONNECT_ERROR);
-        } else if (e instanceof InterruptedIOException) {   //  连接超时
+        } else if (e instanceof InterruptedIOException) { //  连接超时
             onException(CONNECT_TIMEOUT);
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException

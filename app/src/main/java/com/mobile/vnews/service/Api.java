@@ -28,11 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class Api {
-
+    private Retrofit retrofit;
     private ApiService service;
 
     private Api() {
-
 
         // log interceptor
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor((message)-> {
@@ -60,7 +59,7 @@ public class Api {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

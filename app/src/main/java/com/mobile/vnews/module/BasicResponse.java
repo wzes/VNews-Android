@@ -9,16 +9,6 @@ public class BasicResponse<T> {
     private String message;
     private T content;
 
-    public boolean isError() {
-        return error;
-    }
-
-    public void setError(boolean error) {
-        this.error = error;
-    }
-
-    private boolean error;
-
     public T getContent() {
         return content;
     }
