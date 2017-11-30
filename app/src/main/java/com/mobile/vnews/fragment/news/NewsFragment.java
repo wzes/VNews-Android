@@ -1,4 +1,4 @@
-package com.mobile.vnews.activity.news;
+package com.mobile.vnews.fragment.news;
 
 import android.app.Fragment;
 import android.os.Bundle;

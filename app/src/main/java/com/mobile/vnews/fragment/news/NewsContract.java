@@ -1,4 +1,4 @@
-package com.mobile.vnews.activity.news;
+package com.mobile.vnews.fragment.news;
 
 
 import com.mobile.vnews.base.BasePresenter;

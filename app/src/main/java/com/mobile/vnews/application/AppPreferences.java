@@ -2,6 +2,8 @@ package com.mobile.vnews.application;
 
 import android.content.SharedPreferences;
 
+import com.mobile.vnews.util.Utils;
+
 public class AppPreferences {
 
     private static final String KEY_APP_VERSION = "app_version";
@@ -42,7 +44,7 @@ public class AppPreferences {
     }
 
     private static SharedPreferences getSharedPreferences() {
-        return AppCache.getContext().getSharedPreferences("App", 0);
+        return Utils.getContext().getSharedPreferences("App", 0);
     }
 
 }

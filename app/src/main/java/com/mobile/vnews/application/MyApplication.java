@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
-
+import com.mobile.vnews.util.Utils;
 import com.squareup.leakcanary.LeakCanary;
 
 
@@ -19,10 +19,12 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // init it in the function of onCreate in ur Application
+        Utils.init(this);
 
-        AppCache.setContext(this);
+        // AppCache.setContext(this);
 
-       // AppPreferences.saveVersion("0");
+        // AppPreferences.saveVersion("0");
 
         String version = AppPreferences.getVersion();
         // update db or initialize db

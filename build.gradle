@@ -45,4 +45,11 @@ ext {
     circleImageViewVersion = '2.2.0'
     leakcanaryandroidVersion = '1.5.4'
     leakcanaryandroidnoopVersion = '1.5.4'
+
+    butterknifeVersion = '8.5.1'
+    rxjava2Version = '2.0.8'
+    retrofit2Version = '2.2.0'
+    rxlifecycle = '2.1.0'
+    gsonVersion = '2.8.0'
+    utilVersion = '1.9.6'
 }

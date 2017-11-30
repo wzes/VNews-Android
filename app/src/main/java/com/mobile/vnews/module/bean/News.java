@@ -1,4 +1,4 @@
-package com.mobile.vnews.bean;
+package com.mobile.vnews.module.bean;
 
 /**
  * Created by xuantang on 11/27/17.
