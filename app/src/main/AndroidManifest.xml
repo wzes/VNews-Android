@@ -16,15 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.main.MainActivity" />
-        <activity android:name=".activity.intro.ActivityIntro">
+        <activity android:name=".activity.intro.ActivityIntro"/>
+        <activity android:name=".activity.setting.SettingActivity" />
+        <activity android:name=".activity.user.UserActivity" />
+        <activity android:name=".activity.launch.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.setting.SettingActivity" />
-        <activity android:name=".activity.user.UserActivity"></activity>
     </application>
 
 </manifest>
