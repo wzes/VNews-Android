@@ -1,8 +1,8 @@
-package com.mobile.vnews.fragment.message;
+package com.mobile.vnews.activity.message;
 
 
-import com.mobile.vnews.base.BasePresenter;
-import com.mobile.vnews.base.BaseView;
+import com.mobile.vnews.activity.base.BasePresenter;
+import com.mobile.vnews.activity.base.BaseView;
 
 public interface MessageContract {
 

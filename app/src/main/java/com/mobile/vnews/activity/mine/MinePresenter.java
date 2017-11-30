@@ -1,8 +1,6 @@
-package com.mobile.vnews.fragment.mine;
+package com.mobile.vnews.activity.mine;
 
 import android.support.annotation.NonNull;
-
-import com.mobile.vnews.fragment.news.NewsContract;
 
 /**
  * Created by xuantang on 11/27/17.
@@ -24,6 +22,4 @@ public class MinePresenter implements MineContract.Presenter {
     public void start() {
 
     }
-
-
 }

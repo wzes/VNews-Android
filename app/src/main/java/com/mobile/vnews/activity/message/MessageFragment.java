@@ -1,14 +1,9 @@
-package com.mobile.vnews.fragment.word;
+package com.mobile.vnews.activity.message;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.mobile.vnews.fragment.BaseFragment;
-import com.mobile.vnews.fragment.news.NewsContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -16,12 +11,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by xuantang on 11/27/17.
  */
 
-public class WordFragment extends BaseFragment implements WordContract.View {
+public class MessageFragment extends BaseFragment implements MessageContract.View {
 
-    private WordContract.Presenter presenter;
+    private MessageContract.Presenter presenter;
 
-    public static WordFragment getInstance() {
-        return new WordFragment();
+    public static MessageFragment getInstance() {
+        return new MessageFragment();
     }
 
     @Override
@@ -34,7 +29,6 @@ public class WordFragment extends BaseFragment implements WordContract.View {
         super.onActivityCreated(savedInstanceState);
     }
 
-
     @Override
     protected int getLayoutId() {
         return 0;
@@ -46,7 +40,7 @@ public class WordFragment extends BaseFragment implements WordContract.View {
     }
 
     @Override
-    public void setPresenter(WordContract.Presenter presenter) {
+    public void setPresenter(MessageContract.Presenter presenter) {
         this.presenter = checkNotNull(presenter);
     }
 }

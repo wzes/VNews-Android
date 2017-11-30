@@ -1,4 +1,4 @@
-package com.mobile.vnews.fragment.news;
+package com.mobile.vnews.activity.news;
 
 import android.support.annotation.NonNull;
 

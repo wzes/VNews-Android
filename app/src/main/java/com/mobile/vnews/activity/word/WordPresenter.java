@@ -1,8 +1,6 @@
-package com.mobile.vnews.fragment.word;
+package com.mobile.vnews.activity.word;
 
 import android.support.annotation.NonNull;
-
-import com.mobile.vnews.fragment.news.NewsContract;
 
 /**
  * Created by xuantang on 11/27/17.

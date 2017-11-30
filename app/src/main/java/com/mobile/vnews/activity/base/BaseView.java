@@ -1,4 +1,4 @@
-package com.mobile.vnews.base;
+package com.mobile.vnews.activity.base;
 
 public interface BaseView<T> {
 

@@ -1,4 +1,4 @@
-package com.mobile.vnews.activity.user;
+package com.mobile.vnews.activity.mine.user;
 
 import android.os.Bundle;
 

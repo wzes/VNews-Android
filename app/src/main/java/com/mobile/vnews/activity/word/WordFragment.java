@@ -1,14 +1,9 @@
-package com.mobile.vnews.fragment.mine;
+package com.mobile.vnews.activity.word;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.mobile.vnews.fragment.BaseFragment;
-import com.mobile.vnews.fragment.news.NewsContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -16,12 +11,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by xuantang on 11/27/17.
  */
 
-public class MineFragment extends BaseFragment implements MineContract.View {
+public class WordFragment extends BaseFragment implements WordContract.View {
 
-    private MineContract.Presenter presenter;
+    private WordContract.Presenter presenter;
 
-    public static MineFragment getInstance() {
-        return new MineFragment();
+    public static WordFragment getInstance() {
+        return new WordFragment();
     }
 
     @Override
@@ -36,11 +31,6 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
 
     @Override
-    public void setPresenter(MineContract.Presenter presenter) {
-        this.presenter = checkNotNull(presenter);
-    }
-
-    @Override
     protected int getLayoutId() {
         return 0;
     }
@@ -48,5 +38,10 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     @Override
     protected void init(Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    public void setPresenter(WordContract.Presenter presenter) {
+        this.presenter = checkNotNull(presenter);
     }
 }

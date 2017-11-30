@@ -1,4 +1,4 @@
-package com.mobile.vnews.activity.setting;
+package com.mobile.vnews.activity.mine.setting;
 
 import android.os.Bundle;
 

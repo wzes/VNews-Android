@@ -1,8 +1,8 @@
-package com.mobile.vnews.fragment.news;
+package com.mobile.vnews.activity.news;
 
 
-import com.mobile.vnews.base.BasePresenter;
-import com.mobile.vnews.base.BaseView;
+import com.mobile.vnews.activity.base.BasePresenter;
+import com.mobile.vnews.activity.base.BaseView;
 
 public interface NewsContract {
 
