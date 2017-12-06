@@ -5,4 +5,5 @@ package com.mobile.vnews.module.bean;
  */
 
 public class Comment {
+
 }
