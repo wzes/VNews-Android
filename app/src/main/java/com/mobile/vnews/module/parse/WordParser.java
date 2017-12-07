@@ -61,8 +61,6 @@ public class WordParser {
             String wordEr = jsonObject.getString("word_er");
             String wordPast = jsonObject.getString("word_past");
 
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
