@@ -9,6 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "words")
 public class Words {
+
     @PrimaryKey
     private int ID;
     private String word;

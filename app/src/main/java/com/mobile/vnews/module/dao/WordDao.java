@@ -15,16 +15,16 @@ import java.util.List;
 @Dao
 public interface WordDao {
 
-    @Query("SELECT word, pos.name as pos, voice, pos.means as means " +
-            "  FROM words, pos, means " +
-            "  WHERE pos.ID = words.ID AND words.ID = means.wordID AND " +
-            "  word = :word")
+    @Query("SELECT words.ID as ID, word, pos.name as pos, voice, means.means as means, " +
+            "pos.means as posmeans, exchange " +
+            "FROM words, pos, means " +
+            "WHERE word = :word AND pos.ID = means.posID AND words.ID = means.wordID")
     List<Word> getWordsByName(String word);
 
-    @Query("SELECT word, pos.name as pos, voice, pos.means as means " +
-            "  FROM words, pos, means " +
-            "  WHERE pos.ID = words.ID AND words.ID = means.wordID AND " +
-            "  words.ID =:ID")
+    @Query("SELECT words.ID as ID, word, pos.name as pos, voice, means.means as means, " +
+            "pos.means as posmeans , exchange " +
+            "FROM words, pos, means " +
+            "WHERE words.ID = :ID AND pos.ID = means.posID AND words.ID = means.wordID")
     List<Word> getWordsByID(int ID);
 
 }
