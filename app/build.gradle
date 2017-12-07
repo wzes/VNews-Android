@@ -72,4 +72,5 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
     // implementation "com.blankj:utilcode:$rootProject.ext.utilVersion"
     implementation "net.jpountz.lz4:lz4:$rootProject.ext.lz4Version"
+
 }

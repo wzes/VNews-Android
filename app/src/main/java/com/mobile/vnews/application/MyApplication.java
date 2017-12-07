@@ -6,15 +6,16 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import com.mobile.vnews.util.CompressUtils;
+import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.module.dao.WordDao;
+import com.mobile.vnews.module.database.AppDatabase;
+import com.mobile.vnews.util.FileUtils;
 import com.mobile.vnews.util.Utils;
 import com.squareup.leakcanary.LeakCanary;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 
 public class MyApplication extends Application {
@@ -22,7 +23,7 @@ public class MyApplication extends Application {
     // The tag for log
     private static final String TAG = MyApplication.class.getSimpleName();
 
-    public static final String curentVertion = "0";
+    public static final String currentVersion = "1";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -33,15 +34,16 @@ public class MyApplication extends Application {
 
         // AppCache.setContext(this);
 
-        AppPreferences.saveVersion("0");
+        AppPreferences.saveVersion("1");
 
         String version = AppPreferences.getVersion();
+
+        test();
+
         // update db or initialize db
-        if (version.compareTo(curentVertion) < 0) {
+        if (version.compareTo(currentVersion) < 0) {
             initDatabase();
         }
-
-
 
         // For MyCrashHandler
         MyCrashHandler.getInstance(this);
@@ -55,50 +57,41 @@ public class MyApplication extends Application {
         LeakCanary.install(this);
     }
 
+    private void test() {
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
+            WordDao wordDao = appDatabase.getWordDao();
+            List<Word> words = wordDao.getWordsByName("take");
+            System.out.println(words.size());
+            for (Word word : words) {
+                Log.i(TAG, "onCreate: " + words.size() + "------------" + word.getMeans());
+            }
+        }).start();
+    }
+
+    /**
+     * Initialize database
+     */
     private void initDatabase() {
         new Thread(() -> {
             AssetManager assetManager = getAssets();
+            int totalSize;
+            BlockingQueue<Integer> writeQueue = null;
+            BlockingQueue<Integer> readQueue = null;
             try {
-                InputStream inputStream = assetManager.open("word.lz4");
+                totalSize = FileUtils.getTotalSize(assetManager.open("initSize.dat"));
+                writeQueue = FileUtils.getQueueFromFile(assetManager.open("initSize.dat"), "write");
+                readQueue = FileUtils.getQueueFromFile(assetManager.open("sliceSize.dat"), "read");
 
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                // write to data
+                FileUtils.writeToFileBySlice(getApplicationContext(), "word", "/data/data/" + getPackageName() + "/databases/word.db",
+                        totalSize, readQueue, writeQueue);
 
-                File file = new File("/data/data/" + getPackageName() + "/databases/word.db");
-
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-                byte[] content = new byte[inputStream.available()];
-                Log.i(TAG, "content.length: " + inputStream.available());
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-
-                // copy file to data
-                byte[] buf = new byte[1024];
-                int count;
-                int index = 0;
-                while ((count = bufferedInputStream.read(buf)) != -1) {
-                    //bufferedOutputStream.write(buf, 0, count);
-                    System.arraycopy(buf, 0, content, index*1024, count);
-                    index++;
-                }
-
-                Log.i(TAG, "initDatabase: " + content.length);
-                // uncompress
-                byte[] uncompress = CompressUtils.lz4Decompress(content);
-                // write
-                bufferedOutputStream.write(uncompress, 0, uncompress.length);
-                // close
-                bufferedInputStream.close();
-                bufferedOutputStream.close();
-                inputStream.close();
-                fileOutputStream.close();
-                AppPreferences.saveVersion(curentVertion);
-                Log.i(TAG, "Copy is over");
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
     }
+
+
 }

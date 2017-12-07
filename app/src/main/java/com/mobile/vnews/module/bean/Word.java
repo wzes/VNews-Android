@@ -1,6 +1,10 @@
 package com.mobile.vnews.module.bean;
 
 
+import android.arch.persistence.room.Ignore;
+
+import com.mobile.vnews.module.parse.WordParser;
+
 import java.util.List;
 
 /**
@@ -8,9 +12,9 @@ import java.util.List;
  */
 
 public class Word {
-
+    @Ignore
     public static final int VOIVE_EN = 0;
-
+    @Ignore
     public static final int VOIVE_AM = 1;
 
     private String word;
@@ -43,7 +47,7 @@ public class Word {
     }
 
     public String getMeans() {
-        return means;
+        return WordParser.meansConvert(means);
     }
 
     public void setMeans(String means) {
@@ -51,8 +55,11 @@ public class Word {
     }
 
 
+
+    @Ignore
     private List<Voice> voiceList;
 
+    @Ignore
     private List<Pos> posList;
 
     /**
