@@ -5,9 +5,9 @@
 ####　MVP 架构
 ![系统架构](image/5.png) 
 #### 数据库设计
-E-R图
+###### E-R图
 ![E-R](image/1.png) 
-SQL Script
+###### SQL Script
 ```
 <!-- 新闻实体数据 -->
 CREATE TABLE IF NOT EXISTS news (
@@ -134,5 +134,5 @@ CREATE TABLE IF NOT EXISTS view_news (
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 ```
-#### Netty评论系统
+### Netty评论系统
 ![](image/4.png)
