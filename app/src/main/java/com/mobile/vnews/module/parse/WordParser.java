@@ -8,20 +8,66 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xuantang on 12/7/17.
  */
 
 public class WordParser {
+    // phonogramConvert MAP
+    private static HashMap<String, String> map = new HashMap<>();
+    static {
+        map.put("u00e6", "æ");
+        map.put("u00f0", "ð");
+        map.put("u014b", "ŋ");
+        map.put("u0251", "ɑ");
+        map.put("u0252", "ɒ");
+        map.put("u0254", "ɔ");
+        map.put("u0259", "ə");
+        map.put("u025b", "ɛ");
+        map.put("u025c", "ɜ");
+        map.put("u0261", "ɡ");
+        map.put("u026a", "ɪ");
+        map.put("u0283", "ʃ");
+        map.put("u028a", "ʊ");
+        map.put("u028c", "ʌ");
+        map.put("u0292", "ʒ");
+        map.put("u02c8", "ˈ");
+        map.put("u02cc", "ˌ");
+        map.put("u02d0", "ː");
+        map.put("u03b8", "θ");
+    }
+
+    /**
+     *
+     * @param source
+     * @return
+     */
+    private static String phonogramTransfer(String source) {
+        if (TextUtils.isEmpty(source)) {
+            return null;
+        }
+        for (Map.Entry entry : map.entrySet()) {
+            int count;
+            int pos = 0;
+            while ((count = source.indexOf((String) entry.getKey(), pos)) != -1) {
+                pos = count + 4;
+                source = source.replace(entry.getKey().toString(),
+                        entry.getValue().toString());
+            }
+        }
+        return "[" + source + "]";
+    }
 
     /**
      * covert to one word
      * @param wordList
      * @return
      */
-    public Word parserList(List<Word> wordList) {
+    public Word parse(List<Word> wordList) {
         if (wordList == null) {
             throw new NullPointerException();
         }
@@ -37,6 +83,10 @@ public class WordParser {
         List<Word.Exchange> exchangeList = exchangeConvert(wordList.get(0),
                 wordList.get(0).getExchange());
         mWord.setExchanges(exchangeList);
+        // get ph
+        List<Word.Voice> voiceList = voiceConvert(wordList.get(0),
+                wordList.get(0).getVoice());
+        mWord.setVoiceList(voiceList);
 
         return mWord;
     }
@@ -58,13 +108,23 @@ public class WordParser {
         }
         List<Word.Voice> voiceList = new ArrayList<>();
 
-
-
+        try {
+            // parser
+            JSONObject jsonObject = new JSONObject(voice);
+            String phEn = jsonObject.getString("ph_en");
+            String phAm = jsonObject.getString("ph_am");
+            String phEnMp3 = jsonObject.getString("ph_en_map3");
+            String phAmMp3 = jsonObject.getString("ph_am_mp3");
+            voiceList.add(mWord.new Voice("美式", phAm, phAmMp3));
+            voiceList.add(mWord.new Voice("英式", phEn, phEnMp3));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return voiceList;
     }
 
     /**
-     *
+     * Parser p of speech
      * @param mWord
      * @param wordList
      * @return

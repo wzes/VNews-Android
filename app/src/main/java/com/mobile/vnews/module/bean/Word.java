@@ -12,10 +12,6 @@ import java.util.List;
  */
 
 public class Word {
-    @Ignore
-    public static final int VOIVE_EN = 0;
-    @Ignore
-    public static final int VOIVE_AM = 1;
 
     private String ID;
     private String word;
@@ -151,22 +147,22 @@ public class Word {
 
     public class Voice {
 
-        private int type;
+        private String name;
         private String phonogram;
         private String voiceUrl;
 
-        public Voice(int type, String phonogram, String voiceUrl) {
-            this.type = type;
+        public Voice(String name, String phonogram, String voiceUrl) {
+            this.name = name;
             this.phonogram = phonogram;
             this.voiceUrl = voiceUrl;
         }
 
-        public int getType() {
-            return type;
+        public String getType() {
+            return name;
         }
 
-        public void setType(int type) {
-            this.type = type;
+        public void setType(String type) {
+            this.name = type;
         }
 
         public String getPhonogram() {

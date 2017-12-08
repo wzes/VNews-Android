@@ -34,22 +34,28 @@ public class MeansTransferTest {
         map.put("u03b8", "θ");
     }
 
-    @Test
-    public void meansToText() {
-        String source = "lu028cv";
-
+    /**
+     *
+     * @param source
+     * @return
+     */
+    private static String phonogramConvert(String source) {
         for (Map.Entry entry : map.entrySet()) {
             int count;
             int pos = 0;
             while ((count = source.indexOf((String) entry.getKey(), pos)) != -1) {
-                pos = count;
-                System.out.println(count);
+                pos = count + 4;
+                source = source.replace(entry.getKey().toString(),
+                        entry.getValue().toString());
             }
-            System.out.println(entry.getKey());
         }
-        if (map.keySet().contains(source)) {
-            System.out.println(true);
-        } else System.out.println(false);
+        return "[" + source + "]";
+    }
+    @Test
+    public void meansToText() {
+        String source = "u00f0u00e6t";
+
+        System.out.println(phonogramConvert(source));
         //System.out.println(convert(source));
     }
 
