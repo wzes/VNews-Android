@@ -1,5 +1,7 @@
 package com.mobile.vnews.module.parse;
 
+import android.text.TextUtils;
+
 import com.mobile.vnews.module.bean.Word;
 
 import org.json.JSONException;
@@ -16,55 +18,116 @@ public class WordParser {
 
     /**
      * covert to one word
-     * @param words
+     * @param wordList
      * @return
      */
-    public Word parserList(List<Word> words) {
-        if (words == null) {
+    public Word parserList(List<Word> wordList) {
+        if (wordList == null) {
             throw new NullPointerException();
         }
         // create
         Word mWord = new Word();
-        List<Word> wordList = new ArrayList<>();
         mWord.setID(wordList.get(0).getID());
         mWord.setWord(wordList.get(0).getWord());
-        // posList
-        List<Word.Pos> posList = new ArrayList<>();
-        List<Word.Exchange> exchangeList = new ArrayList<>();
-        // init
-        for (Word word : wordList) {
-            // get pos
-            Word.Pos pos = mWord.new Pos();
-            pos.setSymbol(word.getPos());
-            pos.setName(word.getPosmeans());
-            pos.setMeans(WordParser.meansConvert(word.getMeans()));
-            posList.add(pos);
-            // get voice
-            Word.Exchange exchange = mWord.new Exchange();
-            // {"word_third": ["loves"], "word_done": ["loved"], "word_pl": ["loves"], "word_est": "",
-            // "word_ing": ["loving"], "word_er": "", "word_past": ["loved"]}
-            //
 
-        }
+        // get posList
+        List<Word.Pos> posList = posConvert(wordList.get(0), wordList);
+        mWord.setPosList(posList);
+        // get exchanges
+        List<Word.Exchange> exchangeList = exchangeConvert(wordList.get(0),
+                wordList.get(0).getExchange());
+        mWord.setExchanges(exchangeList);
 
         return mWord;
     }
 
-    public List<Word.Exchange> exchangeConvert(Word mWord, String exchange) {
-        Word.Exchange tmp = mWord.new Exchange();
+    /**
+     * {"ph_en": "lu028cv",
+     * "ph_am": "lu028cv",
+     * "ph_en_mp3": "http://res.iciba.com/resource/amp3/oxford/0/4f/5b/4f5bbc0f19c33e5f1a0b6b974b4eacce.mp3",
+     * "ph_am_mp3": "http://res.iciba.com/resource/amp3/1/0/b5/c0/b5c0b187fe309af0f4d35982fd961d7e.mp3",
+     * "ph_other": "",
+     * "ph_tts_mp3": "http://res-tts.iciba.com/b/5/c/b5c0b187fe309af0f4d35982fd961d7e.mp3"}
+     * @param mWord
+     * @param voice
+     * @return
+     */
+    private static List<Word.Voice> voiceConvert(Word mWord, String voice) {
+        if (mWord == null) {
+            throw new NullPointerException();
+        }
+        List<Word.Voice> voiceList = new ArrayList<>();
+
+
+
+        return voiceList;
+    }
+
+    /**
+     *
+     * @param mWord
+     * @param wordList
+     * @return
+     */
+    private List<Word.Pos> posConvert(Word mWord, List<Word> wordList) {
+        if (mWord == null) {
+            throw new NullPointerException();
+        }
+        List<Word.Pos> posList = new ArrayList<>();
+        for (Word word : wordList) {
+            // get pos
+            Word.Pos pos = mWord.new Pos(word.getPos(), word.getPosmeans(),
+                    WordParser.meansConvert(word.getMeans()));
+            posList.add(pos);
+        }
+        return posList;
+    }
+
+    /**
+     *
+     * @param mWord
+     * @param exchange
+     * @return
+     */
+    private static List<Word.Exchange> exchangeConvert(Word mWord, String exchange) {
+        if (mWord == null) {
+            throw new NullPointerException();
+        }
+        List<Word.Exchange> exchangeList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(exchange);
+            // get the data
             String wordThird = jsonObject.getString("word_third");
             String wordDone = jsonObject.getString("word_done");
             String wordPl = jsonObject.getString("word_pl");
             String wordIng = jsonObject.getString("word_ing");
             String wordEr = jsonObject.getString("word_er");
             String wordPast = jsonObject.getString("word_past");
+            // 过去式
+            if (!TextUtils.isEmpty(wordPast)) {
+                exchangeList.add(mWord.new Exchange("过去式", wordPast));
+            }
+            // 复数
+            if (!TextUtils.isEmpty(wordPl)) {
+                exchangeList.add(mWord.new Exchange("复数", wordPl));
+            }
+            // 现在分词
+            if (!TextUtils.isEmpty(wordIng)) {
+                exchangeList.add(mWord.new Exchange("现在分词", wordIng));
+            }
+            // 过去分词
+            if (!TextUtils.isEmpty(wordDone)) {
+                exchangeList.add(mWord.new Exchange("过去分词", wordDone));
+            }
+            // 第三人称单数
+            if (!TextUtils.isEmpty(wordThird)) {
+                exchangeList.add(mWord.new Exchange("第三人称单数", wordThird));
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        return exchangeList;
     }
 
     /**
@@ -72,7 +135,7 @@ public class WordParser {
      * @param unicode
      * @return
      */
-    public static String meansConvert(String unicode) {
+    private static String meansConvert(String unicode) {
         String[] strings = unicode.replace("\"", "")
                 .replace("u", "\\u")
                 .split(",");

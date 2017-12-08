@@ -121,6 +121,12 @@ public class Word {
         private String name;
         private String content;
 
+        public Exchange(String name, String content) {
+            this.name = name;
+            this.content = content;
+        }
+
+
         public String getName() {
             return name;
         }
@@ -148,6 +154,12 @@ public class Word {
         private int type;
         private String phonogram;
         private String voiceUrl;
+
+        public Voice(int type, String phonogram, String voiceUrl) {
+            this.type = type;
+            this.phonogram = phonogram;
+            this.voiceUrl = voiceUrl;
+        }
 
         public int getType() {
             return type;
@@ -182,6 +194,12 @@ public class Word {
         private String symbol;
         private String name;
         private String means;
+
+        public Pos(String symbol, String name, String means) {
+            this.symbol = symbol;
+            this.name = name;
+            this.means = means;
+        }
 
         public String getSymbol() {
             return symbol;

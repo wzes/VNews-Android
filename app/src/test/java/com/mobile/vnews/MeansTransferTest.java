@@ -2,16 +2,55 @@ package com.mobile.vnews;
 
 import org.junit.Test;
 
+import java.security.KeyStore;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by xuantang on 12/7/17.
  */
 
 public class MeansTransferTest {
+    private static HashMap<String, String> map = new HashMap<>();
+    static {
+        map.put("u00e6", "æ");
+        map.put("u00f0", "ð");
+        map.put("u014b", "ŋ");
+        map.put("u0251", "ɑ");
+        map.put("u0252", "ɒ");
+        map.put("u0254", "ɔ");
+        map.put("u0259", "ə");
+        map.put("u025b", "ɛ");
+        map.put("u025c", "ɜ");
+        map.put("u0261", "ɡ");
+        map.put("u026a", "ɪ");
+        map.put("u0283", "ʃ");
+        map.put("u028a", "ʊ");
+        map.put("u028c", "ʌ");
+        map.put("u0292", "ʒ");
+        map.put("u02c8", "ˈ");
+        map.put("u02cc", "ˌ");
+        map.put("u02d0", "ː");
+        map.put("u03b8", "θ");
+    }
+
     @Test
     public void meansToText() {
-        String source = "\"u62ffuff0cu53d6,u91c7u53d6,u63a5u53d7uff08u793cu7269u7b49uff09,u8017u8d39uff08u65f6u95f4u7b49uff09\"";
+        String source = "lu028cv";
 
-        System.out.println(convert(source));
+        for (Map.Entry entry : map.entrySet()) {
+            int count;
+            int pos = 0;
+            while ((count = source.indexOf((String) entry.getKey(), pos)) != -1) {
+                pos = count;
+                System.out.println(count);
+            }
+            System.out.println(entry.getKey());
+        }
+        if (map.keySet().contains(source)) {
+            System.out.println(true);
+        } else System.out.println(false);
+        //System.out.println(convert(source));
     }
 
     /**
