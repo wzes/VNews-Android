@@ -1,9 +1,9 @@
 # VNews-Android
 
 ####　系统架构
-![系统架构](image/2.png) 
+![系统架构](image/6.png) 
 ####　MVP 架构
-![系统架构](image/3.png) 
+![系统架构](image/5.png) 
 #### 数据库设计
 E-R图
 ![E-R](image/1.png) 
@@ -134,3 +134,5 @@ CREATE TABLE IF NOT EXISTS view_news (
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 ```
+#### Netty评论系统
+![](image/4.png)
