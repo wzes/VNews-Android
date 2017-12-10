@@ -18,11 +18,20 @@ public class Comment {
      * newsID    INT
      */
     private int ID;
+    private int floor;
     private String fromID;
     private String toID;
     private String content;
     private Timestamp timestamp;
     private int newID;
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
 
     public int getID() {
         return ID;
