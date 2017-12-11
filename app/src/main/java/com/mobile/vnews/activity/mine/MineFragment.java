@@ -2,7 +2,12 @@ package com.mobile.vnews.activity.mine;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.mobile.vnews.R;
 import com.mobile.vnews.fragment.BaseFragment;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -11,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by xuantang on 11/27/17.
  */
 
-public class MineFragment extends BaseFragment implements MineContract.View {
+public class MineFragment extends Fragment implements MineContract.View {
 
     private MineContract.Presenter presenter;
 
@@ -35,13 +40,10 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         this.presenter = checkNotNull(presenter);
     }
 
+    @Nullable
     @Override
-    protected int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    protected void init(Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        return view;
     }
 }

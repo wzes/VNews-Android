@@ -57,6 +57,9 @@ public class MyApplication extends Application {
         LeakCanary.install(this);
     }
 
+    /**
+     *
+     */
     private void test() {
         new Thread(() -> {
             AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());

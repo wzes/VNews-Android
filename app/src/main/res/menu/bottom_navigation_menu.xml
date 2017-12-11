@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/bottom_navigation_news"
+        android:enabled="true"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_news" />
+
+    <item android:id="@+id/bottom_navigation_word"
+        android:enabled="true"
+        android:icon="@drawable/ic_local_library_black_24dp"
+        android:title="@string/title_word" />
+
+    <item android:id="@+id/bottom_navigation_message"
+        android:enabled="true"
+        android:icon="@drawable/ic_forum_black_24dp"
+        android:title="@string/title_message" />
+
+    <item android:id="@+id/bottom_navigation_mine"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/title_mine" />
+
+</menu>

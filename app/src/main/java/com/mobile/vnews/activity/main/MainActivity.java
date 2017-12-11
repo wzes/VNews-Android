@@ -1,16 +1,131 @@
 package com.mobile.vnews.activity.main;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;
+import com.mobile.vnews.activity.message.MessageFragment;
+import com.mobile.vnews.activity.message.MessagePresenter;
+import com.mobile.vnews.activity.mine.MineFragment;
+import com.mobile.vnews.activity.mine.MinePresenter;
+import com.mobile.vnews.activity.news.NewsFragment;
+import com.mobile.vnews.activity.news.NewsPresenter;
+import com.mobile.vnews.activity.word.WordFragment;
+import com.mobile.vnews.activity.word.WordPresenter;
+import com.mobile.vnews.util.BottomNavigationViewHelper;
 
 public class MainActivity extends BaseActivity {
+    // The tag for log
+    private static final String TAG = MainActivity.class.getSimpleName();
 
+    private static final String KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID =
+            "KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID";
+    
+    private NewsFragment newsFragment;
+    private WordFragment wordFragment;
+    private MessageFragment messageFragment;
+    private MineFragment mineFragment;
+    
+    private NewsPresenter newsPresenter;
+    private WordPresenter wordPresenter;
+    private MessagePresenter messagePresenter;
+    private MinePresenter minePresenter;
+
+    // The private views
+    private BottomNavigationView bottomNavigationView;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Initialize the fragments
+        initFragments(savedInstanceState);
+        
+        // Initialize the private views
+        initViews();
+        // Create the presenters
+        newsPresenter = new NewsPresenter(newsFragment);
+        wordPresenter = new WordPresenter(wordFragment);
+        messagePresenter = new MessagePresenter(messageFragment);
+        minePresenter = new MinePresenter(mineFragment);
+
+        if (savedInstanceState != null) {
+            int id = savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID,
+                    R.id.bottom_navigation_news);
+            switch (id) {
+                case R.id.bottom_navigation_news: {
+                    showFragment(newsFragment);
+
+                    break;
+                }
+
+                case R.id.bottom_navigation_word: {
+                    showFragment(wordFragment);
+
+                    break;
+                }
+
+                case R.id.bottom_navigation_message: {
+                    showFragment(messageFragment);
+
+                    break;
+                }
+
+                case R.id.bottom_navigation_mine: {
+                    showFragment(mineFragment);
+
+                    break;
+                }
+
+                default: {
+                    break;
+                }
+            }
+        } else {
+            showFragment(newsFragment);
+        }
+
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                item -> {
+                    switch (item.getItemId()) {
+                        case R.id.bottom_navigation_news: {
+                            showFragment(newsFragment);
+
+                            break;
+                        }
+
+                        case R.id.bottom_navigation_word: {
+                            showFragment(wordFragment);
+
+                            break;
+                        }
+
+                        case R.id.bottom_navigation_message: {
+                            showFragment(messageFragment);
+
+                            break;
+                        }
+
+                        case R.id.bottom_navigation_mine: {
+                            showFragment(mineFragment);
+
+                            break;
+                        }
+
+                        default: {
+                            break;
+                        }
+                    }
+
+                    getSupportFragmentManager().beginTransaction().commit();
+
+                    return true;
+                });
     }
 
     @Override
@@ -20,6 +135,128 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID,
+                bottomNavigationView.getSelectedItemId());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (newsFragment.isAdded()) {
+            fragmentManager.putFragment(outState, NewsFragment.class.getSimpleName(),
+                    newsFragment);
+        }
+        if (wordFragment.isAdded()) {
+            fragmentManager.putFragment(outState, WordFragment.class.getSimpleName(),
+                    wordFragment);
+        }
+        if (messageFragment.isAdded()) {
+            fragmentManager.putFragment(outState, MessageFragment.class.getSimpleName(),
+                    messageFragment);
+        }
+        if (mineFragment.isAdded()) {
+            fragmentManager.putFragment(outState, MineFragment.class.getSimpleName(),
+                    mineFragment);
+        }
+    }
+
+    /**
+     * Initializes the private views
+     */
+    private void initViews() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+    }
+
+    /**
+     * TODO
+     * @param savedInstanceState
+     */
+    private void initFragments(Bundle savedInstanceState) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState == null) {
+            newsFragment = NewsFragment.getInstance();
+            wordFragment = WordFragment.getInstance();
+            messageFragment = MessageFragment.getInstance();
+            mineFragment = MineFragment.getInstance();
+        } else {
+            newsFragment = (NewsFragment) fragmentManager.getFragment(savedInstanceState,
+                    NewsFragment.class.getSimpleName());
+            wordFragment = (WordFragment) fragmentManager.getFragment(savedInstanceState,
+                    WordFragment.class.getSimpleName());
+            messageFragment = (MessageFragment) fragmentManager.getFragment(savedInstanceState,
+                    MessageFragment.class.getSimpleName());
+            mineFragment = (MineFragment) fragmentManager.getFragment(savedInstanceState,
+                    MineFragment.class.getSimpleName());
+        }
+
+        if (!newsFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_content, newsFragment, NewsFragment.class.getSimpleName())
+                    .commit();
+        }
+
+        if (!wordFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_content, wordFragment, WordFragment.class.getSimpleName())
+                    .commit();
+        }
+
+        if (!messageFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_content, messageFragment, MessageFragment.class.getSimpleName())
+                    .commit();
+        }
+
+        if (!mineFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_content, mineFragment, MineFragment.class.getSimpleName())
+                    .commit();
+        }
+    }
+
+    /**
+     * TODO
+     * @param fragment
+     */
+    private void showFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        if (fragment instanceof NewsFragment) {
+            fm.beginTransaction()
+                    .show(newsFragment)
+                    .hide(wordFragment)
+                    .hide(messageFragment)
+                    .hide(mineFragment)
+                    .commit();
+
+        } else if (fragment instanceof WordFragment) {
+            fm.beginTransaction()
+                    .show(wordFragment)
+                    .hide(newsFragment)
+                    .hide(messageFragment)
+                    .hide(mineFragment)
+                    .commit();
+        } else if (fragment instanceof MessageFragment) {
+            fm.beginTransaction()
+                    .show(messageFragment)
+                    .hide(newsFragment)
+                    .hide(wordFragment)
+                    .hide(mineFragment)
+                    .commit();
+        } else if (fragment instanceof MineFragment) {
+            fm.beginTransaction()
+                    .show(mineFragment)
+                    .hide(newsFragment)
+                    .hide(wordFragment)
+                    .hide(messageFragment)
+                    .commit();
+        }
+    }
+
 }
