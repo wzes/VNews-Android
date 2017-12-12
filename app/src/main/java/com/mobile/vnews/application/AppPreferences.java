@@ -9,6 +9,16 @@ public class AppPreferences {
     private static final String KEY_APP_VERSION = "app_version";
     private static final String KEY_APP_LAUNCH_FIRST = "app_launch_first";
 
+    private static final String KEY_APP_LAST_LOGIN_USER_IMAGE = "app_last_login_user_image";
+
+    public static void saveLastUserImage(String lastUserImage) {
+        saveString(KEY_APP_LAST_LOGIN_USER_IMAGE, lastUserImage);
+    }
+
+    public static String getLastUserImage() {
+        return getString(KEY_APP_LAST_LOGIN_USER_IMAGE);
+    }
+
     public static void saveVersion(String version) {
         saveString(KEY_APP_VERSION, version);
     }

@@ -34,6 +34,7 @@ import static com.mobile.vnews.service.DefaultObserver.ExceptionReason.UNKNOWN_E
  */
 
 public abstract class DefaultObserver<T extends BasicResponse> implements Observer<T> {
+
     private Activity activity;
     // Activity 是否在执行onStop()时取消订阅
     private boolean isAddInStop = false;
@@ -136,16 +137,16 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
     public void onError(Throwable e) {
         LogUtils.e("Retrofit", e.getMessage());
         dismissProgress();
-        if (e instanceof HttpException) {     //   HTTP错误
+        if (e instanceof HttpException) {                 //   HTTP错误
             onException(ExceptionReason.BAD_NETWORK);
         } else if (e instanceof ConnectException
                 || e instanceof UnknownHostException) {   //   连接错误
             onException(CONNECT_ERROR);
-        } else if (e instanceof InterruptedIOException) { //  连接超时
+        } else if (e instanceof InterruptedIOException) {   //  连接超时
             onException(CONNECT_TIMEOUT);
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
-                || e instanceof ParseException) {   //  解析错误
+                || e instanceof ParseException) {            //  解析错误
             onException(PARSE_ERROR);
         } else {
             onException(UNKNOWN_ERROR);

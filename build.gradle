@@ -56,4 +56,9 @@ ext {
     roomVersion = '1.0.0-alpha3'
 
     lz4Version = '1.3.0'
+
+    butterknifeVersion = '8.8.1'
+    circleimageviewVersion = '2.2.0'
+    glideVersion = '4.2.0'
+    glideCompilerVersion = '4.1.1'
 }

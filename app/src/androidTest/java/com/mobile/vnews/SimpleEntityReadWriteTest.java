@@ -3,6 +3,7 @@ package com.mobile.vnews;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
 
@@ -44,9 +45,9 @@ public class SimpleEntityReadWriteTest {
     @Test
     public void testDB() throws Exception {
         System.out.println("--------------------------------");
-        List<WordDao.Word> words = mWordDao.getWordsByName("take");
+        List<Word> words = mWordDao.getWordsByName("take");
         System.out.println(words.size());
-        for (WordDao.Word word : words) {
+        for (Word word : words) {
             Log.i(TAG, "onCreate: " + words.size() + "------------" + word.getMeans());
             System.out.println(word.getMeans());
         }

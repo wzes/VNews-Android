@@ -17,11 +17,56 @@ public class Notice {
      * timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
      */
     private int ID;
-    private String newsID;
+    private int newsID;
     private String fromID;
     private String toID;
     private String content;
     private Timestamp timestamp;
+    /**
+     *  add after
+     */
+    private String title;
+    private String fromImage;
+    private String fromUsername;
+
+//    /**
+//     * Relation user for submitting
+//     */
+//    private String relationID;
+//
+//    public String getRelationID() {
+//        return relationID;
+//    }
+//
+//    public void setRelationID(String relationID) {
+//        this.relationID = relationID;
+//    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getFromImage() {
+        return fromImage;
+    }
+
+    public void setFromImage(String fromImage) {
+        this.fromImage = fromImage;
+    }
+
+    public String getFromUsername() {
+        return fromUsername;
+    }
+
+    public void setFromUsername(String fromUsername) {
+        this.fromUsername = fromUsername;
+    }
+
+    /* --------------------------------------------- */
 
     public int getID() {
         return ID;
@@ -31,11 +76,11 @@ public class Notice {
         this.ID = ID;
     }
 
-    public String getNewsID() {
+    public int getNewsID() {
         return newsID;
     }
 
-    public void setNewsID(String newsID) {
+    public void setNewsID(int newsID) {
         this.newsID = newsID;
     }
 

@@ -14,4 +14,11 @@
     <string name="title_message">Message</string>
     <string name="title_mine">Mine</string>
 
+
+    <string name="register">Register</string>
+
+    <string name="prompt_password">Password</string>
+    <string name="prompt_username">Username</string>
+    <string name="start_login">Start Login</string>
+    <string name="loading_login">Loading</string>
 </resources>
