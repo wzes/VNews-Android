@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="news_item_title_text_size">18sp</dimen>
+    <dimen name="news_item_info_text_size">15sp</dimen>
+    <dimen name="news_image_size">70dp</dimen>
+
+
+
+    <!-- dp size -->
     <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
 </resources>

@@ -26,4 +26,10 @@
     <string name="register_next">next</string>
     <string name="register_input_phone">Input Telephone</string>
     <string name="register_done">Done</string>
+    <string name="news_brief">President Donald Trump has announced that the US now recognises Jerusalem as Israel\'s capital...</string>
+    <string name="news_title">Jerusalem is Israel\'s capital - Trump</string>
+    <string name="news_category">World</string>
+    <string name="news_level">CET-6</string>
+    <string name="news_likes">Likes</string>
+    <string name="news_views">Views</string>
 </resources>
