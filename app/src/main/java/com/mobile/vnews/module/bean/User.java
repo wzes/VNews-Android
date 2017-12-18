@@ -1,15 +1,14 @@
 package com.mobile.vnews.module.bean;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+
+import org.json.JSONObject;
 
 /**
  * Created by xuantang on 11/27/17.
  */
-@Entity(tableName = "user")
 public class User {
-    @PrimaryKey
-    private String ID;
+
+    private String id;
     private String username;
     private String password;
     private String email;
@@ -20,12 +19,51 @@ public class User {
     private String motto;
     private String info;
 
-    public String getID() {
-        return ID;
+    /*--------------------*/
+    private int likeNewsCount;
+    private int viewNewsCount;
+
+    public int getLikeNewsCount() {
+        return likeNewsCount;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setLikeNewsCount(int likeNewsCount) {
+        this.likeNewsCount = likeNewsCount;
+    }
+
+    public int getViewNewsCount() {
+        return viewNewsCount;
+    }
+
+    public void setViewNewsCount(int viewNewsCount) {
+        this.viewNewsCount = viewNewsCount;
+    }
+    /*--------------------*/
+    public User() {
+    }
+
+    public User(String username,String password){
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(String telephone){
+        this.telephone = telephone;
+    }
+
+    public User(String username, String password, String telephone) {
+        this.username = username;
+        this.password = password;
+        this.telephone = telephone;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -99,4 +137,5 @@ public class User {
     public void setInfo(String info) {
         this.info = info;
     }
+
 }

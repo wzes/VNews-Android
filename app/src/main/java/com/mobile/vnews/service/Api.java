@@ -48,6 +48,9 @@ public class Api {
         File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
 
+        /**
+         *
+         */
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
