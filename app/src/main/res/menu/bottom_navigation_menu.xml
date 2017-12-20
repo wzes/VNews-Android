@@ -14,7 +14,7 @@
     <item android:id="@+id/bottom_navigation_message"
         android:enabled="true"
         android:icon="@drawable/ic_forum_black_24dp"
-        android:title="@string/title_message" />
+        android:title="@string/title_notification" />
 
     <item android:id="@+id/bottom_navigation_mine"
         android:enabled="true"

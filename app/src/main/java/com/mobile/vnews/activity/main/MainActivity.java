@@ -10,8 +10,8 @@ import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;
 import com.mobile.vnews.activity.message.MessageFragment;
 import com.mobile.vnews.activity.message.MessagePresenter;
-import com.mobile.vnews.activity.mine.MineFragment;
-import com.mobile.vnews.activity.mine.MinePresenter;
+import com.mobile.vnews.activity.me.MeFragment;
+import com.mobile.vnews.activity.me.MePresenter;
 import com.mobile.vnews.activity.news.NewsFragment;
 import com.mobile.vnews.activity.news.NewsPresenter;
 import com.mobile.vnews.activity.word.WordFragment;
@@ -28,12 +28,12 @@ public class MainActivity extends BaseActivity {
     private NewsFragment newsFragment;
     private WordFragment wordFragment;
     private MessageFragment messageFragment;
-    private MineFragment mineFragment;
+    private MeFragment meFragment;
     
     private NewsPresenter newsPresenter;
     private WordPresenter wordPresenter;
     private MessagePresenter messagePresenter;
-    private MinePresenter minePresenter;
+    private MePresenter mePresenter;
 
     // The private views
     private BottomNavigationView bottomNavigationView;
@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
         newsPresenter = new NewsPresenter(newsFragment);
         wordPresenter = new WordPresenter(wordFragment);
         messagePresenter = new MessagePresenter(messageFragment);
-        minePresenter = new MinePresenter(mineFragment);
+        mePresenter = new MePresenter(meFragment);
 
         if (savedInstanceState != null) {
             int id = savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID,
@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity {
                 }
 
                 case R.id.bottom_navigation_mine: {
-                    showFragment(mineFragment);
+                    showFragment(meFragment);
 
                     break;
                 }
@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity {
                         }
 
                         case R.id.bottom_navigation_mine: {
-                            showFragment(mineFragment);
+                            showFragment(meFragment);
 
                             break;
                         }
@@ -161,9 +161,9 @@ public class MainActivity extends BaseActivity {
             fragmentManager.putFragment(outState, MessageFragment.class.getSimpleName(),
                     messageFragment);
         }
-        if (mineFragment.isAdded()) {
-            fragmentManager.putFragment(outState, MineFragment.class.getSimpleName(),
-                    mineFragment);
+        if (meFragment.isAdded()) {
+            fragmentManager.putFragment(outState, MeFragment.class.getSimpleName(),
+                    meFragment);
         }
     }
 
@@ -184,7 +184,7 @@ public class MainActivity extends BaseActivity {
             newsFragment = NewsFragment.getInstance();
             wordFragment = WordFragment.getInstance();
             messageFragment = MessageFragment.getInstance();
-            mineFragment = MineFragment.getInstance();
+            meFragment = MeFragment.getInstance();
         } else {
             newsFragment = (NewsFragment) fragmentManager.getFragment(savedInstanceState,
                     NewsFragment.class.getSimpleName());
@@ -192,8 +192,8 @@ public class MainActivity extends BaseActivity {
                     WordFragment.class.getSimpleName());
             messageFragment = (MessageFragment) fragmentManager.getFragment(savedInstanceState,
                     MessageFragment.class.getSimpleName());
-            mineFragment = (MineFragment) fragmentManager.getFragment(savedInstanceState,
-                    MineFragment.class.getSimpleName());
+            meFragment = (MeFragment) fragmentManager.getFragment(savedInstanceState,
+                    MeFragment.class.getSimpleName());
         }
 
         if (!newsFragment.isAdded()) {
@@ -214,9 +214,9 @@ public class MainActivity extends BaseActivity {
                     .commit();
         }
 
-        if (!mineFragment.isAdded()) {
+        if (!meFragment.isAdded()) {
             fragmentManager.beginTransaction()
-                    .add(R.id.fragment_content, mineFragment, MineFragment.class.getSimpleName())
+                    .add(R.id.fragment_content, meFragment, MeFragment.class.getSimpleName())
                     .commit();
         }
     }
@@ -232,7 +232,7 @@ public class MainActivity extends BaseActivity {
                     .show(newsFragment)
                     .hide(wordFragment)
                     .hide(messageFragment)
-                    .hide(mineFragment)
+                    .hide(meFragment)
                     .commit();
 
         } else if (fragment instanceof WordFragment) {
@@ -240,18 +240,18 @@ public class MainActivity extends BaseActivity {
                     .show(wordFragment)
                     .hide(newsFragment)
                     .hide(messageFragment)
-                    .hide(mineFragment)
+                    .hide(meFragment)
                     .commit();
         } else if (fragment instanceof MessageFragment) {
             fm.beginTransaction()
                     .show(messageFragment)
                     .hide(newsFragment)
                     .hide(wordFragment)
-                    .hide(mineFragment)
+                    .hide(meFragment)
                     .commit();
-        } else if (fragment instanceof MineFragment) {
+        } else if (fragment instanceof MeFragment) {
             fm.beginTransaction()
-                    .show(mineFragment)
+                    .show(meFragment)
                     .hide(newsFragment)
                     .hide(wordFragment)
                     .hide(messageFragment)

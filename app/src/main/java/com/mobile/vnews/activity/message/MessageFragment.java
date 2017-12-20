@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobile.vnews.R;
-import com.mobile.vnews.fragment.BaseFragment;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -43,7 +42,7 @@ public class MessageFragment extends Fragment implements MessageContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_notification, container, false);
         return view;
     }
 }

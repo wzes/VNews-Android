@@ -19,7 +19,7 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/title_message"
+            app:title="@string/title_notification"
             app:titleTextColor="@color/colorPrimaryText"/>
 
     </android.support.design.widget.AppBarLayout>

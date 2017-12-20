@@ -1,4 +1,4 @@
-package com.mobile.vnews.activity.mine;
+package com.mobile.vnews.activity.me;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobile.vnews.R;
-import com.mobile.vnews.fragment.BaseFragment;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -16,12 +15,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by xuantang on 11/27/17.
  */
 
-public class MineFragment extends Fragment implements MineContract.View {
+public class MeFragment extends Fragment implements MeContract.View {
 
-    private MineContract.Presenter presenter;
+    private MeContract.Presenter presenter;
 
-    public static MineFragment getInstance() {
-        return new MineFragment();
+    public static MeFragment getInstance() {
+        return new MeFragment();
     }
 
     @Override
@@ -36,7 +35,7 @@ public class MineFragment extends Fragment implements MineContract.View {
 
 
     @Override
-    public void setPresenter(MineContract.Presenter presenter) {
+    public void setPresenter(MeContract.Presenter presenter) {
         this.presenter = checkNotNull(presenter);
     }
 

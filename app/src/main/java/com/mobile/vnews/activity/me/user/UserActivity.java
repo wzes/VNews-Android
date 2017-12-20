@@ -1,11 +1,11 @@
-package com.mobile.vnews.activity.mine.setting;
+package com.mobile.vnews.activity.me.user;
 
 import android.os.Bundle;
 
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;
 
-public class SettingActivity extends BaseActivity {
+public class UserActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +14,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_setting;
+        return R.layout.activity_user;
     }
 
     @Override

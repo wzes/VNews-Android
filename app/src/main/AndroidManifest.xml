@@ -21,8 +21,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.intro.ActivityIntro" />
-        <activity android:name=".activity.mine.setting.SettingActivity" />
-        <activity android:name=".activity.mine.user.UserActivity" />
+        <activity android:name=".activity.me.setting.SettingActivity" />
+        <activity android:name=".activity.me.user.UserActivity" />
         <activity android:name=".activity.launch.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
