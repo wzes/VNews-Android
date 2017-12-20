@@ -44,6 +44,8 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
     private CommonDialogUtils dialogUtils;
     private SwipeRefreshLayoutUtils swipeRefreshLayoutUtils;
 
+    private T response;
+
     /**
      *
      * @param activity
@@ -108,17 +110,7 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
 
     @Override
     public void onNext(T response) {
-        dismissProgress();
-//        if (!response.isError()) {
-//            onSuccess(response);
-//        } else {
-//            onFail(response);
-//        }
-        if (response.getCode() == 200) {
-            onSuccess(response);
-        } else {
-            onFail(response);
-        }
+        this.response = response;
     }
 
     /**
@@ -137,12 +129,12 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
     public void onError(Throwable e) {
         LogUtils.e("Retrofit", e.getMessage());
         dismissProgress();
-        if (e instanceof HttpException) {                 //   HTTP错误
+        if (e instanceof HttpException) {                   //   HTTP错误
             onException(ExceptionReason.BAD_NETWORK);
         } else if (e instanceof ConnectException
-                || e instanceof UnknownHostException) {   //   连接错误
+                || e instanceof UnknownHostException) {     //   连接错误
             onException(CONNECT_ERROR);
-        } else if (e instanceof InterruptedIOException) {   //  连接超时
+        } else if (e instanceof InterruptedIOException) {    //  连接超时
             onException(CONNECT_TIMEOUT);
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
@@ -155,6 +147,12 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
 
     @Override
     public void onComplete() {
+        dismissProgress();
+        if (response.getCode() == 200) {
+            onSuccess(response);
+        } else {
+            onFail(response);
+        }
     }
 
     /**

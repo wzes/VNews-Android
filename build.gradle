@@ -61,4 +61,5 @@ ext {
     circleimageviewVersion = '2.2.0'
     glideVersion = '4.2.0'
     glideCompilerVersion = '4.1.1'
+    recyclerVersion = '2.9.30'
 }

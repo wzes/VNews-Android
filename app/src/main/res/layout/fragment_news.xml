@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/app_bar">
+        android:id="@+id/fragment_news_app_bar">
 
         <!-- The Toolbar -->
         <android.support.v7.widget.Toolbar
@@ -25,17 +25,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_news_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/event_refreshLayout"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_news_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fragment_news_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </FrameLayout>
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

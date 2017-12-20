@@ -33,7 +33,7 @@ public interface ApiService {
      */
     int DEFAULT_TIMEOUT = 15000;
 
-    String HOST = "http://localhost:9909/";
+    String HOST = "http://192.168.1.109:9909/";
     String API_SERVER_URL = HOST + "vnews/";
 
     /* USER SYSTEM */
@@ -110,8 +110,7 @@ public interface ApiService {
      * @param count
      * @return
      */
-    @Headers({"Accept: application/json",
-            "Cache-Control: public, max-age=86400"})
+    @Headers({"Accept: application/json"})
     @GET("news")
     Observable<BasicResponse<List<News>>> getNews(@Query("start") int start,
                                                   @Query("count") int count);

@@ -26,7 +26,10 @@
     <string name="register_next">next</string>
     <string name="register_input_phone">Input Telephone</string>
     <string name="register_done">Done</string>
-    <string name="news_brief">President Donald Trump has announced that the US now recognises Jerusalem as Israel\'s capital...</string>
+    <string name="news_brief">President Donald Trump has announced that the US now recognises Jerusalem
+        as Israel's capital, overturning decades of official US policy.Mr Trump described the move as
+        "a long overdue step" to advance the Middle East peace process.The fate of the ancient city
+        is one of the thorniest issues between Israel and the Palestinians.</string>
     <string name="news_title">Jerusalem is Israel\'s capital - Trump</string>
     <string name="news_category">World</string>
     <string name="news_level">CET-6</string>
@@ -43,4 +46,6 @@
     <string name="sheet_means">vt.	采取; 拿，取; 接受（礼物等）; 耗费（时间等）;\nvi.	拿; 获得;</string>
     <string name="word_voice">[teɪk]</string>
     <string name="word_collect">Collect</string>
+    <string name="word_title">conservation</string>
+    <string name="word_means">n. 保存，防止流失，保护自然资源</string>
 </resources>

@@ -46,7 +46,7 @@ public class Api {
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100);   //100Mb
 
         /**
          *
@@ -55,10 +55,9 @@ public class Api {
                 .readTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .addInterceptor(interceptor)
-                .addNetworkInterceptor(new HttpCacheInterceptor())
-                .cache(cache)
                 .build();
-
+        // 缓存
+        // .addNetworkInterceptor(new HttpCacheInterceptor()).cache(cache)
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();
 

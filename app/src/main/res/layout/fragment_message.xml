@@ -25,10 +25,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/app_bar">
+        android:id="@+id/fragment_message_app_bar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/fragment_message_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay"
@@ -40,7 +40,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh_layout"
+        android:id="@+id/fragment_message_fresh_layout"
         android:layout_marginTop="?actionBarSize">
 
         <FrameLayout
@@ -52,7 +52,7 @@
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recycler_view"
+                android:id="@+id/fragment_message_recycler_view"
                 android:scrollbars="vertical"
                 android:scrollbarFadeDuration="1"
                 android:fadeScrollbars="true"
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:id="@+id/empty_view"
+                android:id="@+id/fragment_message_empty_view"
                 android:visibility="visible"
                 android:gravity="center"
                 android:clickable="true"

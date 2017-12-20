@@ -83,4 +83,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideCompilerVersion"
 
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.recyclerVersion"
+    implementation "com.youth.banner:banner:1.4.10"
 }

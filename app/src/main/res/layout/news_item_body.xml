@@ -33,6 +33,8 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:textSize="@dimen/news_item_info_text_size"
+                   android:maxLines="3"
+                   android:ellipsize="end"
                    android:textColor="@color/news_item_title_color"
                    android:text="@string/news_brief"/>
                <LinearLayout
@@ -40,61 +42,81 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="@dimen/dp_2">
-                   <TextView
-                       android:textSize="@dimen/news_item_bottom_text_size"
-                       android:id="@+id/news_item_view"
+                   <LinearLayout
+                       android:id="@+id/news_item_view_layout"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="10" />
-                   <TextView
-                       android:textSize="@dimen/news_item_bottom_text_size"
+                       android:orientation="horizontal"
+                       android:layout_marginEnd="@dimen/dp_10">
+                       <TextView
+                           android:textSize="@dimen/news_item_bottom_text_size"
+                           android:id="@+id/news_item_view"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="10" />
+                       <TextView
+                           android:textSize="@dimen/news_item_bottom_text_size"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/news_views"
+                           android:layout_marginStart="@dimen/dp_4"/>
+                   </LinearLayout>
+                   <LinearLayout
+                       android:id="@+id/news_item_like_layout"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="@string/news_views"
-                       android:layout_marginStart="@dimen/dp_4"/>
-                   <TextView
-                       android:textSize="@dimen/news_item_bottom_text_size"
-                       android:id="@+id/news_item_like"
+                       android:orientation="horizontal"
+                       android:layout_marginEnd="@dimen/dp_10">
+                       <TextView
+                           android:textSize="@dimen/news_item_bottom_text_size"
+                           android:id="@+id/news_item_like"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="10"/>
+                       <TextView
+                           android:textSize="@dimen/news_item_bottom_text_size"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/news_likes"
+                           android:layout_marginStart="@dimen/dp_4"/>
+                   </LinearLayout>
+                   <LinearLayout
+                       android:id="@+id/news_item_comment_layout"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="10"
-                       android:layout_marginStart="@dimen/dp_10"/>
-                   <TextView
-                       android:textSize="@dimen/news_item_bottom_text_size"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/news_likes"
-                       android:layout_marginStart="@dimen/dp_4"/>
-                   <TextView
-                       android:textSize="@dimen/news_item_bottom_text_size"
-                       android:id="@+id/news_item_comment"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="11"
-                       android:layout_marginStart="@dimen/dp_10"/>
-                   <TextView
-                       android:textSize="@dimen/news_item_bottom_text_size"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/news_comments"
-                       android:layout_marginStart="@dimen/dp_4"/>
+                       android:orientation="horizontal"
+                       android:layout_marginEnd="@dimen/dp_10">
+                       <TextView
+                           android:textSize="@dimen/news_item_bottom_text_size"
+                           android:id="@+id/news_item_comment"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="11"/>
+                       <TextView
+                           android:textSize="@dimen/news_item_bottom_text_size"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/news_comments"
+                           android:layout_marginStart="@dimen/dp_4"/>
+                   </LinearLayout>
+
                    <TextView
                        android:textSize="@dimen/news_item_bottom_text_size"
                        android:id="@+id/news_item_level"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/news_level"
-                       android:layout_marginStart="@dimen/dp_10"/>
+                       android:layout_marginEnd="@dimen/dp_10"/>
                    <TextView
                        android:textSize="@dimen/news_item_bottom_text_size"
                        android:id="@+id/news_item_category"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/news_category"
-                       android:layout_marginStart="@dimen/dp_10"/>
+                       android:layout_marginEnd="@dimen/dp_10"/>
                </LinearLayout>
            </LinearLayout>
-           <ImageView
+           <android.support.v7.widget.AppCompatImageView
                android:id="@+id/news_item_image"
                android:layout_width="@dimen/news_image_size"
                android:layout_height="@dimen/news_image_size"
