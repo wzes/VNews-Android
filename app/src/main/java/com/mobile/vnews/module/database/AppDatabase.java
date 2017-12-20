@@ -11,7 +11,7 @@ import com.mobile.vnews.module.bean.User;
 import com.mobile.vnews.module.bean.Words;
 import com.mobile.vnews.module.dao.WordDao;
 
-@Database( entities = { Means.class, User.class, Words.class, Pos.class }, version = 2, exportSchema = false)
+@Database( entities = { Means.class, Words.class, Pos.class }, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;

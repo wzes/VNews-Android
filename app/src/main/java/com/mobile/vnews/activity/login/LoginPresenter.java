@@ -7,6 +7,8 @@ import com.mobile.vnews.service.Api;
 import com.mobile.vnews.service.DefaultObserver;
 
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by xuantang on 12/12/17.
@@ -28,8 +30,12 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String username, String password) {
+        RequestBody formBody = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
         Api.getApiService()
-                .login(username, password)
+                .login(formBody)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DefaultObserver<BasicResponse<User>>(loginFragment.getActivity()) {
                     @Override
