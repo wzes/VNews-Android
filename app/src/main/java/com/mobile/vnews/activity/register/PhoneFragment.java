@@ -63,7 +63,7 @@ public class PhoneFragment extends Fragment implements PhoneContract.View {
     }
 
     @Override
-    public void onNext(String telephone) {
+    public void onNext(String phone) {
 
     }
 

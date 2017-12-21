@@ -1,5 +1,6 @@
 package com.mobile.vnews.activity.news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mobile.vnews.R;
+import com.mobile.vnews.activity.news.detail.NewsDetailActivity;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.util.loader.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -45,6 +47,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
 
     private View header;
     private Banner banner;
+
     public static NewsFragment getInstance() {
         return new NewsFragment();
     }
@@ -101,9 +104,12 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             mList = list;
             mNewsAdapter = new NewsAdapter(R.layout.news_item_body, mList);
             // on click
-            mNewsAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-
+            mNewsAdapter.setOnItemClickListener((adapter, view, position) -> {
+                Intent intent = new Intent(getContext(), NewsDetailActivity.class);
+                intent.putExtra("newsID", mList.get(position).getID());
+                startActivity(intent);
             });
+
             // load more
             mNewsAdapter.setEnableLoadMore(false);
             mNewsAdapter.setOnLoadMoreListener(() -> mPresenter.loadMore(mList.size(), 8));
@@ -154,7 +160,9 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         if (mNewsRefreshLayout != null) {
             mNewsRefreshLayout.setRefreshing(false);
         }
-        mNewsAdapter.loadMoreEnd();
+        if (mNewsAdapter != null) {
+            mNewsAdapter.loadMoreEnd();
+        }
     }
 
     @Override

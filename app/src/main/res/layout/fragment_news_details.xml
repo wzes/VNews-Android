@@ -52,6 +52,65 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- Content View -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10">
+            <TextView
+                android:id="@+id/news_detail_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textSize="@dimen/sp_16"
+                android:text="@string/news_detail_description"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/news_detail_source_layout"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news_detail_source"/>
+                    <TextView
+                        android:id="@+id/news_detail_source"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:text="@string/news_detail_source_title"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/news_detail_date_layout"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+                    <TextView
+                        android:id="@+id/news_detail_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news_detail_date"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.mobile.vnews.util.select.WordSelectedTextView
+                android:id="@+id/news_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_18"
+                android:textAlignment="gravity"
+                android:lineSpacingExtra="4dp"
+                app:highlightText="that"
+                android:text="@string/news_detail_content"/>
+        </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

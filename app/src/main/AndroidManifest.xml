@@ -31,7 +31,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.login.LoginActivity" />
-        <activity android:name=".activity.register.RegisterActivity"></activity>
+        <activity android:name=".activity.register.RegisterActivity" />
+
+        <service android:name=".service.client.MessageService" />
+
+        <activity android:name=".activity.news.detail.NewsDetailActivity"></activity>
     </application>
 
 </manifest>

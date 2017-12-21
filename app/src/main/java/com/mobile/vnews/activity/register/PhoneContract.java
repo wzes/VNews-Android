@@ -11,13 +11,13 @@ public interface PhoneContract {
         void showMessage(String message);
         void onSuccess();
         void onFail();
-        void onNext(String telephone);
+        void onNext(String phone);
         void onLoading();
     }
 
     interface Presenter extends BasePresenter {
-        void send(String telephone);
-        void valid(String telephone, String code);
+        void send(String phone);
+        void valid(String phone, String code);
         void load();
     }
 }

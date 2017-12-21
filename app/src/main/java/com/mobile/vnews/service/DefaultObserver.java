@@ -143,6 +143,7 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
         } else {
             onException(UNKNOWN_ERROR);
         }
+        onFail(response);
     }
 
     @Override

@@ -29,6 +29,15 @@ public class Message {
     private String fromImage;
     private String fromUsername;
 
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    private int floor;
 //    /**
 //     * Relation user for submitting
 //     */

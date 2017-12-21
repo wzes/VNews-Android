@@ -48,4 +48,9 @@
     <string name="word_collect">Collect</string>
     <string name="word_title">conservation</string>
     <string name="word_means">n. 保存，防止流失，保护自然资源</string>
+    <string name="news_detail_source_title">中国日报</string>
+    <string name="news_detail_description">Tearing up long-standing convention President Trump says the US recognises Jerusalem as Israel's capital</string>
+    <string name="news_detail_source">来源:</string>
+    <string name="news_detail_content">President Donald Trump has announced that the US now recognises Jerusalem as Israel's </string>
+    <string name="news_detail_date">昨天10:20</string>
 </resources>

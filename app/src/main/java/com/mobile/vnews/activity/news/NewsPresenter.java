@@ -85,6 +85,7 @@ public class NewsPresenter implements NewsContract.Presenter {
 
                     @Override
                     public void onFail(BasicResponse<List<News>> response) {
+                        Log.i(TAG, "onFail: response");
                         view.onFail();
                     }
                 });

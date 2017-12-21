@@ -62,4 +62,8 @@ ext {
     glideVersion = '4.2.0'
     glideCompilerVersion = '4.1.1'
     recyclerVersion = '2.9.30'
+    bannerVersion = '1.4.10'
+
+    fastjsonVersion = '1.2.41'
+    nettyVersion = '4.0.21.Final'
 }

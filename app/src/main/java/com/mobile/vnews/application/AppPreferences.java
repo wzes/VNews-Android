@@ -11,6 +11,25 @@ public class AppPreferences {
 
     private static final String KEY_APP_LAST_LOGIN_USER_IMAGE = "app_last_login_user_image";
 
+    private static final String KEY_APP_LOGIN_USER_ID = "app_login_user_id";
+    private static final String KEY_APP_LOGIN_STATE = "app_login_state";
+
+    public static void saveLoginUserID(String userID) {
+        saveString(KEY_APP_LOGIN_USER_ID, userID);
+    }
+
+    public static String getLoginUserID() {
+        return getString(KEY_APP_LOGIN_USER_ID);
+    }
+
+    public static void saveLoginState(Boolean state) {
+        saveBoolean(KEY_APP_LOGIN_STATE, state);
+    }
+
+    public static boolean getLoginState() {
+        return getBoolean(KEY_APP_LOGIN_STATE);
+    }
+
     public static void saveLastUserImage(String lastUserImage) {
         saveString(KEY_APP_LAST_LOGIN_USER_IMAGE, lastUserImage);
     }
@@ -41,7 +60,7 @@ public class AppPreferences {
         editor.apply();
     }
     private static boolean getBoolean(String key) {
-        return getSharedPreferences().getBoolean(key, true);
+        return getSharedPreferences().getBoolean(key, false);
     }
     private static void saveString(String key, String value) {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
@@ -50,7 +69,7 @@ public class AppPreferences {
     }
 
     private static String getString(String key) {
-        return getSharedPreferences().getString(key, "0");
+        return getSharedPreferences().getString(key, "");
     }
 
     private static SharedPreferences getSharedPreferences() {

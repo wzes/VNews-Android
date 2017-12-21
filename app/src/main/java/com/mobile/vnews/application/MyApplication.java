@@ -10,6 +10,7 @@ import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
 import com.mobile.vnews.util.FileUtils;
+import com.mobile.vnews.util.IdUtils;
 import com.mobile.vnews.util.Utils;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -33,6 +34,10 @@ public class MyApplication extends Application {
         Utils.init(this);
 
         // AppCache.setContext(this);
+        // if user do not login, make a random user id
+        if (AppPreferences.getLoginUserID().length() == 0) {
+            AppPreferences.saveLoginUserID(IdUtils.getUUID());
+        }
 
         AppPreferences.saveVersion("1");
 

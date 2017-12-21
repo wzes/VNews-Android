@@ -84,5 +84,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideCompilerVersion"
 
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.recyclerVersion"
-    implementation "com.youth.banner:banner:1.4.10"
+    implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
+    implementation "com.alibaba:fastjson:$rootProject.ext.fastjsonVersion"
+    implementation "io.netty:netty-all:$rootProject.ext.nettyVersion"
 }

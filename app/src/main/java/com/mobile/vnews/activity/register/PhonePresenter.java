@@ -7,11 +7,11 @@ package com.mobile.vnews.activity.register;
 public class PhonePresenter implements PhoneContract.Presenter {
 
     RegisterActivity activity;
-    PhoneFragment telephoneFragment;
+    PhoneFragment phoneFragment;
 
-    public PhonePresenter(RegisterActivity activity, PhoneFragment telephoneFragment) {
+    public PhonePresenter(RegisterActivity activity, PhoneFragment phoneFragment) {
         this.activity = activity;
-        this.telephoneFragment = telephoneFragment;
+        this.phoneFragment = phoneFragment;
     }
 
 
