@@ -1,6 +1,7 @@
 package com.mobile.vnews.service;
 
 import com.mobile.vnews.module.BasicResponse;
+import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.User;
 
@@ -215,5 +216,14 @@ public interface ApiService {
     @GET("news/{user_id}/views")
     Observable<BasicResponse<List<News>>> getViewNews(@Path("user_id") String user_id);
 
+    /**
+     *
+     * @param news_id
+     * @return
+     */
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("comment/{news_id}")
+    Observable<BasicResponse<List<Comment>>> getNewsComments(@Path("news_id") String news_id);
 
 }

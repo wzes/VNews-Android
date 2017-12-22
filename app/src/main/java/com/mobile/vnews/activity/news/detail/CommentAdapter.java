@@ -1,6 +1,5 @@
-package com.mobile.vnews.activity.news;
+package com.mobile.vnews.activity.news.detail;
 
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -8,7 +7,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mobile.vnews.R;
-import com.mobile.vnews.module.bean.News;
+import com.mobile.vnews.module.bean.Comment;
+import com.mobile.vnews.util.TimeUtils;
 
 import java.util.List;
 
@@ -16,52 +16,33 @@ import java.util.List;
  * Created by xuantang on 12/20/17.
  */
 
-public class NewsAdapter extends BaseItemDraggableAdapter<News, BaseViewHolder> {
+public class CommentAdapter extends BaseItemDraggableAdapter<Comment, BaseViewHolder> {
 
-    public NewsAdapter(List<News> data) {
+    public CommentAdapter(List<Comment> data) {
         super(data);
     }
 
-    public NewsAdapter(int layoutResId, List<News> data) {
+    public CommentAdapter(int layoutResId, List<Comment> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, News item) {
-        helper.setText(R.id.news_item_title, item.getTitle());
+    protected void convert(BaseViewHolder helper, Comment item) {
 
+        helper.setText(R.id.comment_item_username, item.getFromUsername())
+                .addOnClickListener(R.id.comment_item_like)
+                .addOnClickListener(R.id.comment_item_reply);
         // If the content length more than 30 chars, then show 30 chars
-        helper.setText(R.id.news_item_brief, item.getContent());
+        helper.setText(R.id.comment_item_like_num, String.valueOf(item.getLikeCount()));
         // more than 0 then visible
-        if (item.getViewCount() > 0) {
-            helper.setText(R.id.news_item_view, String.valueOf(item.getViewCount()));
-            helper.getView(R.id.news_item_view_layout).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.news_item_view_layout).setVisibility(View.GONE);
-        }
-        // more than 0 then visible
-        if (item.getLikeCount() > 0) {
-            helper.setText(R.id.news_item_like, String.valueOf(item.getLikeCount()));
-            helper.getView(R.id.news_item_like_layout).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.news_item_like_layout).setVisibility(View.GONE);
-        }
-        // more than 0 then visible
-        if (item.getCommentCount() > 0) {
-            helper.setText(R.id.news_item_comment, String.valueOf(item.getCommentCount()));
-            helper.getView(R.id.news_item_comment_layout).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.news_item_comment_layout).setVisibility(View.GONE);
-        }
-        // level
-        helper.setText(R.id.news_item_level, item.getLevel());
-        // type
-        helper.setText(R.id.news_item_category, item.getType());
+        helper.setText(R.id.comment_item_date, TimeUtils.millis2String(item.getTimestamp()));
+
+        helper.setText(R.id.message_item_content, item.getContent());
         // image
         RequestOptions myOptions = new RequestOptions()
                 .fitCenter()
                 .centerCrop()
                 .placeholder(R.drawable.placeholder);
-        Glide.with(mContext).load(item.getImage()).apply(myOptions).into((ImageView) helper.getView(R.id.news_item_image));
+        Glide.with(mContext).load(item.getFromImage()).apply(myOptions).into((ImageView) helper.getView(R.id.comment_item_image));
     }
 }

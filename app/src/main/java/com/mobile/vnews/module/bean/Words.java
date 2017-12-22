@@ -1,18 +1,20 @@
 package com.mobile.vnews.module.bean;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by xuantang on 12/6/17.
  */
 
-@Entity(tableName = "words")
+@Entity(tableName = "words", indices = {@Index("word")})
 public class Words {
-
     @PrimaryKey
     private int ID;
+
     private String word;
+
     private String exchange;
     private String voice;
 

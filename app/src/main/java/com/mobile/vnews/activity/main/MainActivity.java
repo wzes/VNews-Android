@@ -1,6 +1,8 @@
 package com.mobile.vnews.activity.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,8 @@ import com.mobile.vnews.activity.news.NewsFragment;
 import com.mobile.vnews.activity.news.NewsPresenter;
 import com.mobile.vnews.activity.word.WordFragment;
 import com.mobile.vnews.activity.word.WordPresenter;
+import com.mobile.vnews.application.AppPreferences;
+import com.mobile.vnews.service.client.MessageService;
 import com.mobile.vnews.util.BottomNavigationViewHelper;
 
 public class MainActivity extends BaseActivity {
@@ -41,9 +45,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Start service if user login
+        if (AppPreferences.getLoginState()) {
+            startService(new Intent(this, MessageService.class));
+        }
         // Initialize the fragments
         initFragments(savedInstanceState);
-        
+
         // Initialize the private views
         initViews();
         // Create the presenters

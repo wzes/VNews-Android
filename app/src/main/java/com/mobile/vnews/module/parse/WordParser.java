@@ -1,6 +1,7 @@
 package com.mobile.vnews.module.parse;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.mobile.vnews.module.bean.Word;
 
@@ -12,11 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.annotations.NonNull;
+
 /**
  * Created by xuantang on 12/7/17.
  */
 
 public class WordParser {
+    private static final String TAG = WordParser.class.getSimpleName();
     // phonogramConvert MAP
     private static HashMap<String, String> map = new HashMap<>();
     static {
@@ -67,13 +71,13 @@ public class WordParser {
      * @param wordList
      * @return
      */
-    public Word parse(List<Word> wordList) {
+    public Word parse(@NonNull List<Word> wordList) {
         if (wordList == null) {
             throw new NullPointerException();
         }
         // create
         Word mWord = new Word();
-        mWord.setID(wordList.get(0).getID());
+        mWord.setId(wordList.get(0).getId());
         mWord.setWord(wordList.get(0).getWord());
 
         // get posList
@@ -102,7 +106,7 @@ public class WordParser {
      * @param voice
      * @return
      */
-    private static List<Word.Voice> voiceConvert(Word mWord, String voice) {
+    private List<Word.Voice> voiceConvert(Word mWord, String voice) {
         if (mWord == null) {
             throw new NullPointerException();
         }
@@ -110,13 +114,22 @@ public class WordParser {
 
         try {
             // parser
+            Log.i(TAG, "voiceConvert: " + voice);
             JSONObject jsonObject = new JSONObject(voice);
             String phEn = jsonObject.getString("ph_en");
             String phAm = jsonObject.getString("ph_am");
-            String phEnMp3 = jsonObject.getString("ph_en_map3");
+            String phEnMp3 = jsonObject.getString("ph_en_mp3");
             String phAmMp3 = jsonObject.getString("ph_am_mp3");
-            voiceList.add(mWord.new Voice("美式", phAm, phAmMp3));
-            voiceList.add(mWord.new Voice("英式", phEn, phEnMp3));
+            String mPhEn = null;
+            String mPhAm = null;
+            if (!TextUtils.isEmpty(phEn)) {
+                mPhEn = phonogramTransfer(phEn);
+            }
+            if (!TextUtils.isEmpty(phAm)) {
+                mPhAm = phonogramTransfer(phAm);
+            }
+            voiceList.add(mWord.new Voice("美式", mPhAm, phAmMp3));
+            voiceList.add(mWord.new Voice("英式", mPhEn, phEnMp3));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -136,9 +149,13 @@ public class WordParser {
         List<Word.Pos> posList = new ArrayList<>();
         for (Word word : wordList) {
             // get pos
-            Word.Pos pos = mWord.new Pos(word.getPos(), word.getPosmeans(),
-                    WordParser.meansConvert(word.getMeans()));
-            posList.add(pos);
+            try {
+                Word.Pos pos = mWord.new Pos(word.getPos(), word.getPosmeans(),
+                        WordParser.meansConvert(word.getMeans()));
+                posList.add(pos);
+            } catch (Exception e) {
+
+            }
         }
         return posList;
     }

@@ -53,4 +53,10 @@
     <string name="news_detail_source">来源:</string>
     <string name="news_detail_content">President Donald Trump has announced that the US now recognises Jerusalem as Israel's </string>
     <string name="news_detail_date">昨天10:20</string>
+    <string name="sheet_word_detail">查看详情</string>
+    <string name="comment_date">一天前</string>
+    <string name="comment_reply">回复</string>
+    <string name="comment_like_num">12</string>
+    <string name="comment">评论</string>
+    <string name="comment_no_more">No more comments</string>
 </resources>

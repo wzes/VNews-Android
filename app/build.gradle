@@ -28,27 +28,24 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:support-vector-drawable:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:preference-v14:$rootProject.ext.supportLibraryVersion"
-
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
-
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:support-v4:26.0.2'
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanaryandroidVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanaryandroidnoopVersion"
-
-
     implementation("com.github.apl-devs:appintro:$rootProject.ext.appintroVersion") {
         // This library depends on the support library(probably a different version of my project)
         // Exclude the support library in the compilation of this library to avoid incompatibility
         exclude group: 'com.android.support'
     }
+
     // Dependencies for local unit tests
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
 
@@ -57,7 +54,6 @@ dependencies {
 
     // Espresso UI testing
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2Version"
     implementation "com.squareup.retrofit2:converter-scalars:$rootProject.ext.retrofit2Version"
@@ -67,22 +63,19 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     implementation "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycle"
+
     //compile "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.ext.rxlifecycle"
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycle"
-
     implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
+
     // implementation "com.blankj:utilcode:$rootProject.ext.utilVersion"
     implementation "net.jpountz.lz4:lz4:$rootProject.ext.lz4Version"
-
     implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
-
     implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
-
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideCompilerVersion"
-
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.recyclerVersion"
     implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
     implementation "com.alibaba:fastjson:$rootProject.ext.fastjsonVersion"

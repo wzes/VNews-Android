@@ -58,7 +58,6 @@ public class WordSelectedTextView extends TextView {
         highlightColor = ta.getColor(R.styleable.WordSelectedTextView_highlightColor, Color.RED);
         highlightText = ta.getString(R.styleable.WordSelectedTextView_highlightText);
         selectedColor = ta.getColor(R.styleable.WordSelectedTextView_selectedColor, DEFAULT_SELECTED_COLOR);
-
         ta.recycle();
     }
 

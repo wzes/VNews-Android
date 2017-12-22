@@ -21,7 +21,7 @@ public class Message {
     private String fromID;
     private String toID;
     private String content;
-    private Timestamp timestamp;
+    private long timestamp;
     /**
      *  add after
      */
@@ -117,11 +117,11 @@ public class Message {
         this.content = content;
     }
 
-    public Timestamp getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 }

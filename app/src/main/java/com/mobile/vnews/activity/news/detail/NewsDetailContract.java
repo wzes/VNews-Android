@@ -4,8 +4,12 @@ import android.support.annotation.NonNull;
 
 import com.mobile.vnews.activity.base.BasePresenter;
 import com.mobile.vnews.activity.base.BaseView;
+import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
+import com.mobile.vnews.module.bean.Word;
+
+import java.util.List;
 
 /**
  * Created by xuantang on 12/21/17.
@@ -14,11 +18,12 @@ import com.mobile.vnews.module.bean.News;
 public class NewsDetailContract {
     interface View extends BaseView<Presenter> {
         void showResults(@NonNull News news);
-        void showWord(@NonNull String word);
+        void showWord(@NonNull Word word);
         void onShowFail();
         void onSearchFail();
         void onLikeSuccess();
         void onLikeFail();
+        void showComments(@NonNull List<Comment> comments);
         void onCommentFail();
         void onCommentSuccess(Message message);
         void onLogin();

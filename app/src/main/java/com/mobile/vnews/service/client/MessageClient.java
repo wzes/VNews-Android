@@ -1,5 +1,8 @@
 package com.mobile.vnews.service.client;
 
+import com.alibaba.fastjson.JSON;
+import com.mobile.vnews.module.bean.Message;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -32,6 +35,18 @@ public class MessageClient {
         }
     }
 
+    /**
+     *
+     * @param message
+     */
+    public void sendMessage(Message message) {
+        sendMessage(JSON.toJSONString(message));
+    }
+
+    /**
+     *
+     * @param message
+     */
     public void sendMessage(String message) {
         this.channel.writeAndFlush(message);
     }

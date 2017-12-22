@@ -53,7 +53,7 @@ public class MeansTransferTest {
     }
     @Test
     public void meansToText() {
-        String source = "u00f0u00e6t";
+        String source = "u00f0u00e6t, u00f0u0259t";
 
         System.out.println(phonogramConvert(source));
         //System.out.println(convert(source));

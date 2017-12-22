@@ -22,7 +22,7 @@ public class Comment {
     private String fromID;
     private String toID;
     private String content;
-    private Timestamp timestamp;
+    private long timestamp;
     private int newID;
 
     /*---------------------------------------------------------------*/
@@ -116,11 +116,11 @@ public class Comment {
         this.content = content;
     }
 
-    public Timestamp getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

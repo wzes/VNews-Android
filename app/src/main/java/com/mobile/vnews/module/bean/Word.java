@@ -13,13 +13,17 @@ import java.util.List;
 
 public class Word {
 
-    private String ID;
+    private String id;
     private String word;
     private String pos;
     private String voice;
     private String means;
     private String exchange;
     private String posmeans;
+
+    public Word() {
+    }
+
     public String getPosmeans() {
         return posmeans;
     }
@@ -30,12 +34,12 @@ public class Word {
 
 
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getExchange() {

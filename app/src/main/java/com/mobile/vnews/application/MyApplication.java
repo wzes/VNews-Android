@@ -39,7 +39,7 @@ public class MyApplication extends Application {
             AppPreferences.saveLoginUserID(IdUtils.getUUID());
         }
 
-        AppPreferences.saveVersion("1");
+        AppPreferences.saveVersion("0");
 
         String version = AppPreferences.getVersion();
 
