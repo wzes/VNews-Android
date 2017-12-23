@@ -42,7 +42,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
 
     @Override
-    public void setPresenter(RegisterContract.Presenter presenter) {
+    public void setPresenter(RegisterContract.Presenter mPresenter) {
 
     }
 

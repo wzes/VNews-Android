@@ -12,8 +12,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

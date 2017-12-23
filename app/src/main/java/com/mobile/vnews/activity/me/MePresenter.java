@@ -2,6 +2,8 @@ package com.mobile.vnews.activity.me;
 
 import android.support.annotation.NonNull;
 
+import com.mobile.vnews.application.AppPreferences;
+
 /**
  * Created by xuantang on 11/27/17.
  */
@@ -21,5 +23,14 @@ public class MePresenter implements MeContract.Presenter {
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public void load() {
+        if (AppPreferences.getLoginState()) {
+            view.show(true);
+        } else {
+            view.show(false);
+        }
     }
 }

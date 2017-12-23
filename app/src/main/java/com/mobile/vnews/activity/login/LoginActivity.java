@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             loginFragment = LoginFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, loginFragment, LoginFragment.class.getSimpleName())
+                    .add(R.id.login_container, loginFragment, LoginFragment.class.getSimpleName())
                     .commit();
         }
 

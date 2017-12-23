@@ -35,8 +35,8 @@ public class MessageFragment extends Fragment implements MessageContract.View {
 
 
     @Override
-    public void setPresenter(MessageContract.Presenter presenter) {
-        this.presenter = checkNotNull(presenter);
+    public void setPresenter(MessageContract.Presenter mPresenter) {
+        this.presenter = checkNotNull(mPresenter);
     }
 
     @Nullable

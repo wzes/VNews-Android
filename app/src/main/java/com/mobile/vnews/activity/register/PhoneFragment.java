@@ -43,7 +43,7 @@ public class PhoneFragment extends Fragment implements PhoneContract.View {
     }
 
     @Override
-    public void setPresenter(PhoneContract.Presenter presenter) {
+    public void setPresenter(PhoneContract.Presenter mPresenter) {
 
     }
 

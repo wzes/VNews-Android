@@ -18,7 +18,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -142,8 +141,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     }
 
     @Override
-    public void setPresenter(NewsDetailContract.Presenter presenter) {
-        this.mPresenter = checkNotNull(presenter);
+    public void setPresenter(NewsDetailContract.Presenter mPresenter) {
+        this.mPresenter = checkNotNull(mPresenter);
     }
 
     @Override

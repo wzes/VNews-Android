@@ -13,17 +13,22 @@ public class AppPreferences {
 
     private static final String KEY_APP_LOGIN_USER_ID = "app_login_user_id";
     private static final String KEY_APP_LOGIN_USER_NAME = "app_login_user_name";
-    private static final String KEY_APP_LOGIN_USER_IAMGE = "app_login_user_image";
-
+    private static final String KEY_APP_LOGIN_USER_IMAGE = "app_login_user_image";
+    private static final String KEY_APP_LOGIN_USER_MOTTO = "app_login_user_motto";
     private static final String KEY_APP_LOGIN_STATE = "app_login_state";
 
     public static void saveLoginUsername(String username) {
         saveString(KEY_APP_LOGIN_USER_NAME, username);
     }
     public static void saveLoginUserImage(String userImage) {
-        saveString(KEY_APP_LOGIN_USER_IAMGE, userImage);
+        saveString(KEY_APP_LOGIN_USER_IMAGE, userImage);
     }
-
+    public static void saveLoginUserMotto(String userImage) {
+        saveString(KEY_APP_LOGIN_USER_MOTTO, userImage);
+    }
+    public static String getLoginUserMotto() {
+        return getString(KEY_APP_LOGIN_USER_MOTTO);
+    }
     public static String getLoginUsername() {
         return getString(KEY_APP_LOGIN_USER_NAME);
     }

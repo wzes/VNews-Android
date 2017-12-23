@@ -8,12 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.news.detail.NewsDetailActivity;
 import com.mobile.vnews.module.bean.News;
@@ -166,8 +164,8 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     }
 
     @Override
-    public void setPresenter(NewsContract.Presenter presenter) {
-        this.mPresenter = checkNotNull(presenter);
+    public void setPresenter(NewsContract.Presenter mPresenter) {
+        this.mPresenter = checkNotNull(mPresenter);
     }
 
 

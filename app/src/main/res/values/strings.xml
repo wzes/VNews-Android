@@ -59,4 +59,10 @@
     <string name="comment_like_num">12</string>
     <string name="comment">评论</string>
     <string name="comment_no_more">No more comments</string>
+    <string name="me_username">Phoenix</string>
+    <string name="me_motto">为战而生, 至死方休</string>
+    <string name="me_login">登录</string>
+    <string name="me_collect">我的收藏</string>
+    <string name="me_comment">我的评论</string>
+    <string name="me_settings">通用设置</string>
 </resources>

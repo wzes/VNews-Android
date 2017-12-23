@@ -1,18 +1,22 @@
 package com.mobile.vnews.activity.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mobile.vnews.R;
+import com.mobile.vnews.activity.main.MainActivity;
+import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.User;
 
 import butterknife.BindView;
@@ -80,8 +84,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void setPresenter(LoginContract.Presenter presenter) {
-        this.loginPresenter = (LoginPresenter) presenter;
+    public void setPresenter(LoginContract.Presenter mPresenter) {
+        this.loginPresenter = (LoginPresenter) mPresenter;
     }
 
     @Override
@@ -97,13 +101,20 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(User user) {
+        // save something
+        AppPreferences.saveLoginUserID(user.getId());
+        AppPreferences.saveLoginUsername(user.getUsername());
+        AppPreferences.saveLoginUserImage(user.getImage());
+        AppPreferences.saveLoginState(true);
         // start activity
+        startActivity(new Intent(getActivity(), MainActivity.class));
+        getActivity().finish();
     }
 
     @Override
     public void onFail() {
-
+        Toast.makeText(getActivity(), "登录失败！密码", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -124,6 +135,17 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
                 break;
             case R.id.login_sign:
+                if (TextUtils.isEmpty(loginUsername.getText())) {
+                    Toast.makeText(getContext(), "请输入用户名！", Toast.LENGTH_SHORT).show();
+                    loginUsername.setFocusable(true);
+                    return;
+                }
+
+                if (TextUtils.isEmpty(loginUsername.getText())) {
+                    Toast.makeText(getContext(), "请输入密码！", Toast.LENGTH_SHORT).show();
+                    loginUsername.setFocusable(true);
+                    return;
+                }
                 loginPresenter.login(loginUsername.getText().toString(),
                         loginPassword.getText().toString());
                 break;

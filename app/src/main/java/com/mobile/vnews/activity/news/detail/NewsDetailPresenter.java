@@ -1,11 +1,9 @@
 package com.mobile.vnews.activity.news.detail;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONPObject;
 import com.mobile.vnews.module.BasicResponse;
 import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
@@ -19,17 +17,11 @@ import com.mobile.vnews.service.DefaultObserver;
 import com.mobile.vnews.service.client.MessageService;
 import com.mobile.vnews.util.Utils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 

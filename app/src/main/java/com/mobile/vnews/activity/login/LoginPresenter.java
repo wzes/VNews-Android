@@ -1,13 +1,17 @@
 package com.mobile.vnews.activity.login;
 
+import com.alibaba.fastjson.JSON;
 import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.BasicResponse;
 import com.mobile.vnews.module.bean.User;
 import com.mobile.vnews.service.Api;
 import com.mobile.vnews.service.DefaultObserver;
 
+import java.util.HashMap;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -30,17 +34,22 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String username, String password) {
-        RequestBody formBody = new FormBody.Builder()
-                .add("username", username)
-                .add("password", password)
-                .build();
+//        RequestBody formBody = new FormBody.Builder()
+//                .add("username", username)
+//                .add("password", password)
+//                .build();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("password", password);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(map));
         Api.getApiService()
-                .login(formBody)
+                .login(requestBody )
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultObserver<BasicResponse<User>>(loginFragment.getActivity()) {
                     @Override
                     public void onSuccess(BasicResponse<User> response) {
-                        loginFragment.onSuccess();
+                        loginFragment.onSuccess(response.getContent());
                     }
 
                     @Override

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobile.vnews.R;
-import com.mobile.vnews.fragment.BaseFragment;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -36,8 +35,8 @@ public class WordFragment extends Fragment implements WordContract.View {
 
 
     @Override
-    public void setPresenter(WordContract.Presenter presenter) {
-        this.presenter = checkNotNull(presenter);
+    public void setPresenter(WordContract.Presenter mPresenter) {
+        this.presenter = checkNotNull(mPresenter);
     }
 
     @Nullable
