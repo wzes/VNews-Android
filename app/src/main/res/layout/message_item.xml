@@ -57,6 +57,7 @@
                         android:textSize="@dimen/sp_16"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/message_item_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -68,6 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/message_content"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/black"/>
         </LinearLayout>
     </RelativeLayout>

@@ -232,5 +232,5 @@ public interface ApiService {
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("message/{user_id}")
-    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String news_id);
+    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String user_id);
 }
