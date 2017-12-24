@@ -2,6 +2,7 @@ package com.mobile.vnews.service;
 
 import com.mobile.vnews.module.BasicResponse;
 import com.mobile.vnews.module.bean.Comment;
+import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.User;
 
@@ -34,7 +35,7 @@ public interface ApiService {
      */
     int DEFAULT_TIMEOUT = 10000;
 
-    String HOST = "http://192.168.1.146:9909/";
+    String HOST = "http://192.168.1.109:9909/";
     String API_SERVER_URL = HOST + "vnews/";
 
     /* USER SYSTEM */
@@ -226,4 +227,10 @@ public interface ApiService {
     @GET("comment/{news_id}")
     Observable<BasicResponse<List<Comment>>> getNewsComments(@Path("news_id") String news_id);
 
+    /* Message System */
+
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("message/{user_id}")
+    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String news_id);
 }

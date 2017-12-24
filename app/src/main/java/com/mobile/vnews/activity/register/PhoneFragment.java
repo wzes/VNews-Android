@@ -15,7 +15,7 @@ import com.mobile.vnews.activity.login.LoginFragment;
 
 public class PhoneFragment extends Fragment implements PhoneContract.View {
 
-    PhonePresenter phonePresenter;
+    PhonePresenter mPresenter;
 
     public PhoneFragment() {
 

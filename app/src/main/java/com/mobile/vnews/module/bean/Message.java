@@ -8,7 +8,7 @@ import java.security.Timestamp;
 
 public class Message {
     /**
-     *  ID        INT AUTO_INCREMENT
+     * ID        INT AUTO_INCREMENT
      * PRIMARY KEY,
      * newsID    INT                                 NULL,
      * fromID    VARCHAR(20)                         NULL,
@@ -17,27 +17,29 @@ public class Message {
      * timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
      */
     private int ID;
-    private int newsID;
+    private String newsID;
     private String fromID;
     private String toID;
     private String content;
     private long timestamp;
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    private String floor;
     /**
      *  add after
      */
     private String title;
+    private String toUsername;
     private String fromImage;
     private String fromUsername;
 
-    public int getFloor() {
-        return floor;
-    }
-
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
-    private int floor;
 //    /**
 //     * Relation user for submitting
 //     */
@@ -50,6 +52,14 @@ public class Message {
 //    public void setRelationID(String relationID) {
 //        this.relationID = relationID;
 //    }
+
+    public String getToUsername() {
+        return toUsername;
+    }
+
+    public void setToUsername(String toUsername) {
+        this.toUsername = toUsername;
+    }
 
     public String getTitle() {
         return title;
@@ -85,11 +95,11 @@ public class Message {
         this.ID = ID;
     }
 
-    public int getNewsID() {
+    public String getNewsID() {
         return newsID;
     }
 
-    public void setNewsID(int newsID) {
+    public void setNewsID(String newsID) {
         this.newsID = newsID;
     }
 

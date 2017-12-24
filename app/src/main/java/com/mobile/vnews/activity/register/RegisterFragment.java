@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
 
-    RegisterPresenter presenter;
+    RegisterPresenter mPresenter;
 
     public RegisterFragment() {
 

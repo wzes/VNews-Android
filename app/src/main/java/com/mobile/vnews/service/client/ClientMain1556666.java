@@ -55,8 +55,7 @@ public class ClientMain1556666 {
 					message.setFromImage("image");
 					message.setFromUsername("Hadoop");
 					message.setContent("World War Start!");
-					message.setNewsID(2);
-					message.setFloor(3);
+					message.setNewsID(String.valueOf("2"));
 					message.setContent(input);
 					JSONObject jsonObject = (JSONObject) JSONObject.toJSON(message);
 					channel.writeAndFlush(jsonObject.toString());
