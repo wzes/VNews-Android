@@ -87,8 +87,14 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
         new Thread(() -> {
             AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
             WordDao wordDao = appDatabase.getWordDao();
-            List<Word> words = wordDao.getWordsByName(word.toLowerCase());
 
+            List<Word> words = wordDao.getWordsByName(word);
+
+            if (words.size() == 0) {
+                words = wordDao.getWordsByName(word.toLowerCase());
+            }
+
+            Log.i(TAG, "search result: " + words.size() + " " + word);
             if (words.size() != 0) {
                 try {
 //                    Log.i(TAG, "search: ---------------"  + word + " " + words.size() + "\n"
@@ -96,7 +102,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
 //                    words.get(0).getVoice());
                     WordParser wordParser = new WordParser();
                     mWord = wordParser.parse(words);
-                    // Log.i(TAG, "search: " + JSON.toJSONString(mWord));
+                    Log.i(TAG, "search: " + JSON.toJSONString(mWord));
                 } catch (Exception e) {
                     handler.sendEmptyMessage(1);
                     return;

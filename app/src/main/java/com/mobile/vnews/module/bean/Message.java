@@ -1,11 +1,13 @@
 package com.mobile.vnews.module.bean;
 
+import android.arch.persistence.room.Entity;
+
 import java.security.Timestamp;
 
 /**
  * Created by xuantang on 11/27/17.
  */
-
+@Entity(tableName = "message", primaryKeys = { "ID"})
 public class Message {
     /**
      * ID        INT AUTO_INCREMENT
@@ -41,7 +43,7 @@ public class Message {
     private String fromUsername;
 
 //    /**
-//     * Relation user for submitting
+//     * Relation user_image for submitting
 //     */
 //    private String relationID;
 //

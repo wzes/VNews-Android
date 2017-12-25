@@ -26,10 +26,7 @@
     <string name="register_next">next</string>
     <string name="register_input_phone">Input Telephone</string>
     <string name="register_done">Done</string>
-    <string name="news_brief">President Donald Trump has announced that the US now recognises Jerusalem
-        as Israel's capital, overturning decades of official US policy.Mr Trump described the move as
-        "a long overdue step" to advance the Middle East peace process.The fate of the ancient city
-        is one of the thorniest issues between Israel and the Palestinians.</string>
+    <string name="news_brief">President Donald Trump has announced that the US now recognises Jerusalem.</string>
     <string name="news_title">Jerusalem is Israel\'s capital - Trump</string>
     <string name="news_category">World</string>
     <string name="news_level">CET-6</string>
@@ -65,4 +62,6 @@
     <string name="me_collect">我的收藏</string>
     <string name="me_comment">我的评论</string>
     <string name="me_settings">通用设置</string>
+    <string name="word_search">搜索单词</string>
+    <string name="title_activity_word_detail">WordDetailActivity</string>
 </resources>

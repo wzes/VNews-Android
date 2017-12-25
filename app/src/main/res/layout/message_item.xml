@@ -13,7 +13,7 @@
             android:id="@+id/message_item_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/user"
+            android:src="@drawable/user_image"
             android:layout_margin="@dimen/dp_4"/>
         <LinearLayout
             android:layout_width="match_parent"

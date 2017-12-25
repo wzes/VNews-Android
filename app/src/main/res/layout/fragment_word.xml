@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/app_bar">
 
-        <!-- The Toolbar -->
+        &lt;!&ndash; The Toolbar &ndash;&gt;
         <android.support.v7.widget.Toolbar
             android:id="@+id/fragment_word_toolbar"
             android:layout_width="match_parent"
@@ -23,5 +23,11 @@
             app:title="@string/title_word"
             app:titleTextColor="@color/colorPrimaryText"/>
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>-->
+    <com.lapism.searchview.SearchView
+        android:id="@+id/fragment_word_searchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:search_voice="false"
+        app:search_hint="@string/word_search"/>
 </LinearLayout>

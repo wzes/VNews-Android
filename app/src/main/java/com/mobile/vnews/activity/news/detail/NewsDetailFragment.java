@@ -263,7 +263,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             mList = comments;
             mCommentAdapter = new CommentAdapter(R.layout.comment_item, mList);
 
-            // detail
+            // showDetail
             mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

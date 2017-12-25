@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.mobile.vnews"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -22,8 +22,8 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -68,6 +68,7 @@ dependencies {
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycle"
     implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.roomVersion"
 
     // implementation "com.blankj:utilcode:$rootProject.ext.utilVersion"
     implementation "net.jpountz.lz4:lz4:$rootProject.ext.lz4Version"
@@ -80,4 +81,6 @@ dependencies {
     implementation "com.youth.banner:banner:$rootProject.ext.bannerVersion"
     implementation "com.alibaba:fastjson:$rootProject.ext.fastjsonVersion"
     implementation "io.netty:netty-all:$rootProject.ext.nettyVersion"
+    implementation "com.lapism:searchview:$rootProject.ext.searchViewVersion"
+    implementation "com.google.android:flexbox:$rootProject.ext.flexboxVersion"
 }

@@ -57,7 +57,7 @@ public interface ApiService {
      */
     @Headers({"Content-Type: application/json", "Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @PUT("user")
+    @PUT("user_image")
     Observable<BasicResponse<User>> updateUser(@Body User user);
 
     /**
@@ -77,7 +77,7 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @GET("/user/tel/{telephone}")
+    @GET("/user_image/tel/{telephone}")
     Observable<BasicResponse<String>> checkPhone(@Path("telephone") String telephone);
 
     /**
@@ -87,7 +87,7 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @GET("/user/{ID}")
+    @GET("/user_image/{ID}")
     Observable<BasicResponse<User>> getUser(@Path("ID") String ID);
 
     /**
@@ -98,7 +98,7 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @POST("/user/{ID}/image")
+    @POST("/user_image/{ID}/image")
     @Multipart
     Observable<BasicResponse<String>> uploadPhoto(@Path("ID") String ID,
                                                   @Part MultipartBody.Part file);

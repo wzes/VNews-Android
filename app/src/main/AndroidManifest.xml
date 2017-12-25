@@ -35,7 +35,11 @@
 
         <service android:name=".service.client.MessageService" />
 
-        <activity android:name=".activity.news.detail.NewsDetailActivity"></activity>
+        <activity android:name=".activity.news.detail.NewsDetailActivity" />
+        <activity
+            android:name=".activity.word.detail.WordDetailActivity"
+            android:label="@string/title_activity_word_detail"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

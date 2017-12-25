@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Start service if user login
+        // Start service if user_image login
         if (AppPreferences.getLoginState()) {
             startService(new Intent(this, MessageService.class));
         }

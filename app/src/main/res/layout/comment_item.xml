@@ -15,7 +15,7 @@
             android:id="@+id/comment_item_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/user"
+            android:src="@drawable/user_image"
             android:layout_margin="@dimen/dp_4"/>
         <LinearLayout
             android:orientation="vertical"

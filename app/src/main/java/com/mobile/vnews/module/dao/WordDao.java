@@ -22,6 +22,19 @@ public interface WordDao {
     List<Word> getWordsByName(String word);
 
     @Query("SELECT words.ID as id, word, pos.name as pos, voice, means.means as means, " +
+            "pos.means as posmeans, exchange " +
+            "FROM words, pos, means " +
+            "WHERE word like :word AND pos.ID = means.posID AND words.ID = means.wordID " +
+            "LIMIT :start, :count")
+    List<Word> getWordsByLikeName(String word, int start, int count);
+
+    @Query("SELECT word " +
+            "FROM words " +
+            "WHERE word like :word " +
+            "LIMIT :start, :count")
+    List<String> getSimpleWordsByLikeName(String word, int start, int count);
+
+    @Query("SELECT words.ID as id, word, pos.name as pos, voice, means.means as means, " +
             "pos.means as posmeans , exchange " +
             "FROM words, pos, means " +
             "WHERE words.ID = :ID AND pos.ID = means.posID AND words.ID = means.wordID")

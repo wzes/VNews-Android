@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_word_detail_layout"
+    android:background="@color/colorBaseBackground">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/fragment_word_detail_app_bar">
+
+        <!-- The Toolbar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fragment_word_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="单词详情"
+            app:titleTextColor="@color/colorPrimaryText"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/fragment_word_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:text="@string/sheet_word"
+        android:textStyle="bold"
+        android:layout_gravity="bottom"
+        android:textSize="@dimen/sp_50"
+        tools:ignore="RelativeOverlap"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/dp_10">
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/fragment_word_detail_voice_en_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_volume_up_black_24dp"
+            android:layout_gravity="center_vertical"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:text="英"
+            android:textSize="@dimen/sp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/fragment_word_detail_en_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_voice"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_24"
+            android:textSize="20sp"
+            tools:ignore="RelativeOverlap" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/fragment_word_detail_voice_am_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_volume_up_black_24dp"
+            android:layout_gravity="center_vertical"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:text="美"
+            android:textSize="@dimen/sp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/fragment_word_detail_am_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_voice"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:layout_marginStart="@dimen/dp_10"
+            android:textSize="20sp"
+            tools:ignore="RelativeOverlap" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_4"
+        android:background="@color/me_background"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_word_detail_recycler_view">
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_35"
+        android:textSize="@dimen/sp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/sp_16"
+        android:id="@+id/fragment_word_detail_collect"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ripple_collect"
+        android:text="@string/word_collect"
+        android:layout_marginBottom="@dimen/dp_24"/>
+
+</LinearLayout>

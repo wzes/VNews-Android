@@ -1,6 +1,7 @@
 package com.mobile.vnews.application;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -34,7 +35,7 @@ public class MyApplication extends Application {
         Utils.init(this);
 
         // AppCache.setContext(this);
-        // if user do not login, make a random user id
+        // if user_image do not login, make a random user_image id
         if (AppPreferences.getLoginUserID().length() == 0) {
             AppPreferences.saveLoginUserID(IdUtils.getUUID());
         }
