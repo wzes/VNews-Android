@@ -39,7 +39,12 @@
         <activity
             android:name=".activity.word.detail.WordDetailActivity"
             android:label="@string/title_activity_word_detail"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.word.search.WordSearchActivity" />
+        <activity android:name=".activity.word.collect.WordCollectActivity" />
+        <activity android:name=".activity.me.news.NewsMeActivity" />
+        <activity android:name=".activity.news.detail.comment.NewsCommentActivity" />
+        <activity android:name=".activity.me.comment.MeCommentActivity"></activity>
     </application>
 
 </manifest>

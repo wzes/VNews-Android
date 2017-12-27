@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.mobile.vnews.R;
 import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.module.bean.WordCollect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -173,7 +174,19 @@ public class WordDetailFragment extends Fragment implements WordDetailContract.V
                 }
                 break;
             case R.id.fragment_word_detail_collect:
-                Toast.makeText(getContext(), "Collect", Toast.LENGTH_SHORT).show();
+                WordCollect wordCollect = new WordCollect();
+                wordCollect.setId(mWord.getId());
+                wordCollect.setMeans(mWord.getPosList().get(0).getSymbol() + " " +
+                        mWord.getPosList().get(0).getMeans());
+                wordCollect.setTag("收藏");
+                wordCollect.setWord(mWord.getWord());
+                wordCollect.setTimestamp(System.currentTimeMillis());
+                try {
+                    mPresenter.addCollect(wordCollect);
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

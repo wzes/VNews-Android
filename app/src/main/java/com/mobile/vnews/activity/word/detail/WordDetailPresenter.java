@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.mobile.vnews.activity.word.WordContract;
 import com.mobile.vnews.activity.word.WordFragment;
 import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
 import com.mobile.vnews.module.parse.WordParser;
@@ -87,6 +88,15 @@ public class WordDetailPresenter implements WordDetailContract.Presenter {
                 mFragment.onSearchFail();
             }
 
+        }).start();
+    }
+
+    @Override
+    public void addCollect(WordCollect wordCollect) {
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+            WordDao wordDao = appDatabase.getWordDao();
+            wordDao.addWordCollect(wordCollect);
         }).start();
     }
 }

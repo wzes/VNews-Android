@@ -5,6 +5,7 @@ import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.User;
+import com.mobile.vnews.module.bean.Word;
 
 import java.util.List;
 
@@ -160,7 +161,7 @@ public interface ApiService {
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("news/{user_id}/likes")
-    Observable<BasicResponse<List<News>>> getLikeNewsByUser(@Path("user_id") String user_id);
+    Observable<BasicResponse<List<News>>> getLikeNewsByUserID(@Path("user_id") String user_id);
 
     /**
      *
@@ -215,7 +216,7 @@ public interface ApiService {
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("news/{user_id}/views")
-    Observable<BasicResponse<List<News>>> getViewNews(@Path("user_id") String user_id);
+    Observable<BasicResponse<List<News>>> getViewNewsByUserID(@Path("user_id") String user_id);
 
     /**
      *
@@ -227,10 +228,23 @@ public interface ApiService {
     @GET("comment/{news_id}")
     Observable<BasicResponse<List<Comment>>> getNewsComments(@Path("news_id") String news_id);
 
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("comment/user/{user_id}")
+    Observable<BasicResponse<List<Comment>>> getMyComments(@Path("user_id") String user_id);
+
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("comment/{news_id}/{floor}")
+    Observable<BasicResponse<List<Comment>>> getNewsCommentsByFloor(@Path("news_id") String news_id,
+                                                             @Path("floor") String floor);
+
     /* Message System */
 
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("message/{user_id}")
     Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String user_id);
+
+
 }

@@ -10,14 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.login.LoginActivity;
+import com.mobile.vnews.activity.me.comment.MeCommentActivity;
+import com.mobile.vnews.activity.me.news.NewsMeActivity;
 import com.mobile.vnews.application.AppPreferences;
 
 import butterknife.BindView;
@@ -50,7 +53,7 @@ public class MeFragment extends Fragment implements MeContract.View {
     RelativeLayout mFragmentMeLoginOutLayout;
     @BindView(R.id.fragment_me_login_layout)
     LinearLayout mFragmentMeLoginLayout;
-    @BindView(R.id.me_new_collect_num)
+    @BindView(R.id.me_news_collect_num)
     TextView mMeNewCollectNum;
     @BindView(R.id.me_news_collect_layout)
     LinearLayout mMeNewsCollectLayout;
@@ -63,6 +66,10 @@ public class MeFragment extends Fragment implements MeContract.View {
     @BindView(R.id.fragment_me_login)
     Button mFragmentMeLogin;
     Unbinder unbinder;
+    @BindView(R.id.me_news_track_num)
+    TextView mMeNewsTrackNum;
+    @BindView(R.id.me_news_track_layout)
+    LinearLayout mMeNewsTrackLayout;
 
     private MeContract.Presenter mPresenter;
 
@@ -107,14 +114,33 @@ public class MeFragment extends Fragment implements MeContract.View {
     }
 
     @OnClick({R.id.fragment_me_login_in_layout, R.id.me_news_collect_layout, R.id.me_comment_layout,
-            R.id.me_settings_layout, R.id.fragment_me_login})
+            R.id.me_settings_layout, R.id.fragment_me_login, R.id.me_news_track_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fragment_me_login_in_layout:
                 break;
             case R.id.me_news_collect_layout:
+                if (AppPreferences.getLoginState()) {
+                    Intent intentLike = new Intent(getContext(), NewsMeActivity.class);
+                    intentLike.putExtra("title", "like");
+                    startActivity(intentLike);
+                }
+                Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.me_news_track_layout:
+                if (AppPreferences.getLoginState()) {
+                    Intent intentTrack = new Intent(getContext(), NewsMeActivity.class);
+                    intentTrack.putExtra("title", "view");
+                    startActivity(intentTrack);
+                }
+                Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.me_comment_layout:
+                if (AppPreferences.getLoginState()) {
+                    Intent intentComment = new Intent(getContext(), MeCommentActivity.class);
+                    startActivity(intentComment);
+                }
+                Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.me_settings_layout:
                 break;
@@ -132,11 +158,16 @@ public class MeFragment extends Fragment implements MeContract.View {
             mFragmentMeLoginOutLayout.setVisibility(View.GONE);
             mFragmentMeUsername.setText(AppPreferences.getLoginUsername());
             mFragmentMeMotto.setText(AppPreferences.getLoginUserMotto());
-            Glide.with(getActivity()).load(AppPreferences.getLoginUserImage())
-                    .into(mMyImage);
+            RequestOptions myOptions = new RequestOptions()
+                    .fitCenter()
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder);
+            Glide.with(getActivity().getApplicationContext()).load(AppPreferences.getLoginUserImage())
+                    .apply(myOptions).into(mMyImage);
         } else {
             mFragmentMeLoginInLayout.setVisibility(View.GONE);
             mFragmentMeLoginOutLayout.setVisibility(View.VISIBLE);
         }
     }
+
 }

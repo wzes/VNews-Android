@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
@@ -15,13 +18,15 @@ import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.word.detail.WordDetailActivity;
-import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.activity.word.search.WordSearchActivity;
+import com.mobile.vnews.application.AppPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -32,12 +37,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class WordFragment extends Fragment implements WordContract.View {
 
-    @BindView(R.id.fragment_word_searchView)
-    SearchView mSearchView;
     Unbinder unbinder;
+    @BindView(R.id.fragment_word_recycler_view)
+    RecyclerView mFragmentWordRecyclerView;
+    @BindView(R.id.fragment_word_search_layout)
+    FrameLayout fragmentWordSearchLayout;
     private WordContract.Presenter presenter;
-    private SearchAdapter searchAdapter;
-    private List<SearchItem> suggestionsList;
+
+    private WordBookAdapter mWordBookAdapter;
+    private List<String> mBooks;
+
     public static WordFragment getInstance() {
         return new WordFragment();
     }
@@ -51,7 +60,6 @@ public class WordFragment extends Fragment implements WordContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
-
 
     @Override
     public void setPresenter(WordContract.Presenter mPresenter) {
@@ -69,22 +77,9 @@ public class WordFragment extends Fragment implements WordContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        if (mSearchView != null) {
-            mSearchView.setVersionMargins(SearchView.VersionMargins.TOOLBAR_SMALL);
-            mSearchView.setHint(R.string.word_search);
-            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    mSearchView.close(false);
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    presenter.search(newText);
-                    return false;
-                }
-            });
+        // check
+        if (AppPreferences.getLoginState()) {
+            presenter.load(AppPreferences.getLoginUserID());
         }
     }
 
@@ -95,38 +90,23 @@ public class WordFragment extends Fragment implements WordContract.View {
     }
 
     @Override
-    public void showResult(@NonNull List<String> words) {
-        if (suggestionsList == null) {
-            suggestionsList = new ArrayList<>();
+    public void showBooks(List<String> books) {
+        if (mBooks == null) {
+            mBooks = new ArrayList<>();
+        }
+        mBooks.clear();
+        mBooks.addAll(books);
+        if (mWordBookAdapter == null) {
+            mWordBookAdapter = new WordBookAdapter(R.layout.word_book_item, mBooks);
+            mFragmentWordRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            mFragmentWordRecyclerView.setAdapter(mWordBookAdapter);
         } else {
-            suggestionsList.clear();
+            mWordBookAdapter.notifyDataSetChanged();
         }
-
-        if (searchAdapter == null) {
-            SearchHistoryTable mHistoryDatabase = new SearchHistoryTable(getContext());
-            searchAdapter = new SearchAdapter(getContext(), suggestionsList);
-            searchAdapter.setOnSearchItemClickListener((view, position, text) -> {
-                this.showDetail(text);
-                try {
-                    mHistoryDatabase.addItem(new SearchItem(text));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                mSearchView.close(false);
-            });
-            mSearchView.setAdapter(searchAdapter);
-        }
-
-        for (String word : words) {
-            suggestionsList.add(new SearchItem(word));
-        }
-        searchAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showDetail(String word) {
-        Intent intent = new Intent(getContext(), WordDetailActivity.class);
-        intent.putExtra("word", word);
-        startActivity(intent);
+    @OnClick(R.id.fragment_word_search_layout)
+    public void onViewClicked() {
+        startActivity(new Intent(getContext(), WordSearchActivity.class));
     }
 }

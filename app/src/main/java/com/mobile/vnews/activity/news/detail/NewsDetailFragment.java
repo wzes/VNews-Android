@@ -1,6 +1,7 @@
 package com.mobile.vnews.activity.news.detail;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -28,13 +30,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mobile.vnews.R;
+import com.mobile.vnews.activity.news.detail.comment.NewsCommentActivity;
+import com.mobile.vnews.activity.word.detail.WordDetailActivity;
 import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.util.TimeUtils;
 import com.mobile.vnews.util.select.WordSelectedTextView;
 
@@ -42,6 +46,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -83,6 +88,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     LinearLayout newsDetailDateLayout;
     @BindView(R.id.news_detail_comment_layout)
     LinearLayout mNewsDetailCommentLayout;
+    @BindView(R.id.news_detail_like)
+    FloatingActionButton mNewsDetailLike;
     private CommentAdapter mCommentAdapter;
     private List<Comment> mList;
 
@@ -180,7 +187,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
         // send text
         mNewsDetailComment.setOnClickListener(view -> {
-            if (!AppPreferences.getLoginState()){
+            if (!AppPreferences.getLoginState()) {
                 Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -231,9 +238,28 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         if (word.getPosList() != null && word.getPosList().size() > 0) {
             mSheetWordMeans.setText(word.getPosList().get(0).getSymbol() + word.getPosList().get(0).getMeans());
         }
-        mSheetWordCollect.setOnClickListener(view1 -> Toast.makeText(getActivity(), "Collect", Toast.LENGTH_SHORT).show());
+        // collect word
+        mSheetWordCollect.setOnClickListener(view1 -> {
+            WordCollect wordCollect = new WordCollect();
+            wordCollect.setId(word.getId());
+            wordCollect.setMeans(word.getPosList().get(0).getSymbol() + " " +
+                    word.getPosList().get(0).getMeans());
+            wordCollect.setTag("收藏");
+            wordCollect.setWord(word.getWord());
+            wordCollect.setTimestamp(System.currentTimeMillis());
+            try {
+                mPresenter.addWordCollect(wordCollect);
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
+            }
+            Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
+        });
         mSheetWordVoiceStart.setOnClickListener(view12 -> Toast.makeText(getActivity(), "Speak", Toast.LENGTH_SHORT).show());
-        mSheetWordDetail.setOnClickListener(view -> Toast.makeText(getActivity(), "Detail", Toast.LENGTH_SHORT).show());
+        mSheetWordDetail.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), WordDetailActivity.class);
+            intent.putExtra("word", word.getWord());
+            startActivity(intent);
+        });
         mWordDialog.show();
     }
 
@@ -264,11 +290,11 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             mCommentAdapter = new CommentAdapter(R.layout.comment_item, mList);
 
             // showDetail
-            mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Toast.makeText(getActivity(), "ItemClick item " + position, Toast.LENGTH_SHORT).show();
-                }
+            mCommentAdapter.setOnItemClickListener((adapter, view, position) -> {
+                Intent intent = new Intent(getActivity(), NewsCommentActivity.class);
+                intent.putExtra("newsID", mList.get(position).getNewID());
+                intent.putExtra("floor", mList.get(position).getFloor());
+                startActivity(intent);
             });
 
             // Like and reply
@@ -319,5 +345,14 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.news_detail_like)
+    public void onViewClicked() {
+        if (!AppPreferences.getLoginState()) {
+            Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mPresenter.like(AppPreferences.getLoginUserID(), newID);
     }
 }

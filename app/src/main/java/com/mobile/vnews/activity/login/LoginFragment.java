@@ -106,6 +106,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         AppPreferences.saveLoginUserID(user.getId());
         AppPreferences.saveLoginUsername(user.getUsername());
         AppPreferences.saveLoginUserImage(user.getImage());
+        AppPreferences.saveLoginUserMotto(user.getMotto());
         AppPreferences.saveLoginState(true);
         // start activity
         startActivity(new Intent(getActivity(), MainActivity.class));

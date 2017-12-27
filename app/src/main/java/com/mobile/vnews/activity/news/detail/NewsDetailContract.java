@@ -8,6 +8,7 @@ import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.module.bean.WordCollect;
 
 import java.util.List;
 
@@ -35,5 +36,6 @@ public class NewsDetailContract {
         void like(String userID, int newID);
         void comment(Message message);
         void view(String userID, int newID);
+        void addWordCollect(WordCollect wordCollect);
     }
 }

@@ -9,10 +9,11 @@ import com.mobile.vnews.module.bean.Means;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.Pos;
 import com.mobile.vnews.module.bean.User;
+import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.bean.Words;
 import com.mobile.vnews.module.dao.WordDao;
 
-@Database( entities = { Means.class, Words.class, Pos.class, Message.class}, version = 1, exportSchema = false)
+@Database( entities = { Means.class, Words.class, Pos.class, Message.class, WordCollect.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;

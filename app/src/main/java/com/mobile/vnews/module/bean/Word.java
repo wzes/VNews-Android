@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Word {
 
-    private String id;
+    private int id;
     private String word;
     private String pos;
     private String voice;
@@ -34,11 +34,11 @@ public class Word {
 
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

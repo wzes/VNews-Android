@@ -35,36 +35,12 @@ public class WordPresenter implements WordContract.Presenter {
 
     }
 
-    private List<String> list;
-    @SuppressLint("HandlerLeak")
-    private android.os.Handler handler = new android.os.Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    view.showResult(list);
-                    break;
-                case 1:
-                    break;
-            }
-        }
-    };
-
     @Override
-    public void search(String word) {
-        new Thread(() -> {
-            try {
-                AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
-                WordDao wordDao = appDatabase.getWordDao();
-                List<String> words = new ArrayList<>();
-                //words.addAll(wordDao.getWordsByName(word));
-                words.addAll(wordDao.getSimpleWordsByLikeName(word + "%", 0, 20));
-                list = words;
-                handler.sendEmptyMessage(0);
-            } catch (Exception e) {
-                handler.sendEmptyMessage(1);
-            }
-
-        }).start();
+    public void load(String user_id) {
+        List<String> books = new ArrayList<>();
+        books.add("收藏");
+        books.add("生词");
+        books.add("熟记");
+        view.showBooks(books);
     }
 }

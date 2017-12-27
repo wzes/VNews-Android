@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,10 +24,41 @@
             app:titleTextColor="@color/colorPrimaryText"/>
 
     </android.support.design.widget.AppBarLayout>-->
-    <com.lapism.searchview.SearchView
-        android:id="@+id/fragment_word_searchView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:search_voice="false"
-        app:search_hint="@string/word_search"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_word_search_layout">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:cardCornerRadius="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_4">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="@dimen/dp_40"
+                android:textSize="@dimen/sp_20"
+                android:text="@string/word_search"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_search_black_24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_16"
+                tools:ignore="PrivateResource" />
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_word_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10">
+
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

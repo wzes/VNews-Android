@@ -64,4 +64,7 @@
     <string name="me_settings">通用设置</string>
     <string name="word_search">搜索单词</string>
     <string name="title_activity_word_detail">WordDetailActivity</string>
+    <string name="word_book_title">收藏</string>
+    <string name="fragment_collect">No more words</string>
+    <string name="me_track">我的足迹</string>
 </resources>

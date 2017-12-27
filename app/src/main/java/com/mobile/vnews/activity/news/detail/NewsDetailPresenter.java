@@ -9,6 +9,7 @@ import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.Word;
+import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
 import com.mobile.vnews.module.parse.WordParser;
@@ -182,5 +183,14 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                         Log.i(TAG, "onSuccess: ");
                     }
                 });
+    }
+
+    @Override
+    public void addWordCollect(WordCollect wordCollect) {
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+            WordDao wordDao = appDatabase.getWordDao();
+            wordDao.addWordCollect(wordCollect);
+        }).start();
     }
 }
