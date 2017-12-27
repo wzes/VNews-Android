@@ -74,6 +74,9 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     @Override
                     public void onSuccess(BasicResponse<List<Comment>> response) {
                         mFragment.showComments(response.getContent());
+                        for (Comment comment : response.getContent()) {
+                            Log.i(TAG, "onSuccess: " + JSON.toJSONString(comment));
+                        }
                     }
 
                     @Override
@@ -145,6 +148,20 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(map));
 
         Api.getApiService().likeNews(requestBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BasicResponse<String>>(mFragment.getActivity()) {
+                    @Override
+                    public void onSuccess(BasicResponse<String> response) {
+                        // TODO
+                        Log.i(TAG, "onSuccess: ");
+                    }
+                });
+    }
+
+    @Override
+    public void likeComment(String userID, int comment_id) {
+        Api.getApiService().likeComment(userID, comment_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultObserver<BasicResponse<String>>(mFragment.getActivity()) {

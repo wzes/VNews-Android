@@ -35,12 +35,32 @@ public class WordPresenter implements WordContract.Presenter {
 
     }
 
+    private List<String> mBooks;
     @Override
     public void load(String user_id) {
-        List<String> books = new ArrayList<>();
-        books.add("收藏");
-        books.add("生词");
-        books.add("熟记");
-        view.showBooks(books);
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+            WordDao wordDao = appDatabase.getWordDao();
+            try {
+                mBooks = wordDao.getWordCollectType();
+                handler.sendEmptyMessage(0);
+            } catch (Exception e) {
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
     }
+
+    @SuppressLint("HandlerLeak")
+    private android.os.Handler handler = new android.os.Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    view.showBooks(mBooks);
+                    break;
+                case 1:
+                    break;
+            }
+        }
+    };
 }

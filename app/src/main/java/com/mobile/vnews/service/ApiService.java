@@ -228,11 +228,27 @@ public interface ApiService {
     @GET("comment/{news_id}")
     Observable<BasicResponse<List<Comment>>> getNewsComments(@Path("news_id") String news_id);
 
+    /**
+     *
+     * @param user_id
+     * @return
+     */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("comment/user/{user_id}")
     Observable<BasicResponse<List<Comment>>> getMyComments(@Path("user_id") String user_id);
 
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("comment/{user_id}/like/{comment_id}")
+    Observable<BasicResponse<String>> likeComment(@Path("user_id") String user_id,
+                                                         @Path("comment_id") int comment_id);
+    /**
+     *
+     * @param news_id
+     * @param floor
+     * @return
+     */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("comment/{news_id}/{floor}")

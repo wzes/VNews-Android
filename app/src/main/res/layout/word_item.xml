@@ -27,6 +27,7 @@
                 android:id="@+id/word_item_means"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@string/word_means"/>
         </LinearLayout>
         <ImageButton

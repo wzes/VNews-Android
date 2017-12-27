@@ -12,17 +12,18 @@ public class MeCommentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-
+        //
         if (savedInstanceState != null) {
             mMeCommentFragment = (MeCommentFragment) getSupportFragmentManager()
-                    .getFragment(savedInstanceState, MeCommentFragment.class.getSimpleName());
+                    .getFragment(savedInstanceState,
+                            MeCommentFragment.class.getSimpleName());
         } else {
             mMeCommentFragment = MeCommentFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.news_detail_container, mMeCommentFragment, MeCommentFragment.class.getSimpleName())
+                    .add(R.id.news_detail_container, mMeCommentFragment,
+                            MeCommentFragment.class.getSimpleName())
                     .commit();
         }
-
         new MeCommentPresenter(mMeCommentFragment);
     }
 

@@ -22,8 +22,7 @@
             android:layout_toStartOf="@+id/sheet_comment_send"
             android:id="@+id/sheet_comment_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_20"
-            android:text="@string/sheet_word"/>
+            android:textSize="@dimen/sp_20"/>
         <android.support.v7.widget.AppCompatButton
             android:layout_marginTop="@dimen/dp_10"
             android:layout_width="@dimen/dp_35"
@@ -35,7 +34,6 @@
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_send_black_24dp"
-            android:text="@string/word_collect"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 </LinearLayout>

@@ -17,7 +17,7 @@ public class Comment {
      * timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
      * newsID    INT
      */
-    private int ID;
+    private int id;
     private int floor;
     private String fromID;
     private String toID;
@@ -84,12 +84,12 @@ public class Comment {
         this.floor = floor;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFromID() {

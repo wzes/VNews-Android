@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,22 +46,25 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     AppBarLayout mFragmentNewsCommentAppBar;
     @BindView(R.id.fragment_news_comment_recycler_view)
     RecyclerView mFragmentNewsCommentRecyclerView;
-    @BindView(R.id.fragment_news_comment_refresh_layout)
-    SwipeRefreshLayout mFragmentNewsCommentRefreshLayout;
     private NewsCommentAdapter mNewsCommentAdapter;
     private List<Comment> mList;
 
+    private BottomSheetDialog mCommentDialog;
+    private View mCommentView;
+    private TextInputEditText mCommentText;
+    private AppCompatButton mCommentSend;
+
     Unbinder unbinder;
     private NewsCommentContract.Presenter mPresenter;
-    private static int newID;
+    private static int newsID;
     private static int floor;
-
+    private static String username;
     @Override
     public void onResume() {
         super.onResume();
         // TODO
         // get username
-        mPresenter.load(newID, floor);
+        mPresenter.load(newsID, floor);
     }
 
     @Override
@@ -71,6 +78,7 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
         View view = inflater.inflate(R.layout.fragment_news_comment, container, false);
         unbinder = ButterKnife.bind(this, view);
         NewsCommentActivity activity = (NewsCommentActivity) getActivity();
+        mFragmentNewsCommentToolbar.setTitle("回复" + username);
         activity.setSupportActionBar(mFragmentNewsCommentToolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
@@ -78,9 +86,10 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
         return view;
     }
 
-    public static NewsCommentFragment newInstance(int newID, int floor) {
-        NewsCommentFragment.newID = newID;
+    public static NewsCommentFragment newInstance(int newsID, int floor, String username) {
+        NewsCommentFragment.newsID = newsID;
         NewsCommentFragment.floor = floor;
+        NewsCommentFragment.username = username;
         return new NewsCommentFragment();
     }
 
@@ -126,11 +135,39 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
             mNewsCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     case R.id.comment_item_like:
+                        try {
+                            mPresenter.likeComment(AppPreferences.getLoginUserID(),
+                                    mList.get(position).getId());
+                            mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
+                            mNewsCommentAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.comment_item_reply:
+                        if (mCommentDialog == null) {
+                            mCommentDialog = new BottomSheetDialog(getActivity());
+                            mCommentView = getActivity().getLayoutInflater().inflate(R.layout.sheet_comment, null);
+                            mCommentText = mCommentView.findViewById(R.id.sheet_comment_text);
+                            mCommentSend = mCommentView.findViewById(R.id.sheet_comment_send);
+                            mCommentDialog.setContentView(mCommentView);
+                            mCommentSend.setOnClickListener(view1 -> {
+                                if (!TextUtils.isEmpty(mCommentText.getText())) {
+                                    Message message = new Message();
+                                    message.setNewsID(String.valueOf(newsID));
+                                    message.setFromID(AppPreferences.getLoginUserID());
+                                    message.setFromImage(AppPreferences.getLoginUserImage());
+                                    message.setFromUsername(AppPreferences.getLoginUsername());
+                                    message.setToID(mList.get(position).getToID());
+                                    message.setContent(mCommentText.getText().toString());
+                                    mPresenter.comment(message);
+                                }
+                            });
+                        }
+                        mCommentText.setHint("回复" + mList.get(position).getFromUsername());
+                        mCommentDialog.show();
                         break;
                 }
-                Toast.makeText(getActivity(), "ItemChildClick item " + position, Toast.LENGTH_SHORT).show();
             });
             mFragmentNewsCommentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mFragmentNewsCommentRecyclerView.setAdapter(mNewsCommentAdapter);
@@ -151,7 +188,7 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     @Override
     public void onCommentSuccess(Message message) {
         Comment comment = new Comment();
-        comment.setID(message.getID());
+        comment.setId(message.getID());
         comment.setContent(message.getContent());
         comment.setFromID(message.getFromID());
         comment.setFromImage(message.getFromImage());
@@ -170,14 +207,5 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @OnClick(R.id.news_detail_like)
-    public void onViewClicked() {
-        if (!AppPreferences.getLoginState()) {
-            Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mPresenter.like(AppPreferences.getLoginUserID(), newID);
     }
 }
