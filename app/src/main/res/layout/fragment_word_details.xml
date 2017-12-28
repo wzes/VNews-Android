@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_word_detail_layout"
+    android:orientation="vertical"
+    android:id="@+id/fragment_word_recite_layout"
     android:background="@color/colorBaseBackground">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -101,19 +101,54 @@
         android:layout_height="wrap_content"
         android:id="@+id/fragment_word_detail_recycler_view">
     </android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatButton
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_35"
+            android:textSize="@dimen/sp_16"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/sp_16"
+            android:id="@+id/fragment_word_detail_unknown"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_collect"
+            android:text="生词"
+            android:layout_marginEnd="@dimen/dp_24"
+            android:layout_toStartOf="@+id/fragment_word_detail_collect"
+            android:layout_marginBottom="@dimen/dp_24"/>
 
-    <android.support.v7.widget.AppCompatButton
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_35"
-        android:textSize="@dimen/sp_16"
-        android:paddingStart="@dimen/dp_16"
-        android:paddingEnd="@dimen/sp_16"
-        android:id="@+id/fragment_word_detail_collect"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/ripple_collect"
-        android:text="@string/word_collect"
-        android:layout_marginBottom="@dimen/dp_24"/>
+        <android.support.v7.widget.AppCompatButton
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_35"
+            android:textSize="@dimen/sp_16"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/sp_16"
+            android:id="@+id/fragment_word_detail_collect"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_collect"
+            android:layout_centerHorizontal="true"
+            android:text="收藏"
+            android:layout_marginBottom="@dimen/dp_24"/>
 
+        <android.support.v7.widget.AppCompatButton
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_35"
+            android:textSize="@dimen/sp_16"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/sp_16"
+            android:id="@+id/fragment_word_detail_known"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_collect"
+            android:layout_marginStart="@dimen/dp_24"
+            android:text="熟记"
+            android:layout_toEndOf="@+id/fragment_word_detail_collect"
+            android:layout_marginBottom="@dimen/dp_24"/>
+    </RelativeLayout>
 </LinearLayout>

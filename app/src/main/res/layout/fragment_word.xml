@@ -30,7 +30,7 @@
         android:id="@+id/fragment_word_search_layout">
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             app:cardCornerRadius="@dimen/dp_6"
             android:layout_marginTop="@dimen/dp_6"
             android:layout_marginStart="@dimen/dp_4"

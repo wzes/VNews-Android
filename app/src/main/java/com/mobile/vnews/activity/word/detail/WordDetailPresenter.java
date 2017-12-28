@@ -96,7 +96,11 @@ public class WordDetailPresenter implements WordDetailContract.Presenter {
         new Thread(() -> {
             AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
             WordDao wordDao = appDatabase.getWordDao();
-            wordDao.addWordCollect(wordCollect);
+            try {
+                wordDao.addWordCollect(wordCollect);
+            } catch (Exception e) {
+
+            }
         }).start();
     }
 }

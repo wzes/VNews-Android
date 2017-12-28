@@ -12,14 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
 import com.mobile.vnews.R;
+import com.mobile.vnews.activity.word.collect.WordCollectActivity;
 import com.mobile.vnews.activity.word.detail.WordDetailActivity;
 import com.mobile.vnews.activity.word.search.WordSearchActivity;
 import com.mobile.vnews.application.AppPreferences;
+import com.mobile.vnews.module.bean.WordCollect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +103,11 @@ public class WordFragment extends Fragment implements WordContract.View {
             mWordBookAdapter = new WordBookAdapter(R.layout.word_book_item, mBooks);
             mFragmentWordRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             mFragmentWordRecyclerView.setAdapter(mWordBookAdapter);
+            mWordBookAdapter.setOnItemClickListener((adapter, view, position) -> {
+                Intent intent = new Intent(getActivity(), WordCollectActivity.class);
+                intent.putExtra("collect", mBooks.get(position));
+                startActivity(intent);
+            });
         } else {
             mWordBookAdapter.notifyDataSetChanged();
         }

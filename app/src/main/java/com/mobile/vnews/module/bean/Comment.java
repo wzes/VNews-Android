@@ -3,7 +3,9 @@ package com.mobile.vnews.module.bean;
 import java.security.Timestamp;
 
 /**
- * Created by xuantang on 11/27/17.
+ *
+ * @author xuantang
+ * @date 11/27/17
  */
 
 public class Comment {
@@ -17,7 +19,7 @@ public class Comment {
      * timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
      * newsID    INT
      */
-    private int ID;
+    private int id;
     private int floor;
     private String fromID;
     private String toID;
@@ -34,6 +36,15 @@ public class Comment {
     private String fromUsername;
     private String toImage;
     private String toUsername;
+    private boolean isLike;
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
 
     public int getLikeCount() {
         return likeCount;
@@ -84,12 +95,12 @@ public class Comment {
         this.floor = floor;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFromID() {

@@ -157,6 +157,20 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     }
 
     @Override
+    public void likeComment(String userID, int comment_id) {
+        Api.getApiService().likeComment(userID, comment_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BasicResponse<String>>(mFragment.getActivity()) {
+                    @Override
+                    public void onSuccess(BasicResponse<String> response) {
+                        // TODO
+                        Log.i(TAG, "onSuccess: ");
+                    }
+                });
+    }
+
+    @Override
     public void comment(Message message) {
         try {
             MessageService.getMessageClient().sendMessage(message);

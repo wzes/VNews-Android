@@ -34,6 +34,7 @@ public class NewsDetailContract {
         void load(int newsID);
         void search(String word);
         void like(String userID, int newID);
+        void likeComment(String userID, int comment_id);
         void comment(Message message);
         void view(String userID, int newID);
         void addWordCollect(WordCollect wordCollect);

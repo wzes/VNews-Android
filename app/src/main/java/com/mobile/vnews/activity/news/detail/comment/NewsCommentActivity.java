@@ -2,6 +2,7 @@ package com.mobile.vnews.activity.news.detail.comment;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.mobile.vnews.R;
 
@@ -14,11 +15,13 @@ public class NewsCommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_comment);
         int newsID = getIntent().getIntExtra("newsID", 0);
         int floor = getIntent().getIntExtra("floor", 0);
+        String username = getIntent().getStringExtra("username");
+        Log.i("TAG", "onCreate: " + newsID + " " + floor);
         if (savedInstanceState != null) {
             mNewsCommentFragment = (NewsCommentFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, NewsCommentFragment.class.getSimpleName());
         } else {
-            mNewsCommentFragment = NewsCommentFragment.newInstance(newsID, floor);
+            mNewsCommentFragment = NewsCommentFragment.newInstance(newsID, floor, username);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.news_comment_container, mNewsCommentFragment, NewsCommentFragment.class.getSimpleName())
                     .commit();

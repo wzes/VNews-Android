@@ -55,15 +55,20 @@ public class WordDetailFragment extends Fragment implements WordDetailContract.V
     RecyclerView mFragmentWordDetailRecyclerView;
     @BindView(R.id.fragment_word_detail_collect)
     AppCompatButton mFragmentWordDetailCollect;
-    @BindView(R.id.fragment_word_detail_layout)
-    LinearLayout mFragmentWordDetailLayout;
+//    @BindView(R.id.fragment_word_detail_layout)
+//    LinearLayout mFragmentWordDetailLayout;
     Unbinder unbinder;
+    @BindView(R.id.fragment_word_detail_unknown)
+    AppCompatButton mFragmentWordDetailUnknown;
+    @BindView(R.id.fragment_word_detail_known)
+    AppCompatButton mFragmentWordDetailKnown;
     private WordDetailContract.Presenter mPresenter;
 
     private Word mWord;
     private static String word;
     private List<String> mList;
     private WordDetailAdapter mWordDetailAdapter;
+
     public static WordDetailFragment newInstance(String word) {
         WordDetailFragment.word = word;
         return new WordDetailFragment();
@@ -160,7 +165,9 @@ public class WordDetailFragment extends Fragment implements WordDetailContract.V
     }
 
 
-    @OnClick({R.id.fragment_word_detail_voice_en_start, R.id.fragment_word_detail_voice_am_start, R.id.fragment_word_detail_collect})
+    @OnClick({R.id.fragment_word_detail_voice_en_start, R.id.fragment_word_detail_voice_am_start,
+            R.id.fragment_word_detail_unknown, R.id.fragment_word_detail_known,
+            R.id.fragment_word_detail_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fragment_word_detail_voice_en_start:
@@ -173,21 +180,41 @@ public class WordDetailFragment extends Fragment implements WordDetailContract.V
                     Toast.makeText(getContext(), "Speak", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.fragment_word_detail_collect:
-                WordCollect wordCollect = new WordCollect();
-                wordCollect.setId(mWord.getId());
-                wordCollect.setMeans(mWord.getPosList().get(0).getSymbol() + " " +
-                        mWord.getPosList().get(0).getMeans());
-                wordCollect.setTag("收藏");
-                wordCollect.setWord(mWord.getWord());
-                wordCollect.setTimestamp(System.currentTimeMillis());
+            case R.id.fragment_word_detail_unknown:
                 try {
-                    mPresenter.addCollect(wordCollect);
+                    mPresenter.addCollect(newWordCollect("生词"));
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fragment_word_detail_known:
+                try {
+                    mPresenter.addCollect(newWordCollect("熟记"));
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fragment_word_detail_collect:
+                try {
+                    mPresenter.addCollect(newWordCollect("收藏"));
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    private WordCollect newWordCollect(String tag) {
+        WordCollect wordCollect = new WordCollect();
+        wordCollect.setId(mWord.getId());
+        wordCollect.setMeans(mWord.getPosList().get(0).getSymbol() + " " +
+                mWord.getPosList().get(0).getMeans());
+        wordCollect.setTag(tag);
+        wordCollect.setWord(mWord.getWord());
+        wordCollect.setTimestamp(System.currentTimeMillis());
+        return wordCollect;
     }
 }

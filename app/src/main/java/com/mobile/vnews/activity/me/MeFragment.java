@@ -124,23 +124,26 @@ public class MeFragment extends Fragment implements MeContract.View {
                     Intent intentLike = new Intent(getContext(), NewsMeActivity.class);
                     intentLike.putExtra("title", "like");
                     startActivity(intentLike);
+                } else {
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.me_news_track_layout:
                 if (AppPreferences.getLoginState()) {
                     Intent intentTrack = new Intent(getContext(), NewsMeActivity.class);
                     intentTrack.putExtra("title", "view");
                     startActivity(intentTrack);
+                } else {
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.me_comment_layout:
                 if (AppPreferences.getLoginState()) {
                     Intent intentComment = new Intent(getContext(), MeCommentActivity.class);
                     startActivity(intentComment);
+                } else {
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.me_settings_layout:
                 break;

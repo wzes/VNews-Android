@@ -27,5 +27,6 @@ public class NewsCommentContract {
         void load(int newsID, int floor);
         void like(String userID, int newID);
         void comment(Message message);
+        void likeComment(String userID, int comment_id);
     }
 }

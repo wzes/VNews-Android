@@ -28,7 +28,6 @@ public class NewsCommentAdapter extends BaseItemDraggableAdapter<Comment, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, Comment item) {
-
         helper.setText(R.id.comment_item_username, item.getFromUsername())
                 .addOnClickListener(R.id.comment_item_like)
                 .addOnClickListener(R.id.comment_item_reply);

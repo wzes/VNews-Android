@@ -153,6 +153,12 @@ public interface ApiService {
     @GET("news/detail/{news_id}")
     Observable<BasicResponse<News>> getNewsDetail(@Path("news_id") int news_id);
 
+
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("news/detail/{user_id}/{news_id}")
+    Observable<BasicResponse<News>> getNewsDetailByUserID(@Path("user_id") String user_id,
+                                                          @Path("news_id") int news_id);
     /**
      *
      * @param user_id
@@ -228,11 +234,33 @@ public interface ApiService {
     @GET("comment/{news_id}")
     Observable<BasicResponse<List<Comment>>> getNewsComments(@Path("news_id") String news_id);
 
+    /**
+     *
+     * @param user_id
+     * @return
+     */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("comment/user/{user_id}")
     Observable<BasicResponse<List<Comment>>> getMyComments(@Path("user_id") String user_id);
 
+    /**
+     *
+     * @param user_id
+     * @param comment_id
+     * @return
+     */
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("comment/{user_id}/like/{comment_id}")
+    Observable<BasicResponse<String>> likeComment(@Path("user_id") String user_id,
+                                                         @Path("comment_id") int comment_id);
+    /**
+     *
+     * @param news_id
+     * @param floor
+     * @return
+     */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("comment/{news_id}/{floor}")

@@ -12,13 +12,13 @@ public class WordCollectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_collect);
-        String word = getIntent().getStringExtra("word");
+        String collect = getIntent().getStringExtra("collect");
 
         if (savedInstanceState != null) {
             mWordCollectFragment = (WordCollectFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, WordCollectFragment.class.getSimpleName());
         } else {
-            mWordCollectFragment = WordCollectFragment.newInstance(word);
+            mWordCollectFragment = WordCollectFragment.newInstance(collect);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.word_collect_container, mWordCollectFragment, WordCollectFragment.class.getSimpleName())
                     .commit();

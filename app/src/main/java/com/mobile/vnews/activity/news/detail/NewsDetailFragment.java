@@ -110,7 +110,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     private View mCommentView;
 
     private NewsDetailContract.Presenter mPresenter;
-    private static int newID;
+    private static int newsID;
 
     @Override
     public void onResume() {
@@ -118,8 +118,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
         // TODO
         // get username
-        mPresenter.view(AppPreferences.getLoginUserID(), newID);
-        mPresenter.load(newID);
+        mPresenter.view(AppPreferences.getLoginUserID(), newsID);
+        mPresenter.load(newsID);
     }
 
     @Override
@@ -142,8 +142,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         return view;
     }
 
-    public static NewsDetailFragment newInstance(int newID) {
-        NewsDetailFragment.newID = newID;
+    public static NewsDetailFragment newInstance(int newsID) {
+        NewsDetailFragment.newsID = newsID;
         return new NewsDetailFragment();
     }
 
@@ -210,6 +210,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                     }
                 });
             }
+            mCommentText.setHint("评论");
             mCommentDialog.show();
         });
         mNewsDetailContent.setOnWordSelectedClickListener(word -> mPresenter.search(word));
@@ -240,14 +241,14 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         }
         // collect word
         mSheetWordCollect.setOnClickListener(view1 -> {
-            WordCollect wordCollect = new WordCollect();
-            wordCollect.setId(word.getId());
-            wordCollect.setMeans(word.getPosList().get(0).getSymbol() + " " +
-                    word.getPosList().get(0).getMeans());
-            wordCollect.setTag("收藏");
-            wordCollect.setWord(word.getWord());
-            wordCollect.setTimestamp(System.currentTimeMillis());
             try {
+                WordCollect wordCollect = new WordCollect();
+                wordCollect.setId(word.getId());
+                wordCollect.setMeans(word.getPosList().get(0).getSymbol() + " " +
+                        word.getPosList().get(0).getMeans());
+                wordCollect.setTag("收藏");
+                wordCollect.setWord(word.getWord());
+                wordCollect.setTimestamp(System.currentTimeMillis());
                 mPresenter.addWordCollect(wordCollect);
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
@@ -292,7 +293,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             // showDetail
             mCommentAdapter.setOnItemClickListener((adapter, view, position) -> {
                 Intent intent = new Intent(getActivity(), NewsCommentActivity.class);
-                intent.putExtra("newsID", mList.get(position).getNewID());
+                intent.putExtra("newsID", newsID);
+                intent.putExtra("username", mList.get(position).getFromUsername());
                 intent.putExtra("floor", mList.get(position).getFloor());
                 startActivity(intent);
             });
@@ -301,11 +303,39 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             mCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     case R.id.comment_item_like:
+                        try {
+                            mPresenter.likeComment(AppPreferences.getLoginUserID(),
+                                    mList.get(position).getId());
+                            mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
+                            mCommentAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.comment_item_reply:
+                        if (mCommentDialog == null) {
+                            mCommentDialog = new BottomSheetDialog(getActivity());
+                            mCommentView = getActivity().getLayoutInflater().inflate(R.layout.sheet_comment, null);
+                            mCommentText = mCommentView.findViewById(R.id.sheet_comment_text);
+                            mCommentSend = mCommentView.findViewById(R.id.sheet_comment_send);
+                            mCommentDialog.setContentView(mCommentView);
+                            mCommentSend.setOnClickListener(view1 -> {
+                                if (!TextUtils.isEmpty(mCommentText.getText())) {
+                                    Message message = new Message();
+                                    message.setNewsID(String.valueOf(newsID));
+                                    message.setFromID(AppPreferences.getLoginUserID());
+                                    message.setFromImage(AppPreferences.getLoginUserImage());
+                                    message.setFromUsername(AppPreferences.getLoginUsername());
+                                    message.setToID(mList.get(position).getToID());
+                                    message.setContent(mCommentText.getText().toString());
+                                    mPresenter.comment(message);
+                                }
+                            });
+                        }
+                        mCommentText.setHint("回复" + mList.get(position).getFromUsername());
+                        mCommentDialog.show();
                         break;
                 }
-                Toast.makeText(getActivity(), "ItemChildClick item " + position, Toast.LENGTH_SHORT).show();
             });
             mNewsDetailCommentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mNewsDetailCommentRecyclerView.setAdapter(mCommentAdapter);
@@ -326,7 +356,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     @Override
     public void onCommentSuccess(Message message) {
         Comment comment = new Comment();
-        comment.setID(message.getID());
+        comment.setId(message.getID());
         comment.setContent(message.getContent());
         comment.setFromID(message.getFromID());
         comment.setFromImage(message.getFromImage());
@@ -353,6 +383,6 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
             return;
         }
-        mPresenter.like(AppPreferences.getLoginUserID(), newID);
+        mPresenter.like(AppPreferences.getLoginUserID(), newsID);
     }
 }

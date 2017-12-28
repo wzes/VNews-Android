@@ -1,5 +1,6 @@
 package com.mobile.vnews.activity.word.collect;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.word.detail.WordDetailActivity;
 import com.mobile.vnews.activity.word.detail.WordDetailAdapter;
@@ -75,13 +77,13 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_word_collect, container, false);
-
-        WordDetailActivity activity = (WordDetailActivity) getActivity();
+        unbinder = ButterKnife.bind(this, view);
+        WordCollectActivity activity = (WordCollectActivity) getActivity();
         activity.setSupportActionBar(mFragmentWordCollectToolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         setHasOptionsMenu(true);
-        unbinder = ButterKnife.bind(this, view);
+        mFragmentWordCollectToolbar.setTitle(word);
         return view;
     }
 
@@ -115,16 +117,23 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
         if (mWordCollectAdapter == null) {
             //mList = list;
             mWordCollectAdapter = new WordCollectAdapter(R.layout.word_item, mList);
+            mWordCollectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Intent intent = new Intent(getContext(), WordDetailActivity.class);
+                    intent.putExtra("word", mList.get(position).getWord());
+                    startActivity(intent);
+                }
+            });
             // on click
             mWordCollectAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     case R.id.word_item_like:
                         WordCollect wordCollect = new WordCollect();
-                        wordCollect.setId(mWord.getId());
-                        wordCollect.setMeans(mWord.getPosList().get(0).getSymbol() + " " +
-                                mWord.getPosList().get(0).getMeans());
+                        wordCollect.setId(mList.get(position).getId());
+                        wordCollect.setMeans(mList.get(position).getMeans());
                         wordCollect.setTag("收藏");
-                        wordCollect.setWord(mWord.getWord());
+                        wordCollect.setWord(mList.get(position).getWord());
                         wordCollect.setTimestamp(System.currentTimeMillis());
                         try {
                             mPresenter.addCollect(wordCollect);

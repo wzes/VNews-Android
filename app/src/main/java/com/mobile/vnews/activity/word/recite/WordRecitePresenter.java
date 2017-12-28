@@ -1,11 +1,8 @@
-package com.mobile.vnews.activity.word.collect;
-
+package com.mobile.vnews.activity.word.recite;
 
 import android.annotation.SuppressLint;
 import android.os.Message;
-import android.support.annotation.NonNull;
 
-import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
@@ -13,28 +10,21 @@ import com.mobile.vnews.util.Utils;
 
 import java.util.List;
 
-
 /**
- * Created by xuantang on 11/27/17.
+ * Created by xuantang on 12/28/17.
  */
 
-public class WordCollectPresenter implements WordCollectContract.Presenter {
-    // The tag for log
-    private static final String TAG = WordCollectPresenter.class.getSimpleName();
+public class WordRecitePresenter implements WordReciteContract.Presenter {
+    private WordReciteFragment mFragment;
 
-    @NonNull
-    private WordCollectFragment mFragment;
-
-    public WordCollectPresenter(@NonNull WordCollectFragment mFragment) {
-        this.mFragment = mFragment;
-        this.mFragment.setPresenter(this);
+    public WordRecitePresenter(WordReciteFragment wordReciteFragment) {
+        this.mFragment = wordReciteFragment;
     }
 
     @Override
     public void start() {
 
     }
-
     private List<WordCollect> mList;
 
     @SuppressLint("HandlerLeak")
@@ -78,7 +68,19 @@ public class WordCollectPresenter implements WordCollectContract.Presenter {
             } catch (Exception e) {
 
             }
+        }).start();
+    }
 
+    @Override
+    public void removeCollect(WordCollect wordCollect) {
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+            WordDao wordDao = appDatabase.getWordDao();
+            try {
+                wordDao.removeWordCollect(wordCollect);
+            } catch (Exception e) {
+
+            }
         }).start();
     }
 }
