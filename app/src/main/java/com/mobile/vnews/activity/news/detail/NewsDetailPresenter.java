@@ -74,9 +74,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     @Override
                     public void onSuccess(BasicResponse<List<Comment>> response) {
                         mFragment.showComments(response.getContent());
-                        for (Comment comment : response.getContent()) {
-                            Log.i(TAG, "onSuccess: " + JSON.toJSONString(comment));
-                        }
                     }
 
                     @Override

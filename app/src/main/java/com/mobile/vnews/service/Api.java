@@ -55,6 +55,7 @@ public class Api {
                 .readTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .addInterceptor(interceptor)
+                .addNetworkInterceptor(new HttpCacheInterceptor()).cache(cache)
                 .build();
         // 缓存
         // .addNetworkInterceptor(new HttpCacheInterceptor()).cache(cache)

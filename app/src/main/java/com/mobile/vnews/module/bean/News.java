@@ -1,5 +1,7 @@
 package com.mobile.vnews.module.bean;
 
+import java.util.Date;
+
 /**
  * Created by xuantang on 11/27/17.
  */
@@ -19,12 +21,12 @@ public class News {
      * level       VARCHAR(50)  NULL,
      * type
      */
-    private int id;
+    private int ID;
     private String title;
     private String author;
     private String description;
     private String image;
-    private Long publishedAt;
+    private long publishedAt;
     private String source;
     private String content;
     private String level;
@@ -33,13 +35,22 @@ public class News {
     private int viewCount;
     private int likeCount;
     private int commentCount;
+    private boolean isLike;
 
-    public int getID() {
-        return id;
+    public boolean isLike() {
+        return isLike;
     }
 
-    public void setID(int id) {
-        this.id = id;
+    public void setLike(boolean like) {
+        isLike = like;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getTitle() {
@@ -74,11 +85,11 @@ public class News {
         this.image = image;
     }
 
-    public Long getPublishedAt() {
+    public long getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Long publishedAt) {
+    public void setPublishedAt(long publishedAt) {
         this.publishedAt = publishedAt;
     }
 

@@ -3,7 +3,9 @@ package com.mobile.vnews.module.bean;
 import java.security.Timestamp;
 
 /**
- * Created by xuantang on 11/27/17.
+ *
+ * @author xuantang
+ * @date 11/27/17
  */
 
 public class Comment {
@@ -34,6 +36,15 @@ public class Comment {
     private String fromUsername;
     private String toImage;
     private String toUsername;
+    private boolean isLike;
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
 
     public int getLikeCount() {
         return likeCount;

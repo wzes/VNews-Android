@@ -44,7 +44,8 @@
         <activity android:name=".activity.word.collect.WordCollectActivity" />
         <activity android:name=".activity.me.news.NewsMeActivity" />
         <activity android:name=".activity.news.detail.comment.NewsCommentActivity" />
-        <activity android:name=".activity.me.comment.MeCommentActivity"></activity>
+        <activity android:name=".activity.me.comment.MeCommentActivity" />
+        <activity android:name=".activity.word.recite.WordReciteActivity"></activity>
     </application>
 
 </manifest>
