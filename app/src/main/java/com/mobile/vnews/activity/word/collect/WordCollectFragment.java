@@ -117,13 +117,10 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
         if (mWordCollectAdapter == null) {
             //mList = list;
             mWordCollectAdapter = new WordCollectAdapter(R.layout.word_item, mList);
-            mWordCollectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Intent intent = new Intent(getContext(), WordDetailActivity.class);
-                    intent.putExtra("word", mList.get(position).getWord());
-                    startActivity(intent);
-                }
+            mWordCollectAdapter.setOnItemClickListener((adapter, view, position) -> {
+                Intent intent = new Intent(getContext(), WordDetailActivity.class);
+                intent.putExtra("word", mList.get(position).getWord());
+                startActivity(intent);
             });
             // on click
             mWordCollectAdapter.setOnItemChildClickListener((adapter, view, position) -> {

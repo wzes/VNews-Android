@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.mobile.vnews.R;
 import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
+import com.mobile.vnews.util.wordplayer.WordPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,12 +173,14 @@ public class WordDetailFragment extends Fragment implements WordDetailContract.V
         switch (view.getId()) {
             case R.id.fragment_word_detail_voice_en_start:
                 if (mWord.getVoiceList() != null && mWord.getVoiceList().get(0) != null) {
-                    Toast.makeText(getContext(), "Speak", Toast.LENGTH_SHORT).show();
+                    // play
+                    WordPlayer.play(mWord.getVoiceList().get(0).getVoiceUrl());
                 }
                 break;
             case R.id.fragment_word_detail_voice_am_start:
                 if (mWord.getVoiceList() != null && mWord.getVoiceList().get(1) != null) {
-                    Toast.makeText(getContext(), "Speak", Toast.LENGTH_SHORT).show();
+                    // play
+                    WordPlayer.play(mWord.getVoiceList().get(1).getVoiceUrl());
                 }
                 break;
             case R.id.fragment_word_detail_unknown:

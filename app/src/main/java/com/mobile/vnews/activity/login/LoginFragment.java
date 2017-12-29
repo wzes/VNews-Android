@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.main.MainActivity;
+import com.mobile.vnews.activity.register.RegisterActivity;
 import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.User;
 
@@ -119,11 +120,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void register() {
-        // start activity
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -133,7 +129,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_register:
-
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
                 break;
             case R.id.login_sign:
                 if (TextUtils.isEmpty(loginUsername.getText())) {

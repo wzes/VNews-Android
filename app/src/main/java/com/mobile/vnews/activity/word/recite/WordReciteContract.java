@@ -18,7 +18,7 @@ import java.util.List;
 public class WordReciteContract {
     interface View extends BaseView<Presenter> {
         void showResults(@NonNull List<WordCollect> list);
-        void nextWord(int position);
+        void changeWord(int position);
         void onShowFail();
     }
 
