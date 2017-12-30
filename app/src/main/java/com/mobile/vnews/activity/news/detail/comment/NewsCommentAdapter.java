@@ -1,5 +1,8 @@
 package com.mobile.vnews.activity.news.detail.comment;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -35,7 +38,13 @@ public class NewsCommentAdapter extends BaseItemDraggableAdapter<Comment, BaseVi
         helper.setText(R.id.comment_item_like_num, String.valueOf(item.getLikeCount()));
         // more than 0 then visible
         helper.setText(R.id.comment_item_date, TimeUtils.millis2String(item.getTimestamp()));
-
+//        if (item.isLike()) {
+//            ImageView imageView = helper.getView(R.id.comment_item_like);
+//            imageView.setColorFilter(R.color.colorAccent);
+//        } else {
+//            ImageView imageView = helper.getView(R.id.comment_item_like);
+//            imageView.setColorFilter(R.color.colorSecondaryText);
+//        }
         helper.setText(R.id.message_item_content, item.getContent());
         // image
         RequestOptions myOptions = new RequestOptions()

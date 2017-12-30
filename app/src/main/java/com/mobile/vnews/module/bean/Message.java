@@ -2,8 +2,6 @@ package com.mobile.vnews.module.bean;
 
 import android.arch.persistence.room.Entity;
 
-import java.security.Timestamp;
-
 /**
  * Created by xuantang on 11/27/17.
  */

@@ -12,6 +12,16 @@ public class RegisterActivity extends AppCompatActivity {
     PhoneFragment phoneFragment;
     RegisterFragment registerFragment;
 
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
             phoneFragment = PhoneFragment.newInstance();
             registerFragment = RegisterFragment.newInstance();
         }
-
-        changeTab(0);
-
         new PhonePresenter(this, phoneFragment);
+        new RegisterPresenter(this, registerFragment);
+        changeTab(0);
     }
 
     /**
@@ -39,11 +48,20 @@ public class RegisterActivity extends AppCompatActivity {
     public void changeTab(int tab) {
         if (tab == 0) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, phoneFragment, PhoneFragment.class.getSimpleName())
+                    .remove(registerFragment)
+                    .commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.register_container, phoneFragment, PhoneFragment.class.getSimpleName())
                     .commit();
         } else {
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, registerFragment, PhoneFragment.class.getSimpleName())
+                    .remove(phoneFragment)
+                    .commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.register_container, registerFragment, RegisterFragment.class.getSimpleName())
                     .commit();
         }
     }

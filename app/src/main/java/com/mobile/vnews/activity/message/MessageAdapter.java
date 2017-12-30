@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mobile.vnews.R;
+import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.util.TimeUtils;
@@ -31,7 +32,11 @@ public class MessageAdapter extends BaseItemDraggableAdapter<Message, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, Message item) {
-        helper.setText(R.id.message_item_from, item.getFromUsername());
+        if (AppPreferences.getLoginUserID().equals(item.getFromID())) {
+            helper.setText(R.id.message_item_from, "我");
+        } else {
+            helper.setText(R.id.message_item_from, item.getFromUsername());
+        }
         // judge
         if (!TextUtils.isEmpty(item.getToID())) {
             helper.setText(R.id.message_item_action, "回复了");

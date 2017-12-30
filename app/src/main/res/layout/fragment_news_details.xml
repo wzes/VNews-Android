@@ -161,7 +161,8 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_favorite_border_black_24dp"
         app:layout_anchor="@+id/news_details_app_bar"
-        app:layout_anchorGravity="center|bottom|right" />
+        app:layout_anchorGravity="center|bottom|right"
+        android:background="@color/colorSecondaryText"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

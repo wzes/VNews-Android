@@ -21,6 +21,7 @@ import com.mobile.vnews.R;
 import com.mobile.vnews.activity.login.LoginActivity;
 import com.mobile.vnews.activity.me.comment.MeCommentActivity;
 import com.mobile.vnews.activity.me.news.NewsMeActivity;
+import com.mobile.vnews.activity.me.setting.SettingActivity;
 import com.mobile.vnews.application.AppPreferences;
 
 import butterknife.BindView;
@@ -146,6 +147,7 @@ public class MeFragment extends Fragment implements MeContract.View {
                 }
                 break;
             case R.id.me_settings_layout:
+                startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.fragment_me_login:
                 startActivity(new Intent(getContext(), LoginActivity.class));

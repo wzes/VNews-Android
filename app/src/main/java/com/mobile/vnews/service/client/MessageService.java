@@ -13,7 +13,7 @@ public class MessageService extends Service {
 
     private static MessageClient messageClient;
     private static final String HOST = "192.168.1.109";
-    private static final int PORT = 9999;
+    private static final int PORT = 10001;
 
     /**
      *

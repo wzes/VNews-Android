@@ -11,6 +11,7 @@ import com.mobile.vnews.module.bean.Pos;
 import com.mobile.vnews.module.bean.User;
 import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.bean.Words;
+import com.mobile.vnews.module.dao.MessageDao;
 import com.mobile.vnews.module.dao.WordDao;
 
 @Database( entities = { Means.class, Words.class, Pos.class, Message.class, WordCollect.class}, version = 1, exportSchema = false)
@@ -31,4 +32,5 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract WordDao getWordDao();
+    public abstract MessageDao getMessageDao();
 }

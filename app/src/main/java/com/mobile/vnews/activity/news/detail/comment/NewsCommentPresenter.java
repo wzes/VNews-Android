@@ -105,4 +105,9 @@ public class NewsCommentPresenter implements NewsCommentContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void dislikeComment(String userID, int comment_id) {
+
+    }
 }

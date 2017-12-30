@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.BasicResponse;
 import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
+import com.mobile.vnews.module.dao.MessageDao;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
 import com.mobile.vnews.module.parse.WordParser;
@@ -53,35 +55,68 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     @Override
     public void load(int newsID) {
         // Get news
-        Api.getApiService().getNewsDetail(newsID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultObserver<BasicResponse<News>>(mFragment.getActivity(), true) {
-                    @Override
-                    public void onSuccess(BasicResponse<News> response) {
-                        mFragment.showResults(response.getContent());
-                    }
+        if (AppPreferences.getLoginState()) {
+            Api.getApiService().getNewsDetailByUserID(AppPreferences.getLoginUserID(), newsID)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DefaultObserver<BasicResponse<News>>(mFragment.getActivity(), true) {
+                        @Override
+                        public void onSuccess(BasicResponse<News> response) {
+                            mFragment.showResults(response.getContent());
+                        }
 
-                    @Override
-                    public void onFail(BasicResponse<News> response) {
-                        mFragment.onShowFail();
-                    }
-                });
-        // Get comments
-        Api.getApiService().getNewsComments(String.valueOf(newsID))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultObserver<BasicResponse<List<Comment>>>(mFragment.getActivity(), true) {
-                    @Override
-                    public void onSuccess(BasicResponse<List<Comment>> response) {
-                        mFragment.showComments(response.getContent());
-                    }
+                        @Override
+                        public void onFail(BasicResponse<News> response) {
+                            mFragment.onShowFail();
+                        }
+                    });
+            // Get comments
+            Api.getApiService().getNewsCommentsByUserID(AppPreferences.getLoginUserID(), String.valueOf(newsID))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DefaultObserver<BasicResponse<List<Comment>>>(mFragment.getActivity(), true) {
+                        @Override
+                        public void onSuccess(BasicResponse<List<Comment>> response) {
+                            mFragment.showComments(response.getContent());
+                            Log.i(TAG, "load: " + response.getContent().get(0).isLike());
+                        }
 
-                    @Override
-                    public void onFail(BasicResponse<List<Comment>> response) {
-                        mFragment.onShowFail();
-                    }
-                });
+                        @Override
+                        public void onFail(BasicResponse<List<Comment>> response) {
+                            mFragment.onShowFail();
+                        }
+                    });
+        } else {
+            Api.getApiService().getNewsDetail(newsID)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DefaultObserver<BasicResponse<News>>(mFragment.getActivity(), true) {
+                        @Override
+                        public void onSuccess(BasicResponse<News> response) {
+                            mFragment.showResults(response.getContent());
+                        }
+
+                        @Override
+                        public void onFail(BasicResponse<News> response) {
+                            mFragment.onShowFail();
+                        }
+                    });
+            // Get comments
+            Api.getApiService().getNewsComments(String.valueOf(newsID))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DefaultObserver<BasicResponse<List<Comment>>>(mFragment.getActivity(), true) {
+                        @Override
+                        public void onSuccess(BasicResponse<List<Comment>> response) {
+                            mFragment.showComments(response.getContent());
+                        }
+
+                        @Override
+                        public void onFail(BasicResponse<List<Comment>> response) {
+                            mFragment.onShowFail();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -176,9 +211,19 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     }
 
     @Override
+    public void dislikeComment(String userID, int comment_id) {
+
+    }
+
+    @Override
     public void comment(Message message) {
         try {
             MessageService.getMessageClient().sendMessage(message);
+            new Thread(() -> {
+                AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+                MessageDao messageDao = appDatabase.getMessageDao();
+                messageDao.addMessage(message);
+            }).start();
             mFragment.onCommentSuccess(message);
         } catch (Exception e) {
             mFragment.onCommentFail();

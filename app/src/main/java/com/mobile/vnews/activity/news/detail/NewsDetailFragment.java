@@ -304,9 +304,17 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                 switch (view.getId()) {
                     case R.id.comment_item_like:
                         try {
-                            mPresenter.likeComment(AppPreferences.getLoginUserID(),
-                                    mList.get(position).getId());
-                            mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
+                            if (mList.get(position).isLike()) {
+                                mPresenter.dislikeComment(AppPreferences.getLoginUserID(),
+                                        mList.get(position).getId());
+                                mList.get(position).setLike(false);
+                                mList.get(position).setLikeCount(mList.get(position).getLikeCount() - 1);
+                            } else {
+                                mPresenter.likeComment(AppPreferences.getLoginUserID(),
+                                        mList.get(position).getId());
+                                mList.get(position).setLike(true);
+                                mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
+                            }
                             mCommentAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
@@ -323,6 +331,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                                 if (!TextUtils.isEmpty(mCommentText.getText())) {
                                     Message message = new Message();
                                     message.setNewsID(String.valueOf(newsID));
+                                    message.setFloor(String.valueOf(mList.size() + 1));
                                     message.setFromID(AppPreferences.getLoginUserID());
                                     message.setFromImage(AppPreferences.getLoginUserImage());
                                     message.setFromUsername(AppPreferences.getLoginUsername());
@@ -351,17 +360,20 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     @Override
     public void onCommentFail() {
         Toast.makeText(getActivity(), "Server is error", Toast.LENGTH_SHORT).show();
+        mCommentDialog.dismiss();
     }
 
     @Override
     public void onCommentSuccess(Message message) {
         Comment comment = new Comment();
         comment.setId(message.getID());
+        comment.setFloor(Integer.parseInt(message.getFloor()));
         comment.setContent(message.getContent());
         comment.setFromID(message.getFromID());
         comment.setFromImage(message.getFromImage());
         comment.setFromUsername(message.getFromUsername());
         comment.setTimestamp(message.getTimestamp());
+        mCommentDialog.dismiss();
         mCommentAdapter.addData(comment);
         mCommentAdapter.notifyDataSetChanged();
     }

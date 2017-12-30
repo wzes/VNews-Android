@@ -97,6 +97,11 @@ public class MessageFragment extends Fragment implements MessageContract.View {
         if (mFragmentMessageFreshLayout != null) {
             mFragmentMessageFreshLayout.setRefreshing(false);
         }
+        if (list.size() == 0) {
+            mFragmentMessageEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mFragmentMessageEmptyView.setVisibility(View.GONE);
+        }
         //
         if (mMessageAdapter == null) {
             mList = list;
@@ -130,6 +135,7 @@ public class MessageFragment extends Fragment implements MessageContract.View {
 
     @Override
     public void onShowFail() {
+        mFragmentMessageEmptyView.setVisibility(View.VISIBLE);
         mFragmentMessageFreshLayout.setRefreshing(false);
     }
 
