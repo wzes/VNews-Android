@@ -53,10 +53,10 @@ public class MeansTransferTest {
     }
     @Test
     public void meansToText() {
-        String source = "u00f0u00e6t, u00f0u0259t";
+        String source = "\"u5ba3u5e03uff08 announceu7684u8fc7u53bbu5f0fu548cu8fc7u53bbu5206u8bcd uff09,u901au77e5,u5e7fu64ad,u58f0u79f0\"";
 
-        System.out.println(phonogramConvert(source));
-        //System.out.println(convert(source));
+        //System.out.println(phonogramConvert(source));
+        System.out.println(convert(source));
     }
 
     /**
@@ -87,8 +87,13 @@ public class MeansTransferTest {
         String[] hex = unicode.split("\\\\u");
 
         for (int i = 1; i < hex.length; i++) {
-            int data = Integer.parseInt(hex[i], 16);
-            string.append((char) data);
+            try {
+                int data = Integer.parseInt(hex[i], 16);
+                string.append((char) data);
+            } catch (Exception e) {
+
+            }
+
         }
 
         return string.toString();

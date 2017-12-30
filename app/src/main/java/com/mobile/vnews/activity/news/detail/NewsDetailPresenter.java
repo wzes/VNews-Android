@@ -17,6 +17,7 @@ import com.mobile.vnews.service.Api;
 import com.mobile.vnews.service.DefaultObserver;
 import com.mobile.vnews.service.client.MessageService;
 import com.mobile.vnews.util.Utils;
+import com.mobile.vnews.util.word.WordLemma;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,13 +90,17 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
             AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
             WordDao wordDao = appDatabase.getWordDao();
 
-            List<Word> words = wordDao.getWordsByName(word);
+
+
+            List<Word> words = wordDao.getWordsByName(WordLemma.get(word));
 
             if (words.size() == 0) {
                 words = wordDao.getWordsByName(word.toLowerCase());
+                if (words.size() == 0) {
+                    words = wordDao.getWordsByName(WordLemma.get(word));
+                }
             }
 
-            Log.i(TAG, "search result: " + words.size() + " " + word);
             if (words.size() != 0) {
                 try {
 //                    Log.i(TAG, "search: ---------------"  + word + " " + words.size() + "\n"

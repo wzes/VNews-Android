@@ -200,7 +200,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                 mCommentSend.setOnClickListener(view1 -> {
                     if (!TextUtils.isEmpty(mCommentText.getText())) {
                         Message message = new Message();
-                        message.setNewsID(String.valueOf(news.getID()));
+                        message.setNewsID(String.valueOf(news.getId()));
                         message.setFromID(AppPreferences.getLoginUserID());
                         message.setFromImage(AppPreferences.getLoginUserImage());
                         message.setFromUsername(AppPreferences.getLoginUsername());
