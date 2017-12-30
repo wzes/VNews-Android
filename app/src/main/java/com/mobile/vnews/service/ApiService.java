@@ -36,7 +36,7 @@ public interface ApiService {
      */
     int DEFAULT_TIMEOUT = 10000;
 
-    String HOST = "http://192.168.1.109:9909/";
+    String HOST = "http://10.0.1.52:9909/";
     String API_SERVER_URL = HOST + "vnews/";
 
     /* USER SYSTEM */
@@ -205,6 +205,17 @@ public interface ApiService {
 
     /**
      *
+     * @param user_id
+     * @param comment_id
+     * @return
+     */
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @DELETE("comment/{user_id}/dislike/{comment_id}")
+    Observable<BasicResponse<String>> cancelLikeComment(@Path("user_id") String user_id,
+                                                     @Path("comment_id") int comment_id);
+    /**
+     *
      * @param requestBody
      * @return
      */
@@ -278,7 +289,8 @@ public interface ApiService {
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("message/{user_id}")
-    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String user_id);
+    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String user_id,
+                                                         @Query("timestamp") long timestamp);
 
 
 }

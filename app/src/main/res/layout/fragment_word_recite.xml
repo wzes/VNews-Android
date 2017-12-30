@@ -21,9 +21,8 @@
                 android:id="@+id/fragment_word_recite_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:theme="@style/ThemeOverlay.AppCompat.Light"
                 app:title="记单词"
                 app:titleTextColor="@color/colorPrimaryText"/>
         </android.support.design.widget.AppBarLayout>

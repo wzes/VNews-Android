@@ -19,6 +19,7 @@ public class WordRecitePresenter implements WordReciteContract.Presenter {
 
     public WordRecitePresenter(WordReciteFragment wordReciteFragment) {
         this.mFragment = wordReciteFragment;
+        wordReciteFragment.setPresenter(this);
     }
 
     @Override

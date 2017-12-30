@@ -25,7 +25,7 @@ public class MyApplication extends Application {
     // The tag for log
     private static final String TAG = MyApplication.class.getSimpleName();
 
-    public static final String currentVersion = "1";
+    public static final String currentVersion = "0";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

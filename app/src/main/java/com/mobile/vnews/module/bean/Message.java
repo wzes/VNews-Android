@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 /**
  * Created by xuantang on 11/27/17.
  */
-@Entity(tableName = "message", primaryKeys = { "ID"})
+@Entity(tableName = "message", primaryKeys = { "id"})
 public class Message {
     /**
      * ID        INT AUTO_INCREMENT
@@ -16,7 +16,7 @@ public class Message {
      * content   TEXT                                NOT NULL,
      * timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
      */
-    private int ID;
+    private int id;
     private String newsID;
     private String fromID;
     private String toID;
@@ -87,12 +87,12 @@ public class Message {
 
     /* --------------------------------------------- */
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNewsID() {

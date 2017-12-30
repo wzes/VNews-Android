@@ -78,7 +78,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                         @Override
                         public void onSuccess(BasicResponse<List<Comment>> response) {
                             mFragment.showComments(response.getContent());
-                            Log.i(TAG, "load: " + response.getContent().get(0).isLike());
                         }
 
                         @Override
@@ -212,7 +211,30 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
 
     @Override
     public void dislikeComment(String userID, int comment_id) {
+        Api.getApiService().cancelLikeComment(userID, comment_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BasicResponse<String>>(mFragment.getActivity()) {
+                    @Override
+                    public void onSuccess(BasicResponse<String> response) {
+                        // TODO
+                        Log.i(TAG, "onSuccess: ");
+                    }
+                });
+    }
 
+    @Override
+    public void dislikeNews(String userID, int news_id) {
+        Api.getApiService().cancelLikeNews(userID, news_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BasicResponse<String>>(mFragment.getActivity()) {
+                    @Override
+                    public void onSuccess(BasicResponse<String> response) {
+                        // TODO
+                        Log.i(TAG, "onSuccess: ");
+                    }
+                });
     }
 
     @Override
@@ -222,10 +244,13 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
             new Thread(() -> {
                 AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
                 MessageDao messageDao = appDatabase.getMessageDao();
+                int size = messageDao.getSize();
+                message.setId(size + 1);
                 messageDao.addMessage(message);
             }).start();
             mFragment.onCommentSuccess(message);
         } catch (Exception e) {
+            e.printStackTrace();
             mFragment.onCommentFail();
         }
     }
@@ -237,7 +262,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
         map.put("user_id", userID);
         map.put("news_id", String.valueOf(newID));
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(map));
-
         Api.getApiService().viewNews(requestBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.word.detail.WordDetailActivity;
 import com.mobile.vnews.activity.word.detail.WordDetailAdapter;
+import com.mobile.vnews.activity.word.recite.WordReciteActivity;
 import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
 
@@ -84,6 +87,16 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         setHasOptionsMenu(true);
         mFragmentWordCollectToolbar.setTitle(word);
+        mFragmentWordCollectToolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_open_recite:
+                    Intent intent = new Intent(getActivity(), WordReciteActivity.class);
+                    intent.putExtra("tag", word);
+                    startActivity(intent);
+                    break;
+            }
+            return true;
+        });
         return view;
     }
 
@@ -97,6 +110,10 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.word_recite_menu, menu);
+    }
+
     public void onResume() {
         super.onResume();
         mPresenter.load(word);

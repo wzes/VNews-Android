@@ -7,6 +7,8 @@ import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;
@@ -22,7 +24,7 @@ import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.service.client.MessageService;
 import com.mobile.vnews.util.BottomNavigationViewHelper;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppCompatActivity {
     // The tag for log
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -45,11 +47,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
         // Start service if user_image login
         if (AppPreferences.getLoginState()) {
             startService(new Intent(this, MessageService.class));
         }
+        Log.i("MainActivity", "onCreate: " + System.currentTimeMillis());
         // Initialize the fragments
         initFragments(savedInstanceState);
 
@@ -104,13 +107,11 @@ public class MainActivity extends BaseActivity {
                     switch (item.getItemId()) {
                         case R.id.bottom_navigation_news: {
                             showFragment(newsFragment);
-
                             break;
                         }
 
                         case R.id.bottom_navigation_word: {
                             showFragment(wordFragment);
-
                             break;
                         }
 
@@ -119,33 +120,28 @@ public class MainActivity extends BaseActivity {
 
                             break;
                         }
-
                         case R.id.bottom_navigation_mine: {
                             showFragment(meFragment);
-
                             break;
                         }
-
                         default: {
                             break;
                         }
                     }
-
                     getSupportFragmentManager().beginTransaction().commit();
-
                     return true;
                 });
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void init(Bundle savedInstanceState) {
-        
-    }
+//    @Override
+//    protected int getLayoutId() {
+//        return R.layout.activity_main;
+//    }
+//
+//    @Override
+//    protected void init(Bundle savedInstanceState) {
+//
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {

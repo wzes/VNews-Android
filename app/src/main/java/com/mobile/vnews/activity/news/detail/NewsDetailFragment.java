@@ -9,7 +9,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -89,7 +88,10 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     @BindView(R.id.news_detail_comment_layout)
     LinearLayout mNewsDetailCommentLayout;
     @BindView(R.id.news_detail_like)
-    FloatingActionButton mNewsDetailLike;
+    ImageView mNewsDetailLike;
+    @BindView(R.id.news_detail_like_num)
+    TextView mNewsDetailLikeNum;
+
     private CommentAdapter mCommentAdapter;
     private List<Comment> mList;
 
@@ -108,7 +110,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
     private View mWordView;
     private View mCommentView;
-
+    private News news;
     private NewsDetailContract.Presenter mPresenter;
     private static int newsID;
 
@@ -176,13 +178,15 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
     @Override
     public void showResults(@NonNull News news) {
+        this.news = news;
         setTitle(news.getTitle());
         mNewsDetailContent.setText(news.getContent(), TextView.BufferType.SPANNABLE);
         mNewsDetailSource.setText(news.getSource());
         mNewsDetailDescription.setText(news.getDescription());
         mNewsDetailDate.setText(TimeUtils.millis2String(news.getPublishedAt()));
-
+        mNewsDetailLikeNum.setText(news.getLikeCount() + "");
         Glide.with(getActivity()).load(news.getImage()).into(mNewsDetailsImage);
+
         mNewsDetailCommentLayout.setVisibility(View.VISIBLE);
 
         // send text
@@ -204,7 +208,13 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                         message.setFromID(AppPreferences.getLoginUserID());
                         message.setFromImage(AppPreferences.getLoginUserImage());
                         message.setFromUsername(AppPreferences.getLoginUsername());
+                        message.setTimestamp(System.currentTimeMillis());
                         message.setTitle(news.getTitle());
+                        if (mList == null) {
+                            message.setFloor("1");
+                        } else {
+                            message.setFloor(String.valueOf(mList.size() + 1));
+                        }
                         message.setContent(mCommentText.getText().toString());
                         mPresenter.comment(message);
                     }
@@ -330,6 +340,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                             mCommentSend.setOnClickListener(view1 -> {
                                 if (!TextUtils.isEmpty(mCommentText.getText())) {
                                     Message message = new Message();
+                                    message.setId(mList.size());
                                     message.setNewsID(String.valueOf(newsID));
                                     message.setFloor(String.valueOf(mList.size() + 1));
                                     message.setFromID(AppPreferences.getLoginUserID());
@@ -352,7 +363,6 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             mList.clear();
             mList.addAll(comments);
             // load more
-            mCommentAdapter.loadMoreComplete();
             mCommentAdapter.notifyDataSetChanged();
         }
     }
@@ -366,7 +376,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     @Override
     public void onCommentSuccess(Message message) {
         Comment comment = new Comment();
-        comment.setId(message.getID());
+        comment.setId(message.getId());
         comment.setFloor(Integer.parseInt(message.getFloor()));
         comment.setContent(message.getContent());
         comment.setFromID(message.getFromID());
@@ -389,12 +399,27 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         unbinder.unbind();
     }
 
+
     @OnClick(R.id.news_detail_like)
     public void onViewClicked() {
         if (!AppPreferences.getLoginState()) {
             Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
             return;
         }
-        mPresenter.like(AppPreferences.getLoginUserID(), newsID);
+        try {
+            if (news.isLike()) {
+                news.setLike(false);
+                mPresenter.dislikeNews(AppPreferences.getLoginUserID(), newsID);
+                news.setLikeCount(news.getLikeCount() - 1);
+            } else {
+                news.setLike(true);
+                news.setLikeCount(news.getLikeCount() + 1);
+                mPresenter.like(AppPreferences.getLoginUserID(), newsID);
+            }
+            mNewsDetailLikeNum.setText(news.getLikeCount() + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

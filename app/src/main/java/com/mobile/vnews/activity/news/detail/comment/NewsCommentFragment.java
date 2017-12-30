@@ -196,7 +196,7 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     @Override
     public void onCommentSuccess(Message message) {
         Comment comment = new Comment();
-        comment.setId(message.getID());
+        comment.setId(message.getId());
         comment.setContent(message.getContent());
         comment.setFromID(message.getFromID());
         comment.setFromImage(message.getFromImage());

@@ -70,6 +70,9 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
     private List<WordCollect> mList;
     private int position;
 
+    // vib
+    private boolean direction = true;
+
     private ShakeListener mShakerListener;
 
     public static WordReciteFragment newInstance(String tag) {
@@ -105,7 +108,25 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
         mShakerListener = new ShakeListener(getActivity());
         mShakerListener.setOnShakeListener(() -> {
             vibrator.vibrate(300);
-            changeWord(position + 1);
+            if (direction) {
+                if (position < mList.size() - 1) {
+                    position++;
+                    changeWord(position);
+                    if (position == mList.size() - 1) {
+                        direction = false;
+                    }
+                }
+            } else {
+                if (position > 0) {
+                    position--;
+                    changeWord(position);
+                    if (position == 0) {
+                        direction = true;
+                    }
+                }
+            }
+
+
         });
         return view;
     }
@@ -156,10 +177,12 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
                 changeWordCollect("熟记");
                 break;
             case R.id.fragment_word_recite_forward:
-                changeWord(position - 1);
+                position++;
+                changeWord(position);
                 break;
             case R.id.fragment_word_recite_back:
-                changeWord(position + 1);
+                position--;
+                changeWord(position);
                 break;
         }
     }
@@ -184,11 +207,14 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
     @Override
     public void showResults(@NonNull List<WordCollect> list) {
         mList = list;
+        position = 0;
+        changeWord(position);
     }
 
     @Override
     public void changeWord(int position) {
         checkPosition(position);
+        mFragmentWordReciteProcess.setText(String.format("%d/%d", position + 1, mList.size()));
         mFragmentWordReciteMeans.setText(mList.get(position).getMeans());
         mFragmentWordReciteMeans.setVisibility(View.GONE);
         mFragmentWordReciteTitle.setText(mList.get(position).getWord());

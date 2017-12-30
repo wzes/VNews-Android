@@ -1,11 +1,16 @@
 package com.mobile.vnews.activity.message;
 
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.news.NewsAdapter;
 import com.mobile.vnews.activity.news.detail.NewsDetailActivity;
@@ -30,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -54,11 +62,50 @@ public class MessageFragment extends Fragment implements MessageContract.View {
     private MessageAdapter mMessageAdapter;
     private List<Message> mList;
 
+    private MessageReceiver messageReceiver;
 
     public static MessageFragment getInstance() {
         return new MessageFragment();
     }
 
+    // receive message
+    public class MessageReceiver extends BroadcastReceiver {
+        public void onReceive(Context context, Intent intent) {
+            // get msg
+            refresh(intent.getStringExtra("message"));
+        }
+    }
+    private NotificationManager notifyManager;
+
+    /**
+     *
+     * @param message
+     */
+    public void refresh(String message) {
+        // get msg
+        JSONObject jsonObject = JSON.parseObject(message);
+        Message msg = JSON.toJavaObject(jsonObject, Message.class);
+        mList.add(0, msg);
+        mMessageAdapter.notifyDataSetChanged();
+
+        // check if notification is opened
+        if (AppPreferences.getNotification()) {
+            sendNotification();
+        }
+    }
+    /*
+     * Notice
+     */
+    private void sendNotification() {
+        // vibrates
+        long[] vibrates = new long[]{0, 500, 1000, 0};
+        notifyManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+        notifyManager.notify(1, new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("来自VNews的新消息")
+                .setVibrate(vibrates)
+                .build());
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +127,12 @@ public class MessageFragment extends Fragment implements MessageContract.View {
         super.onResume();
         if (AppPreferences.getLoginState()) {
             mPresenter.load(AppPreferences.getLoginUserID());
-            Log.i("TAG", "onResume: " + AppPreferences.getLoginUserID());
+            // register receiver
+            if (messageReceiver == null) {
+                messageReceiver = new MessageReceiver();
+                IntentFilter intentFilter = new IntentFilter("com.mobile.vnews.message");
+                getActivity().registerReceiver(messageReceiver, intentFilter);
+            }
         }
     }
 
@@ -128,7 +180,6 @@ public class MessageFragment extends Fragment implements MessageContract.View {
             mList.clear();
             mList.addAll(list);
             // load more
-            mMessageAdapter.loadMoreComplete();
             mMessageAdapter.notifyDataSetChanged();
         }
     }
@@ -143,5 +194,8 @@ public class MessageFragment extends Fragment implements MessageContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (AppPreferences.getLoginState()) {
+            getActivity().unregisterReceiver(messageReceiver);
+        }
     }
 }

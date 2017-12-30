@@ -16,6 +16,24 @@ public class AppPreferences {
     private static final String KEY_APP_LOGIN_USER_IMAGE = "app_login_user_image";
     private static final String KEY_APP_LOGIN_USER_MOTTO = "app_login_user_motto";
     private static final String KEY_APP_LOGIN_STATE = "app_login_state";
+    private static final String KEY_APP_NOTIFICATION = "app_notice";
+
+    private static final String KEY_APP_LAST_GET_MSG = "app_last_get_msg";
+
+    public static void saveLastGetMsgTimestamp(long timestamp) {
+        saveLong(KEY_APP_LAST_GET_MSG, timestamp);
+    }
+    public static long getLastGetMsgTimestamp() {
+        return getLong(KEY_APP_LAST_GET_MSG);
+    }
+
+
+    public static void saveNotification(boolean notice) {
+        saveBoolean(KEY_APP_NOTIFICATION, notice);
+    }
+    public static boolean getNotification() {
+       return getBoolean(KEY_APP_NOTIFICATION);
+    }
 
     public static void saveLoginUsername(String username) {
         saveString(KEY_APP_LOGIN_USER_NAME, username);
@@ -79,6 +97,14 @@ public class AppPreferences {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
         editor.putBoolean(key, value);
         editor.apply();
+    }
+    private static void saveLong(String key, long value) {
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
+    private static long getLong(String key) {
+        return getSharedPreferences().getLong(key, 1514619494840L);
     }
     private static boolean getBoolean(String key) {
         return getSharedPreferences().getBoolean(key, false);

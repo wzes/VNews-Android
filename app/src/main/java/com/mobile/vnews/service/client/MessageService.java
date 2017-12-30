@@ -12,7 +12,7 @@ import com.mobile.vnews.application.AppPreferences;
 public class MessageService extends Service {
 
     private static MessageClient messageClient;
-    private static final String HOST = "192.168.1.109";
+    private static final String HOST = "10.0.1.52";
     private static final int PORT = 10001;
 
     /**
