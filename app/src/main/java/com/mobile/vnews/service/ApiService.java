@@ -89,20 +89,20 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @GET("user/{ID}")
-    Observable<BasicResponse<User>> getUser(@Path("ID") String ID);
+    @GET("user/{user_id}")
+    Observable<BasicResponse<User>> getUser(@Path("user_id") String user_id);
 
     /**
      *
-     * @param ID
+     * @param user_id
      * @param file
      * @return
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @POST("user/{ID}/image")
+    @POST("user/{ user_id}/image")
     @Multipart
-    Observable<BasicResponse<String>> uploadPhoto(@Path("ID") String ID,
+    Observable<BasicResponse<String>> uploadPhoto(@Path("user_id") String user_id,
                                                   @Part MultipartBody.Part file);
 
 

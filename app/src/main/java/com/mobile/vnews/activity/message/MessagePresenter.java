@@ -70,9 +70,7 @@ public class MessagePresenter implements MessageContract.Presenter {
                 .subscribe(new DefaultObserver<BasicResponse<List<Message>>>(view.getActivity()) {
                     @Override
                     public void onSuccess(BasicResponse<List<Message>> response) {
-                        if (messages == null) {
-                            messages = new ArrayList<>();
-                        }
+                        messages = new ArrayList<>();
                         messages.addAll(response.getContent());
                         // save
                         AppPreferences.saveLastGetMsgTimestamp(System.currentTimeMillis());
@@ -86,6 +84,16 @@ public class MessagePresenter implements MessageContract.Presenter {
                 });
     }
 
+    @Override
+    public void removeMessage(Message message) {
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+            MessageDao messageDao = appDatabase.getMessageDao();
+            messageDao.removeMessage(message);
+            Log.i(TAG, "removeMessage: " + message.getId());
+        }).start();
+    }
+
     public void getMsg() {
         try {
             new Thread(() -> {
@@ -94,6 +102,7 @@ public class MessagePresenter implements MessageContract.Presenter {
                 // add local database
                 for (Message message : messages) {
                     messageDao.addMessage(message);
+                    Log.i(TAG, "addMessage: " + message.getId());
                 }
                 messages = messageDao.getMessage();
                 handler.sendEmptyMessage(0);

@@ -18,6 +18,7 @@ public interface MessageContract {
 
     interface Presenter extends BasePresenter {
         void load(String user_id);
+        void removeMessage(Message message);
     }
 
 }
