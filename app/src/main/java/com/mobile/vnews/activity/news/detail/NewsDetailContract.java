@@ -35,6 +35,8 @@ public class NewsDetailContract {
         void search(String word);
         void like(String userID, int newID);
         void likeComment(String userID, int comment_id);
+        void dislikeComment(String userID, int comment_id);
+        void dislikeNews(String userID, int news_id);
         void comment(Message message);
         void view(String userID, int newID);
         void addWordCollect(WordCollect wordCollect);

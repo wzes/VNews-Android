@@ -78,7 +78,19 @@ public class WordCollectPresenter implements WordCollectContract.Presenter {
             } catch (Exception e) {
 
             }
+        }).start();
+    }
 
+    @Override
+    public void removeCollect(WordCollect wordCollect) {
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
+            WordDao wordDao = appDatabase.getWordDao();
+            try {
+                wordDao.removeWordCollect(wordCollect);
+            } catch (Exception e) {
+
+            }
         }).start();
     }
 }

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -24,34 +24,41 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_news_comment_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/fragment_message_empty_view"
-        android:visibility="visible"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_collections_black_24dp"
-            android:tint="@color/colorAccent"
-            android:importantForAccessibility="no"
-            android:hapticFeedbackEnabled="true"/>
-
-        <android.support.v7.widget.AppCompatTextView
+        android:focusable="true"
+        android:clickable="true">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_news_comment_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:text="@string/fragment_collect"
-            android:textColor="@color/colorAccent"
-            android:textAlignment="center"/>
-    </LinearLayout>
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/fragment_news_comment_empty_view"
+            android:visibility="visible"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_collections_black_24dp"
+                android:tint="@color/colorAccent"
+                android:importantForAccessibility="no"
+                android:hapticFeedbackEnabled="true"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@string/fragment_collect"
+                android:textColor="@color/colorAccent"
+                android:textAlignment="center"/>
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

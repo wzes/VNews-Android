@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.mobile.vnews.application.AppPreferences;
+import com.mobile.vnews.service.ApiService;
 
 
 @SuppressLint("Registered")
 public class MessageService extends Service {
 
     private static MessageClient messageClient;
-    private static final String HOST = "192.168.1.109";
-    private static final int PORT = 9999;
+    private static final String HOST = "10.0.1.52";
+    private static final int PORT = 10001;
 
     /**
      *
@@ -27,7 +28,7 @@ public class MessageService extends Service {
         try {
             // if login
             if (AppPreferences.getLoginState()) {
-                messageClient = new MessageClient(HOST, PORT, AppPreferences.getLoginUserID());
+                messageClient = new MessageClient(ApiService.IP, PORT, AppPreferences.getLoginUserID());
             }
         } catch (Exception e) {
             e.printStackTrace();

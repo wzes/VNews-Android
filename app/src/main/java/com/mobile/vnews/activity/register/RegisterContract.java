@@ -9,12 +9,11 @@ public interface RegisterContract {
     interface View extends BaseView<Presenter> {
         void showMessage(String message);
         void onSuccess();
-        void onNext(String telephone);
         void onFail();
         void onLoading();
     }
 
     interface Presenter extends BasePresenter {
-        void register(String phone, String username, String password);
+        void register(String username, String password);
     }
 }

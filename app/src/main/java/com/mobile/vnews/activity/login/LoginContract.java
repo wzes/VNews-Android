@@ -12,7 +12,6 @@ public interface LoginContract {
         void showMessage(String message);
         void onSuccess(User user);
         void onFail();
-        void register();
     }
 
     interface Presenter extends BasePresenter {

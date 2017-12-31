@@ -1,5 +1,7 @@
 package com.mobile.vnews.service.client;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.mobile.vnews.module.bean.Message;
 
@@ -11,15 +13,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class MessageClient {
     private Channel channel;
-    private String host;
-    private int port;
-    private boolean stop = false;
-    private String user_id;
 
     public MessageClient(String host, int port, String user_id) {
-        this.host = host;
-        this.port = port;
-        this.user_id = user_id;
+        String host1 = host;
+        int port1 = port;
+        String user_id1 = user_id;
         EventLoopGroup worker = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(worker);

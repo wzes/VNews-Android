@@ -123,7 +123,7 @@ public class NewsMeFragment extends Fragment implements NewsMeContract.View {
             // on click
             mNewsMeAdapter.setOnItemClickListener((adapter, view, position) -> {
                 Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-                intent.putExtra("newsID", mList.get(position).getID());
+                intent.putExtra("newsID", mList.get(position).getId());
                 startActivity(intent);
             });
             mNewsMeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

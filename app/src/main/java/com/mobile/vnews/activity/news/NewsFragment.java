@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,8 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             // on click
             mNewsAdapter.setOnItemClickListener((adapter, view, position) -> {
                 Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-                intent.putExtra("newsID", mList.get(position).getID());
+                intent.putExtra("newsID", mList.get(position).getId());
+                Log.i("TAG", "showResults: " + mList.get(position).getId());
                 startActivity(intent);
             });
 

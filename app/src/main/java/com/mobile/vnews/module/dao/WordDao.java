@@ -36,7 +36,7 @@ public interface WordDao {
 
     @Query("SELECT word " +
             "FROM words " +
-            "WHERE word like :word " +
+            "WHERE word like :word ORDER BY times DESC " +
             "LIMIT :start, :count")
     List<String> getSimpleWordsByLikeName(String word, int start, int count);
 
@@ -54,6 +54,7 @@ public interface WordDao {
 
     @Query("SELECT distinct(tag) FROM word_collect")
     List<String> getWordCollectType();
+
     @Insert
     void addWordCollect(WordCollect wordCollect);
 

@@ -9,15 +9,14 @@ public interface PhoneContract {
 
     interface View extends BaseView<Presenter> {
         void showMessage(String message);
-        void onSuccess();
-        void onFail();
-        void onNext(String phone);
+        void onSuccess(String code);
+        void onFail(String message);
         void onLoading();
     }
 
     interface Presenter extends BasePresenter {
         void send(String phone);
-        void valid(String phone, String code);
         void load();
+        void onNext();
     }
 }

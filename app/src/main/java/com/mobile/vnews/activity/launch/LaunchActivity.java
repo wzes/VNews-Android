@@ -2,6 +2,7 @@ package com.mobile.vnews.activity.launch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;

@@ -101,7 +101,7 @@ public class WordFragment extends Fragment implements WordContract.View {
         mBooks.addAll(books);
         if (mWordBookAdapter == null) {
             mWordBookAdapter = new WordBookAdapter(R.layout.word_book_item, mBooks);
-            mFragmentWordRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            mFragmentWordRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
             mFragmentWordRecyclerView.setAdapter(mWordBookAdapter);
             mWordBookAdapter.setOnItemClickListener((adapter, view, position) -> {
                 Intent intent = new Intent(getActivity(), WordCollectActivity.class);

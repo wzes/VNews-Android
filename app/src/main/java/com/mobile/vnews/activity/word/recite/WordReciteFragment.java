@@ -1,6 +1,8 @@
 package com.mobile.vnews.activity.word.recite;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.mobile.vnews.R;
 import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
+import com.mobile.vnews.util.shake.ShakeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +68,12 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
     Unbinder unbinder;
     private static String tag;
     private List<WordCollect> mList;
+    private int position;
+
+    // vib
+    private boolean direction = true;
+
+    private ShakeListener mShakerListener;
 
     public static WordReciteFragment newInstance(String tag) {
         WordReciteFragment.tag = tag;
@@ -74,6 +83,7 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -91,6 +101,33 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         setHasOptionsMenu(true);
+
+        final Vibrator vibrator = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
+        //
+        mShakerListener = new ShakeListener(getActivity());
+        mShakerListener.setOnShakeListener(() -> {
+            vibrator.vibrate(300);
+            if (direction) {
+                if (position < mList.size() - 1) {
+                    position++;
+                    changeWord(position);
+                    if (position == mList.size() - 1) {
+                        direction = false;
+                    }
+                }
+            } else {
+                if (position > 0) {
+                    position--;
+                    changeWord(position);
+                    if (position == 0) {
+                        direction = true;
+                    }
+                }
+            }
+
+
+        });
         return view;
     }
 
@@ -105,7 +142,15 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
 
     @Override
     public void onResume() {
+        mShakerListener.resume();
+        mPresenter.load(tag);
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mShakerListener.pause();
     }
 
     @Override
@@ -114,29 +159,43 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
         unbinder.unbind();
     }
 
-    private WordCollect newWordCollect(String tag, int position) {
-        WordCollect wordCollect = new WordCollect();
-        wordCollect.setId(mList.get(position).getId());
-        wordCollect.setMeans(mList.get(position).getMeans());
-        wordCollect.setTag(tag);
-        wordCollect.setWord(mList.get(position).getWord());
-        wordCollect.setTimestamp(System.currentTimeMillis());
-        return wordCollect;
-    }
-
-    @OnClick({R.id.fragment_word_recite_expand, R.id.fragment_word_recite_unknown, R.id.fragment_word_recite_collect, R.id.fragment_word_recite_known, R.id.fragment_word_recite_forward})
+    @OnClick({R.id.fragment_word_recite_expand, R.id.fragment_word_recite_unknown,
+            R.id.fragment_word_recite_collect, R.id.fragment_word_recite_known,
+            R.id.fragment_word_recite_back, R.id.fragment_word_recite_forward})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fragment_word_recite_expand:
+                mFragmentWordReciteMeans.setVisibility(View.VISIBLE);
                 break;
             case R.id.fragment_word_recite_unknown:
+                changeWordCollect("生词");
                 break;
             case R.id.fragment_word_recite_collect:
+                changeWordCollect("收藏");
                 break;
             case R.id.fragment_word_recite_known:
+                changeWordCollect("熟记");
                 break;
             case R.id.fragment_word_recite_forward:
+                position++;
+                changeWord(position);
                 break;
+            case R.id.fragment_word_recite_back:
+                position--;
+                changeWord(position);
+                break;
+        }
+    }
+
+    private void changeWordCollect(String desTag) {
+        try {
+            mPresenter.removeCollect(mList.get(position));
+            WordCollect wordCollect = mList.get(position);
+            wordCollect.setTag(desTag);
+            mList.remove(position);
+            mPresenter.addCollect(wordCollect);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -148,15 +207,34 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
     @Override
     public void showResults(@NonNull List<WordCollect> list) {
         mList = list;
+        position = 0;
+        changeWord(position);
     }
 
     @Override
-    public void nextWord(int position) {
+    public void changeWord(int position) {
+        checkPosition(position);
+        mFragmentWordReciteProcess.setText(String.format("%d/%d", position + 1, mList.size()));
+        mFragmentWordReciteMeans.setText(mList.get(position).getMeans());
+        mFragmentWordReciteMeans.setVisibility(View.GONE);
+        mFragmentWordReciteTitle.setText(mList.get(position).getWord());
+    }
 
+    private void checkPosition(int position) {
+        if (position > 0) {
+            mFragmentWordReciteBack.setVisibility(View.VISIBLE);
+        } else {
+            mFragmentWordReciteBack.setVisibility(View.GONE);
+        }
+        if (position < mList.size() - 1) {
+            mFragmentWordReciteForward.setVisibility(View.VISIBLE);
+        } else {
+            mFragmentWordReciteForward.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onShowFail() {
-
+        Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
     }
 }

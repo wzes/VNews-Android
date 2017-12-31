@@ -7,7 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,7 +29,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -46,6 +45,8 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     AppBarLayout mFragmentNewsCommentAppBar;
     @BindView(R.id.fragment_news_comment_recycler_view)
     RecyclerView mFragmentNewsCommentRecyclerView;
+    @BindView(R.id.fragment_news_comment_empty_view)
+    LinearLayout mFragmentNewsCommentEmptyView;
     private NewsCommentAdapter mNewsCommentAdapter;
     private List<Comment> mList;
 
@@ -59,6 +60,7 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     private static int newsID;
     private static int floor;
     private static String username;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -119,26 +121,31 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
 
     @Override
     public void showComments(@NonNull List<Comment> comments) {
+        if (comments.size() == 0) {
+            mFragmentNewsCommentEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mFragmentNewsCommentEmptyView.setVisibility(View.GONE);
+        }
         if (mNewsCommentAdapter == null) {
             mList = comments;
             mNewsCommentAdapter = new NewsCommentAdapter(R.layout.comment_item, mList);
-
-            // showDetail
-            mNewsCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Toast.makeText(getActivity(), "ItemClick item " + position, Toast.LENGTH_SHORT).show();
-                }
-            });
 
             // Like and reply
             mNewsCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     case R.id.comment_item_like:
                         try {
-                            mPresenter.likeComment(AppPreferences.getLoginUserID(),
-                                    mList.get(position).getId());
-                            mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
+                            if (mList.get(position).isLike()) {
+                                mPresenter.dislikeComment(AppPreferences.getLoginUserID(),
+                                        mList.get(position).getId());
+                                mList.get(position).setLike(false);
+                                mList.get(position).setLikeCount(mList.get(position).getLikeCount() - 1);
+                            } else {
+                                mPresenter.likeComment(AppPreferences.getLoginUserID(),
+                                        mList.get(position).getId());
+                                mList.get(position).setLike(true);
+                                mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
+                            }
                             mNewsCommentAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
@@ -182,13 +189,14 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
 
     @Override
     public void onCommentFail() {
+        mFragmentNewsCommentEmptyView.setVisibility(View.VISIBLE);
         Toast.makeText(getActivity(), "Server is error", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCommentSuccess(Message message) {
         Comment comment = new Comment();
-        comment.setId(message.getID());
+        comment.setId(message.getId());
         comment.setContent(message.getContent());
         comment.setFromID(message.getFromID());
         comment.setFromImage(message.getFromImage());

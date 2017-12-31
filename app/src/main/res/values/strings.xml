@@ -67,4 +67,6 @@
     <string name="word_book_title">收藏</string>
     <string name="fragment_collect">No more words</string>
     <string name="me_track">我的足迹</string>
+    <string name="word_unknown">生词</string>
+    <string name="word_know">熟记</string>
 </resources>

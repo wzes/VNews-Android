@@ -13,13 +13,13 @@ public class NewsDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-        int newID = getIntent().getIntExtra("newsID", 0);
+        int newsID = getIntent().getIntExtra("newsID", 0);
 
         if (savedInstanceState != null) {
             mNewsDetailFragment = (NewsDetailFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, NewsDetailFragment.class.getSimpleName());
         } else {
-            mNewsDetailFragment = NewsDetailFragment.newInstance(newID);
+            mNewsDetailFragment = NewsDetailFragment.newInstance(newsID);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.news_detail_container, mNewsDetailFragment, NewsDetailFragment.class.getSimpleName())
                     .commit();

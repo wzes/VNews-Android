@@ -3,6 +3,7 @@ package com.mobile.vnews.module.parse;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.mobile.vnews.module.bean.Word;
 
 import org.json.JSONException;
@@ -153,8 +154,9 @@ public class WordParser {
                 Word.Pos pos = mWord.new Pos(word.getPos(), word.getPosmeans(),
                         WordParser.meansConvert(word.getMeans()));
                 posList.add(pos);
+                Log.i(TAG, "posConvert: " + JSON.toJSONString(pos));
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
         return posList;
@@ -235,8 +237,12 @@ public class WordParser {
         String[] hex = unicode.split("\\\\u");
 
         for (int i = 1; i < hex.length; i++) {
-            int data = Integer.parseInt(hex[i], 16);
-            string.append((char) data);
+            try {
+                int data = Integer.parseInt(hex[i], 16);
+                string.append((char) data);
+            } catch (Exception e) {
+                Log.i(TAG, "unicodeConvertString: ");
+            }
         }
 
         return string.toString();

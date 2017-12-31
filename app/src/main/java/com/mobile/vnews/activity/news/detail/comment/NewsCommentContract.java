@@ -28,5 +28,6 @@ public class NewsCommentContract {
         void like(String userID, int newID);
         void comment(Message message);
         void likeComment(String userID, int comment_id);
+        void dislikeComment(String userID, int comment_id);
     }
 }

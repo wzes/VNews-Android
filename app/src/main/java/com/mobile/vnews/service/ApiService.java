@@ -36,7 +36,8 @@ public interface ApiService {
      */
     int DEFAULT_TIMEOUT = 10000;
 
-    String HOST = "http://192.168.1.109:9909/";
+    String IP = "192.168.1.109";
+    String HOST = "http://" + IP + ":9909/";
     String API_SERVER_URL = HOST + "vnews/";
 
     /* USER SYSTEM */
@@ -58,7 +59,7 @@ public interface ApiService {
      */
     @Headers({"Content-Type: application/json", "Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @PUT("user_image")
+    @PUT("user")
     Observable<BasicResponse<User>> updateUser(@Body User user);
 
     /**
@@ -78,8 +79,8 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @GET("/user_image/tel/{telephone}")
-    Observable<BasicResponse<String>> checkPhone(@Path("telephone") String telephone);
+    @GET("user/phone/{phone}")
+    Observable<BasicResponse<String>> checkPhone(@Path("phone") String phone);
 
     /**
      *
@@ -88,20 +89,20 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @GET("/user_image/{ID}")
-    Observable<BasicResponse<User>> getUser(@Path("ID") String ID);
+    @GET("user/{user_id}")
+    Observable<BasicResponse<User>> getUser(@Path("user_id") String user_id);
 
     /**
      *
-     * @param ID
+     * @param user_id
      * @param file
      * @return
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @POST("/user_image/{ID}/image")
+    @POST("user/{ user_id}/image")
     @Multipart
-    Observable<BasicResponse<String>> uploadPhoto(@Path("ID") String ID,
+    Observable<BasicResponse<String>> uploadPhoto(@Path("user_id") String user_id,
                                                   @Part MultipartBody.Part file);
 
 
@@ -205,6 +206,17 @@ public interface ApiService {
 
     /**
      *
+     * @param user_id
+     * @param comment_id
+     * @return
+     */
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @DELETE("comment/{user_id}/dislike/{comment_id}")
+    Observable<BasicResponse<String>> cancelLikeComment(@Path("user_id") String user_id,
+                                                     @Path("comment_id") int comment_id);
+    /**
+     *
      * @param requestBody
      * @return
      */
@@ -233,6 +245,12 @@ public interface ApiService {
             "Cache-Control: public, max-age=86400"})
     @GET("comment/{news_id}")
     Observable<BasicResponse<List<Comment>>> getNewsComments(@Path("news_id") String news_id);
+
+    @Headers({"Accept: application/json",
+            "Cache-Control: public, max-age=86400"})
+    @GET("comment/user/{user_id}/news/{news_id}")
+    Observable<BasicResponse<List<Comment>>> getNewsCommentsByUserID( @Path("user_id") String user_id,
+                                                                      @Path("news_id") String news_id);
 
     /**
      *
@@ -272,7 +290,8 @@ public interface ApiService {
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
     @GET("message/{user_id}")
-    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String user_id);
+    Observable<BasicResponse<List<Message>>> getMessages(@Path("user_id") String user_id,
+                                                         @Query("timestamp") long timestamp);
 
 
 }
