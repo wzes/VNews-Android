@@ -54,6 +54,7 @@ public interface WordDao {
 
     @Query("SELECT distinct(tag) FROM word_collect")
     List<String> getWordCollectType();
+
     @Insert
     void addWordCollect(WordCollect wordCollect);
 

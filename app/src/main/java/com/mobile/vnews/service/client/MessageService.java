@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.mobile.vnews.application.AppPreferences;
+import com.mobile.vnews.service.ApiService;
 
 
 @SuppressLint("Registered")
@@ -27,7 +28,7 @@ public class MessageService extends Service {
         try {
             // if login
             if (AppPreferences.getLoginState()) {
-                messageClient = new MessageClient(HOST, PORT, AppPreferences.getLoginUserID());
+                messageClient = new MessageClient(ApiService.IP, PORT, AppPreferences.getLoginUserID());
             }
         } catch (Exception e) {
             e.printStackTrace();

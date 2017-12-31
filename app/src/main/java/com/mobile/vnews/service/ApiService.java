@@ -36,7 +36,8 @@ public interface ApiService {
      */
     int DEFAULT_TIMEOUT = 10000;
 
-    String HOST = "http://10.0.1.52:9909/";
+    String IP = "192.168.1.109";
+    String HOST = "http://" + IP + ":9909/";
     String API_SERVER_URL = HOST + "vnews/";
 
     /* USER SYSTEM */

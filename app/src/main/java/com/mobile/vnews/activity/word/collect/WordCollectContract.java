@@ -18,6 +18,7 @@ public interface WordCollectContract {
     interface Presenter extends BasePresenter {
         void load(String user_id);
         void addCollect(WordCollect wordCollect);
+        void removeCollect(WordCollect wordCollect);
     }
 
 }

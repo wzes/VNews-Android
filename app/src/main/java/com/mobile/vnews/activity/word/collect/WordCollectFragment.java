@@ -1,6 +1,7 @@
 package com.mobile.vnews.activity.word.collect;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.word.detail.WordDetailActivity;
 import com.mobile.vnews.activity.word.detail.WordDetailAdapter;
@@ -157,12 +161,39 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
                         Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
                         break;
                 }
-//                Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-//                intent.putExtra("newsID", mList.get(position).getID());
-//                startActivity(intent);
+
             });
             mFragmentWordCollectRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mFragmentWordCollectRecyclerView.setAdapter(mWordCollectAdapter);
+
+            ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(mWordCollectAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+            itemTouchHelper.attachToRecyclerView(mFragmentWordCollectRecyclerView);
+
+
+            // swipe
+            mWordCollectAdapter.enableSwipeItem();
+            mWordCollectAdapter.setOnItemSwipeListener(new OnItemSwipeListener() {
+                @Override
+                public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+                    Toast.makeText(getActivity(), "滑动删除", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
+
+                }
+
+                @Override
+                public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+                    mPresenter.removeCollect(mList.get(pos));
+                }
+
+                @Override
+                public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+
+                }
+            });
         }
     }
 

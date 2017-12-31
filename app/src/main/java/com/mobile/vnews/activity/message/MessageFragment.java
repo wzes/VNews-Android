@@ -101,7 +101,7 @@ public class MessageFragment extends Fragment implements MessageContract.View {
         long[] vibrates = new long[]{0, 500, 1000, 0};
         notifyManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
         notifyManager.notify(1, new NotificationCompat.Builder(getContext())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle("来自VNews的新消息")
                 .setVibrate(vibrates)
                 .build());

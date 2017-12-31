@@ -27,7 +27,6 @@ public class MessageClient {
             channel = bootstrap.connect(host, port).sync().channel();
             // login
             channel.writeAndFlush("login" + user_id);
-            Log.i("TAG", "MessageClient: " + "login");
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.exit(1);
