@@ -40,11 +40,11 @@ public class Api {
                 String text = URLDecoder.decode(message, "utf-8");
                 LogUtils.e("OKHttp-----", text);
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
                 LogUtils.e("OKHttp-----", message);
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        // cache
         File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100);   //100Mb
 
@@ -54,9 +54,9 @@ public class Api {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(ApiService.DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)
-                .addInterceptor(interceptor)
                 .build();
         // 缓存
+        // .addInterceptor(interceptor)
         // .addNetworkInterceptor(new HttpCacheInterceptor()).cache(cache)
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();

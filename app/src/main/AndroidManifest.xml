@@ -47,7 +47,11 @@
         <activity android:name=".activity.news.detail.comment.NewsCommentActivity" />
         <activity android:name=".activity.me.comment.MeCommentActivity" />
         <activity android:name=".activity.word.recite.WordReciteActivity" />
-        <activity android:name=".activity.me.info.InfoSettingActivity"></activity>
+        <activity android:name=".activity.me.info.InfoSettingActivity"/>
+        <!--<activity android:configChanges="keyboardHidden|orientation"-->
+             <!--android:name="com.yancy.gallerypick.activity.GalleryPickActivity"-->
+             <!--android:screenOrientation="portrait"-->
+             <!--android:theme="@style/GalleryTheme"/>-->
     </application>
 
 </manifest>

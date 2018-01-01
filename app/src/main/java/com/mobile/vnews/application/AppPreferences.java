@@ -51,7 +51,7 @@ public class AppPreferences {
         return getString(KEY_APP_LOGIN_USER_NAME);
     }
     public static String getLoginUserImage() {
-        return getString(KEY_APP_LAST_LOGIN_USER_IMAGE);
+        return getString(KEY_APP_LOGIN_USER_IMAGE);
     }
     public static void saveLoginUserID(String userID) {
         saveString(KEY_APP_LOGIN_USER_ID, userID);

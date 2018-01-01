@@ -1,7 +1,7 @@
 package com.mobile.vnews.module.bean;
 
 
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Created by xuantang on 11/27/17.
@@ -22,6 +22,15 @@ public class User {
     /*--------------------*/
     private int likeNewsCount;
     private int viewNewsCount;
+    private int commentCount;
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public int getLikeNewsCount() {
         return likeNewsCount;
@@ -138,4 +147,8 @@ public class User {
         this.info = info;
     }
 
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
+    }
 }

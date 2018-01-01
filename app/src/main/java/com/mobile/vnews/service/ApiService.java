@@ -36,7 +36,7 @@ public interface ApiService {
      */
     int DEFAULT_TIMEOUT = 10000;
 
-    String IP = "192.168.1.109";
+    String IP = "118.89.111.157";
     String HOST = "http://" + IP + ":9909/";
     String API_SERVER_URL = HOST + "vnews/";
 
@@ -100,10 +100,10 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @POST("user/{ user_id}/image")
+    @POST("user/{user_id}/photo")
     @Multipart
     Observable<BasicResponse<String>> uploadPhoto(@Path("user_id") String user_id,
-                                                  @Part MultipartBody.Part file);
+                                                  @Part MultipartBody.Part photo);
 
 
     /* NEWS SYSTEM */

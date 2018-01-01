@@ -83,5 +83,6 @@ dependencies {
     implementation "io.netty:netty-all:$rootProject.ext.nettyVersion"
     implementation "com.lapism:searchview:$rootProject.ext.searchViewVersion"
     implementation "com.google.android:flexbox:$rootProject.ext.flexboxVersion"
-    implementation "com.github.YancyYe:GalleryPick:1.2.1"
+    implementation "com.github.YancyYe:GalleryPick:$rootProject.ext.galleryPickVersion"
+    implementation "top.zibin:Luban:$rootProject.ext.lubanVersion"
 }
