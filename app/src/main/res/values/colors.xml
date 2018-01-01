@@ -16,6 +16,6 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="news_item_title_color">#FF424242</color>
     <color name="black">#000000</color>
-
+    <color name="gallery_blue">#000000</color>
     <color name="me_background">#ffeaeaea</color>
 </resources>

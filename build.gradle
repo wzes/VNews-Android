@@ -60,7 +60,7 @@ ext {
     butterknifeVersion = '8.8.1'
     circleimageviewVersion = '2.2.0'
     glideVersion = '4.2.0'
-    glideCompilerVersion = '4.1.1'
+    glideCompilerVersion = '4.2.0'
     recyclerVersion = '2.9.30'
     bannerVersion = '1.4.10'
 
@@ -68,4 +68,6 @@ ext {
     nettyVersion = '4.0.21.Final'
     searchViewVersion = '5.0.0-alpha7'
     flexboxVersion = '0.3.1'
+    galleryPickVersion = '1.2.1'
+    lubanVersion = '1.1.3'
 }

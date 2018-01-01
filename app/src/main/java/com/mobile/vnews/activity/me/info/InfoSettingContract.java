@@ -15,6 +15,9 @@ public interface InfoSettingContract {
     interface View extends BaseView<Presenter> {
         void showResults(@NonNull User user);
         void onFail();
+        void onUploadSuccess(String filename);
+        void onUploadFail();
+        void onUpdateSuccess(@NonNull User user);
     }
 
     interface Presenter extends BasePresenter {

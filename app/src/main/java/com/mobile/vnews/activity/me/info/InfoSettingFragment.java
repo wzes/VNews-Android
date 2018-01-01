@@ -2,6 +2,7 @@ package com.mobile.vnews.activity.me.info;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,16 +10,21 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mobile.vnews.R;
@@ -89,7 +95,7 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
     Unbinder unbinder;
     private InfoSettingContract.Presenter mPresenter;
 
-    private User user;
+    private static User mUser;
 
     public static InfoSettingFragment newInstance() {
         return new InfoSettingFragment();
@@ -118,12 +124,9 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
         meSettingInfoUsername.setText(AppPreferences.getLoginUsername());
         mMeSettingInfoId.setText(AppPreferences.getLoginUserID());
         mMeSettingInfoMotto.setText(AppPreferences.getLoginUserMotto());
-        RequestOptions myOptions = new RequestOptions()
-                .fitCenter()
-                .centerCrop()
-                .placeholder(R.drawable.placeholder);
-        Glide.with(getActivity().getApplicationContext()).load(AppPreferences.getLoginUserImage())
-                .apply(myOptions).into(mMeSettingInfoPhoto);
+
+        AppPreferences.saveLoginUserImage("http://118.89.111.157/vnews/users/013cc199af6c4d56b9d9.jpg");
+        refreshPhoto(AppPreferences.getLoginUserImage());
         return view;
     }
 
@@ -154,7 +157,11 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
         this.mPresenter = checkNotNull(mPresenter);
     }
 
-    @OnClick({R.id.fragment_me_setting_app_bar, R.id.me_setting_info_photo_layout, R.id.me_setting_info_id_layout, R.id.me_setting_info_username_layout, R.id.me_setting_info_phone_layout, R.id.me_setting_info_email_layout, R.id.me_setting_info_sex_layout, R.id.me_setting_info_birthday_layout, R.id.me_setting_info_motto_layout, R.id.me_setting_info_brief_layout})
+    @OnClick({R.id.fragment_me_setting_app_bar, R.id.me_setting_info_photo_layout,
+            R.id.me_setting_info_id_layout, R.id.me_setting_info_username_layout,
+            R.id.me_setting_info_phone_layout, R.id.me_setting_info_email_layout,
+            R.id.me_setting_info_sex_layout, R.id.me_setting_info_birthday_layout,
+            R.id.me_setting_info_motto_layout, R.id.me_setting_info_brief_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fragment_me_setting_app_bar:
@@ -163,33 +170,35 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
                 requestPermission();
                 break;
             case R.id.me_setting_info_id_layout:
+                Toast.makeText(getActivity(), "不能更改ID", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.me_setting_info_username_layout:
+                updateUser("username");
                 break;
             case R.id.me_setting_info_phone_layout:
+                updateUser("phone");
                 break;
             case R.id.me_setting_info_email_layout:
+                updateUser("email");
                 break;
             case R.id.me_setting_info_sex_layout:
+                updateUser("sex");
                 break;
             case R.id.me_setting_info_birthday_layout:
+                updateUser("birthday");
                 break;
             case R.id.me_setting_info_motto_layout:
+                updateUser("motto");
                 break;
             case R.id.me_setting_info_brief_layout:
+                updateUser("brief");
                 break;
         }
     }
 
     @Override
     public void showResults(@NonNull User user) {
-        this.user = user;
-        meSettingInfoEmail.setText(user.getEmail());
-        meSettingInfoPhone.setText(user.getTelephone());
-        mMeSettingInfoBirthday.setText(user.getBirthday());
-        mMeSettingInfoBrief.setText(user.getInfo());
-        mMeSettingInfoMotto.setText(user.getMotto());
-        mMeSettingInfoSex.setText(user.getSex());
+        refreshUser(user);
     }
 
     @Override
@@ -197,11 +206,57 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
         Toast.makeText(getActivity(), "Server error", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onUploadSuccess(String filename) {
+        AppPreferences.saveLoginUserImage(filename);
+        refreshPhoto(filename);
+        Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     *
+     */
+    private void refreshPhoto(String filename) {
+
+        RequestOptions myOptions = new RequestOptions()
+                .fitCenter()
+                .centerCrop();
+        Glide.with(getActivity().getApplicationContext()).load(filename)
+                .apply(myOptions).into(mMeSettingInfoPhoto);
+    }
+
+    @Override
+    public void onUploadFail() {
+        Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUpdateSuccess(@NonNull User user) {
+        refreshUser(user);
+    }
+
+    private void refreshUser(User user) {
+        mUser = user;
+        meSettingInfoEmail.setText(mUser.getEmail());
+        meSettingInfoPhone.setText(mUser.getTelephone());
+        mMeSettingInfoBirthday.setText(mUser.getBirthday());
+        mMeSettingInfoBrief.setText(mUser.getInfo());
+        mMeSettingInfoMotto.setText(mUser.getMotto());
+        mMeSettingInfoSex.setText(mUser.getSex());
+        // save
+        AppPreferences.saveLoginUserID(mUser.getId());
+        AppPreferences.saveLoginUsername(mUser.getUsername());
+        AppPreferences.saveLoginUserImage(mUser.getImage());
+        AppPreferences.saveLoginUserMotto(mUser.getMotto());
+    }
+
     /**
      * Open
      */
     private void openGallery() {
         // Open Gallery
+
         GalleryPick.getInstance()
                 .setGalleryConfig(new GalleryConfig.Builder()
                 .imageLoader(new ImageLoader() {
@@ -256,6 +311,9 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
                 .open(getActivity());
     }
 
+    /**
+     *
+     */
     private void requestPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(), "android.permission.WRITE_EXTERNAL_STORAGE") == 0) {
             openGallery();
@@ -265,5 +323,80 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 2);
         }
+    }
+
+    private void updateUser(String info) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final EditText edit = new EditText(getActivity());
+        builder.setView(edit);
+        if (info.equals("email")) {
+            builder.setTitle("请输入邮箱");
+            edit.setText(mUser.getEmail());
+            edit.setSelection(mUser.getEmail().length());
+        } else if (info.equals("phone")) {
+            builder.setTitle("请输入电话");
+            edit.setText(mUser.getTelephone());
+            edit.setSelection(mUser.getTelephone().length());
+        } else if (info.equals("birthday")) {
+            builder.setTitle("请输入生日");
+            edit.setText(mUser.getBirthday());
+            edit.setSelection(mUser.getBirthday().length());
+        } else if (info.equals("motto")) {
+            builder.setTitle("请输入个性签名");
+            edit.setText(mUser.getMotto());
+            edit.setSelection(mUser.getMotto().length());
+        } else if (info.equals("brief")) {
+            builder.setTitle("请输入简介");
+            edit.setText(mUser.getInfo());
+            edit.setSelection(mUser.getInfo().length());
+        } else if (info.equals("sex")) {
+            builder.setTitle("请输入性别");
+            edit.setText(mUser.getSex());
+            edit.setSelection(mUser.getSex().length());
+        } else if (info.equals("username")) {
+            builder.setTitle("请输入用户名");
+            edit.setText(mUser.getUsername());
+            edit.setSelection(mUser.getUsername().length());
+        }
+        builder.setPositiveButton("确认", (dialog, which) -> {
+            if (info.equals("email")) {
+                mUser.setEmail(edit.getText().toString());
+            } else if (info.equals("phone")) {
+                mUser.setTelephone(edit.getText().toString());
+            } else if (info.equals("birthday")) {
+                mUser.setBirthday(edit.getText().toString());
+            } else if (info.equals("motto")) {
+                mUser.setMotto(edit.getText().toString());
+            } else if (info.equals("brief")) {
+                mUser.setInfo(edit.getText().toString());
+            } else if (info.equals("sex")) {
+                mUser.setSex(edit.getText().toString());
+            } else if (info.equals("username")) {
+                mUser.setUsername(edit.getText().toString());
+            }
+            if (TextUtils.isEmpty(mUser.getEmail())) {
+                mUser.setEmail("");
+            }
+            if (TextUtils.isEmpty(mUser.getSex())) {
+                mUser.setSex("");
+            }
+            if (TextUtils.isEmpty(mUser.getBirthday())) {
+                mUser.setBirthday("");
+            }
+            if (TextUtils.isEmpty(mUser.getInfo())) {
+                mUser.setInfo("");
+            }
+            if (TextUtils.isEmpty(mUser.getPassword())) {
+                mUser.setPassword("");
+            }
+            mPresenter.update(mUser);
+        });
+        builder.setNegativeButton("取消", (dialog, which) -> {
+
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
 }

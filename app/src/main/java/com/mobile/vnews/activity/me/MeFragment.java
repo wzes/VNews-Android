@@ -2,10 +2,12 @@ package com.mobile.vnews.activity.me;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.login.LoginActivity;
 import com.mobile.vnews.activity.me.comment.MeCommentActivity;
+import com.mobile.vnews.activity.me.info.InfoSettingActivity;
 import com.mobile.vnews.activity.me.news.NewsMeActivity;
 import com.mobile.vnews.activity.me.setting.SettingActivity;
 import com.mobile.vnews.application.AppPreferences;
+import com.mobile.vnews.module.bean.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,14 +115,26 @@ public class MeFragment extends Fragment implements MeContract.View {
     @Override
     public void onResume() {
         super.onResume();
+        if (AppPreferences.getLoginState()) {
+            mFragmentMeLoginInLayout.setVisibility(View.VISIBLE);
+            mFragmentMeLoginOutLayout.setVisibility(View.GONE);
+        } else {
+            mFragmentMeLoginInLayout.setVisibility(View.GONE);
+            mFragmentMeLoginOutLayout.setVisibility(View.VISIBLE);
+        }
         mPresenter.load();
     }
 
     @OnClick({R.id.fragment_me_login_in_layout, R.id.me_news_collect_layout, R.id.me_comment_layout,
-            R.id.me_settings_layout, R.id.fragment_me_login, R.id.me_news_track_layout})
+            R.id.me_settings_layout, R.id.fragment_me_login, R.id.me_news_track_layout,
+            R.id.fragment_me_login_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fragment_me_login_in_layout:
+                startActivity(new Intent(getActivity(), InfoSettingActivity.class));
+                break;
+            case R.id.fragment_me_login_layout:
+                startActivity(new Intent(getActivity(), InfoSettingActivity.class));
                 break;
             case R.id.me_news_collect_layout:
                 if (AppPreferences.getLoginState()) {
@@ -157,22 +173,34 @@ public class MeFragment extends Fragment implements MeContract.View {
     }
 
     @Override
-    public void show(boolean loginState) {
-        if (loginState) {
-            mFragmentMeLoginInLayout.setVisibility(View.VISIBLE);
-            mFragmentMeLoginOutLayout.setVisibility(View.GONE);
-            mFragmentMeUsername.setText(AppPreferences.getLoginUsername());
-            mFragmentMeMotto.setText(AppPreferences.getLoginUserMotto());
-            RequestOptions myOptions = new RequestOptions()
-                    .fitCenter()
-                    .centerCrop()
-                    .placeholder(R.drawable.placeholder);
-            Glide.with(getActivity().getApplicationContext()).load(AppPreferences.getLoginUserImage())
-                    .apply(myOptions).into(mMyImage);
-        } else {
-            mFragmentMeLoginInLayout.setVisibility(View.GONE);
-            mFragmentMeLoginOutLayout.setVisibility(View.VISIBLE);
-        }
+    public void show(@NonNull User user) {
+        // save
+        AppPreferences.saveLoginUserID(user.getId());
+        AppPreferences.saveLoginUsername(user.getUsername());
+        AppPreferences.saveLoginUserImage(user.getImage());
+        AppPreferences.saveLoginUserMotto(user.getMotto());
+        mMeNewCollectNum.setText(String.valueOf(user.getLikeNewsCount()));
+        mMeNewsTrackNum.setText(String.valueOf(user.getViewNewsCount()));
+        mMeCommentNum.setText(String.valueOf(user.getCommentCount()));
+        mFragmentMeUsername.setText(user.getUsername());
+        mFragmentMeMotto.setText(user.getMotto());
+        RequestOptions myOptions = new RequestOptions()
+                .fitCenter()
+                .centerCrop()
+                .placeholder(R.drawable.placeholder);
+        Glide.with(getActivity()).load(AppPreferences.getLoginUserImage())
+                .apply(myOptions).into(mMyImage);
     }
 
+    @Override
+    public void onFail() {
+        mFragmentMeUsername.setText(AppPreferences.getLoginUsername());
+        mFragmentMeMotto.setText(AppPreferences.getLoginUserMotto());
+        RequestOptions myOptions = new RequestOptions()
+                .fitCenter()
+                .centerCrop()
+                .placeholder(R.drawable.placeholder);
+        Glide.with(getActivity()).load(AppPreferences.getLoginUserImage())
+                .apply(myOptions).into(mMyImage);
+    }
 }
