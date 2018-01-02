@@ -116,7 +116,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void onFail() {
-        Toast.makeText(getActivity(), "登录失败！密码", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "登录失败！密码不正确", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -25,7 +25,7 @@ public class MyApplication extends Application {
     // The tag for log
     private static final String TAG = MyApplication.class.getSimpleName();
 
-    public static final String currentVersion = "0";
+    public static final String currentVersion = "1";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -39,8 +39,6 @@ public class MyApplication extends Application {
         if (AppPreferences.getLoginUserID().length() == 0) {
             AppPreferences.saveLoginUserID(IdUtils.getUUID());
         }
-
-        AppPreferences.saveVersion("0");
 
         String version = AppPreferences.getVersion();
 
@@ -95,7 +93,7 @@ public class MyApplication extends Application {
                 // write to data
                 FileUtils.writeToFileBySlice(getApplicationContext(), "word", "/data/data/" + getPackageName() + "/databases/word.db",
                         totalSize, readQueue, writeQueue);
-
+                AppPreferences.saveVersion("1");
             } catch (IOException e) {
                 e.printStackTrace();
             }
