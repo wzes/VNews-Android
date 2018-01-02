@@ -1,29 +1,30 @@
 package com.mobile.vnews.activity.launch;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;
+import com.mobile.vnews.activity.intro.ActivityIntro;
 import com.mobile.vnews.activity.main.MainActivity;
+import com.mobile.vnews.application.AppPreferences;
 
-public class LaunchActivity extends BaseActivity {
+public class LaunchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, MainActivity.class));
+        // not first
+        if (!AppPreferences.getLaunchInfo()) {
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            AppPreferences.saveLaunchInfo(false);
+            startActivity(new Intent(this, ActivityIntro.class));
+        }
         finish();
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_launch;
-    }
-
-    @Override
-    protected void init(Bundle savedInstanceState) {
-
     }
 }

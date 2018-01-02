@@ -40,6 +40,7 @@ import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.util.TimeUtils;
 import com.mobile.vnews.util.select.WordSelectedTextView;
+import com.mobile.vnews.util.wordplayer.WordPlayer;
 
 import java.util.List;
 
@@ -265,7 +266,13 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             }
             Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
         });
-        mSheetWordVoiceStart.setOnClickListener(view12 -> Toast.makeText(getActivity(), "Speak", Toast.LENGTH_SHORT).show());
+        mSheetWordVoiceStart.setOnClickListener(view12 -> {
+            try {
+                WordPlayer.play(word.getVoiceList().get(0).getVoiceUrl());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         mSheetWordDetail.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WordDetailActivity.class);
             intent.putExtra("word", word.getWord());

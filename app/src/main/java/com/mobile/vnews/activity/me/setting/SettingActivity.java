@@ -15,6 +15,8 @@ import com.mobile.vnews.R;
 import com.mobile.vnews.activity.BaseActivity;
 import com.mobile.vnews.activity.login.LoginActivity;
 import com.mobile.vnews.application.AppPreferences;
+import com.mobile.vnews.module.dao.MessageDao;
+import com.mobile.vnews.module.database.AppDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +81,13 @@ public class SettingActivity extends AppCompatActivity {
     private void clearLoginInfo() {
         AppPreferences.saveLoginState(false);
         AppPreferences.saveLastUserImage(AppPreferences.getLoginUserImage());
-        finish();
+        // Clear Messages
+        new Thread(() -> {
+            AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
+            appDatabase.getOpenHelper()
+                    .getWritableDatabase()
+                    .execSQL("DELETE FROM message");
+            finish();
+        }).start();
     }
 }

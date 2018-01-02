@@ -19,25 +19,14 @@ public class ActivityIntro extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // not first
-        if (!AppPreferences.getLaunchInfo()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            AppPreferences.saveLaunchInfo(false);
-        }
         addSlide(AppIntroFragment.newInstance(createSliderPage("title1", "desc1",
-                R.drawable.ic_public_black_24dp, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
         addSlide(AppIntroFragment.newInstance(createSliderPage("title2", "desc2",
-                R.drawable.ic_public_black_24dp, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
         addSlide(AppIntroFragment.newInstance(createSliderPage("title3", "desc3",
-                R.drawable.ic_public_black_24dp, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
         addSlide(AppIntroFragment.newInstance(createSliderPage("title4", "desc4",
-                R.drawable.ic_public_black_24dp, getResources().getColor(R.color.colorPrimary))));
-        addSlide(AppIntroFragment.newInstance(createSliderPage("title5", "desc5",
-                R.drawable.ic_public_black_24dp, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
 
         // OPTIONAL METHODS
         // Override bar/separator color.
@@ -72,22 +61,17 @@ public class ActivityIntro extends AppIntro {
         sliderPage.setDescription(description);
         sliderPage.setImageDrawable(imageDrawable);
         sliderPage.setBgColor(bgColor);
-
         return sliderPage;
     }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        // Do something when users tap on Skip button.
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-
-        // TODO: Judge whether we should go to ActivateActivity or MainActivity
-//        startActivity(new Intent(this, ActivateActivity.class));
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
@@ -95,7 +79,6 @@ public class ActivityIntro extends AppIntro {
     @Override
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);
-        // Do something when the slide changes.
     }
 
 }
