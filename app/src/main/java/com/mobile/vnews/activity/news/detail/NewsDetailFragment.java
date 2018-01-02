@@ -19,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.mobile.vnews.R;
 import com.mobile.vnews.activity.news.detail.comment.NewsCommentActivity;
@@ -349,13 +351,13 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                                     Message message = new Message();
                                     message.setId(mList.size());
                                     message.setNewsID(String.valueOf(newsID));
-                                    message.setFloor(String.valueOf(mList.size() + 1));
+                                    message.setFloor((position + 1) + "");
                                     message.setFromID(AppPreferences.getLoginUserID());
                                     message.setFromImage(AppPreferences.getLoginUserImage());
                                     message.setFromUsername(AppPreferences.getLoginUsername());
-                                    message.setToID(mList.get(position).getToID());
+                                    message.setToID(mList.get(position).getFromID());
                                     message.setContent(mCommentText.getText().toString());
-                                    mPresenter.comment(message);
+                                    mPresenter.reply(message);
                                 }
                             });
                         }
@@ -398,6 +400,12 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     @Override
     public void onLogin() {
 
+    }
+
+    @Override
+    public void onReplySuccess(Message message) {
+        Log.i("TAG", "onReplySuccess: " + JSON.toJSONString(message));
+        mCommentDialog.dismiss();
     }
 
     @Override

@@ -28,6 +28,7 @@ public class NewsDetailContract {
         void onCommentFail();
         void onCommentSuccess(Message message);
         void onLogin();
+        void onReplySuccess(Message message);
     }
 
     interface Presenter extends BasePresenter {
@@ -38,6 +39,7 @@ public class NewsDetailContract {
         void dislikeComment(String userID, int comment_id);
         void dislikeNews(String userID, int news_id);
         void comment(Message message);
+        void reply(Message message);
         void view(String userID, int newID);
         void addWordCollect(WordCollect wordCollect);
     }

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class NewsCommentContract {
     interface View extends BaseView<Presenter> {
-        void showComments(@NonNull List<Comment> comments);
+        void showComments(List<Comment> comments);
         void onCommentFail();
         void onCommentSuccess(Message message);
         void onLogin();

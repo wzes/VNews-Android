@@ -120,70 +120,70 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
     }
 
     @Override
-    public void showComments(@NonNull List<Comment> comments) {
-        if (comments.size() == 0) {
+    public void showComments(List<Comment> comments) {
+        if (comments == null) {
             mFragmentNewsCommentEmptyView.setVisibility(View.VISIBLE);
         } else {
             mFragmentNewsCommentEmptyView.setVisibility(View.GONE);
-        }
-        if (mNewsCommentAdapter == null) {
-            mList = comments;
-            mNewsCommentAdapter = new NewsCommentAdapter(R.layout.comment_item, mList);
+            if (mNewsCommentAdapter == null) {
+                mList = comments;
+                mNewsCommentAdapter = new NewsCommentAdapter(R.layout.comment_item, mList);
 
-            // Like and reply
-            mNewsCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                switch (view.getId()) {
-                    case R.id.comment_item_like:
-                        try {
-                            if (mList.get(position).isLike()) {
-                                mPresenter.dislikeComment(AppPreferences.getLoginUserID(),
-                                        mList.get(position).getId());
-                                mList.get(position).setLike(false);
-                                mList.get(position).setLikeCount(mList.get(position).getLikeCount() - 1);
-                            } else {
-                                mPresenter.likeComment(AppPreferences.getLoginUserID(),
-                                        mList.get(position).getId());
-                                mList.get(position).setLike(true);
-                                mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
-                            }
-                            mNewsCommentAdapter.notifyDataSetChanged();
-                        } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case R.id.comment_item_reply:
-                        if (mCommentDialog == null) {
-                            mCommentDialog = new BottomSheetDialog(getActivity());
-                            mCommentView = getActivity().getLayoutInflater().inflate(R.layout.sheet_comment, null);
-                            mCommentText = mCommentView.findViewById(R.id.sheet_comment_text);
-                            mCommentSend = mCommentView.findViewById(R.id.sheet_comment_send);
-                            mCommentDialog.setContentView(mCommentView);
-                            mCommentSend.setOnClickListener(view1 -> {
-                                if (!TextUtils.isEmpty(mCommentText.getText())) {
-                                    Message message = new Message();
-                                    message.setNewsID(String.valueOf(newsID));
-                                    message.setFromID(AppPreferences.getLoginUserID());
-                                    message.setFromImage(AppPreferences.getLoginUserImage());
-                                    message.setFromUsername(AppPreferences.getLoginUsername());
-                                    message.setToID(mList.get(position).getToID());
-                                    message.setContent(mCommentText.getText().toString());
-                                    mPresenter.comment(message);
+                // Like and reply
+                mNewsCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                    switch (view.getId()) {
+                        case R.id.comment_item_like:
+                            try {
+                                if (mList.get(position).isLike()) {
+                                    mPresenter.dislikeComment(AppPreferences.getLoginUserID(),
+                                            mList.get(position).getId());
+                                    mList.get(position).setLike(false);
+                                    mList.get(position).setLikeCount(mList.get(position).getLikeCount() - 1);
+                                } else {
+                                    mPresenter.likeComment(AppPreferences.getLoginUserID(),
+                                            mList.get(position).getId());
+                                    mList.get(position).setLike(true);
+                                    mList.get(position).setLikeCount(mList.get(position).getLikeCount() + 1);
                                 }
-                            });
-                        }
-                        mCommentText.setHint("回复" + mList.get(position).getFromUsername());
-                        mCommentDialog.show();
-                        break;
-                }
-            });
-            mFragmentNewsCommentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            mFragmentNewsCommentRecyclerView.setAdapter(mNewsCommentAdapter);
-        } else {
-            mList.clear();
-            mList.addAll(comments);
-            // load more
-            mNewsCommentAdapter.loadMoreComplete();
-            mNewsCommentAdapter.notifyDataSetChanged();
+                                mNewsCommentAdapter.notifyDataSetChanged();
+                            } catch (Exception e) {
+                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case R.id.comment_item_reply:
+                            if (mCommentDialog == null) {
+                                mCommentDialog = new BottomSheetDialog(getActivity());
+                                mCommentView = getActivity().getLayoutInflater().inflate(R.layout.sheet_comment, null);
+                                mCommentText = mCommentView.findViewById(R.id.sheet_comment_text);
+                                mCommentSend = mCommentView.findViewById(R.id.sheet_comment_send);
+                                mCommentDialog.setContentView(mCommentView);
+                                mCommentSend.setOnClickListener(view1 -> {
+                                    if (!TextUtils.isEmpty(mCommentText.getText())) {
+                                        Message message = new Message();
+                                        message.setNewsID(String.valueOf(newsID));
+                                        message.setFromID(AppPreferences.getLoginUserID());
+                                        message.setFromImage(AppPreferences.getLoginUserImage());
+                                        message.setFromUsername(AppPreferences.getLoginUsername());
+                                        message.setToID(mList.get(position).getToID());
+                                        message.setContent(mCommentText.getText().toString());
+                                        mPresenter.comment(message);
+                                    }
+                                });
+                            }
+                            mCommentText.setHint("回复" + mList.get(position).getFromUsername());
+                            mCommentDialog.show();
+                            break;
+                    }
+                });
+                mFragmentNewsCommentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mFragmentNewsCommentRecyclerView.setAdapter(mNewsCommentAdapter);
+            } else {
+                mList.clear();
+                mList.addAll(comments);
+                // load more
+                mNewsCommentAdapter.loadMoreComplete();
+                mNewsCommentAdapter.notifyDataSetChanged();
+            }
         }
     }
 

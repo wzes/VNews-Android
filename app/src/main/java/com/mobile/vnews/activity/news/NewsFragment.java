@@ -18,6 +18,7 @@ import com.mobile.vnews.activity.news.detail.NewsDetailActivity;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.util.loader.GlideImageLoader;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,6 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             mNewsAdapter.setOnItemClickListener((adapter, view, position) -> {
                 Intent intent = new Intent(getContext(), NewsDetailActivity.class);
                 intent.putExtra("newsID", mList.get(position).getId());
-                Log.i("TAG", "showResults: " + mList.get(position).getId());
                 startActivity(intent);
             });
 
@@ -150,6 +150,11 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 .setBannerTitles(titles)
                 .setDelayTime(5000)
                 .setIndicatorGravity(7)
+                .setOnBannerListener(position -> {
+                    Intent intent = new Intent(getContext(), NewsDetailActivity.class);
+                    intent.putExtra("newsID", mList.get(position).getId());
+                    startActivity(intent);
+                })
                 .setImageLoader(new GlideImageLoader())
                 .start();
     }
