@@ -20,10 +20,10 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // not first
         if (!AppPreferences.getLaunchInfo()) {
-            startActivity(new Intent(this, MainActivity.class));
-        } else {
-            AppPreferences.saveLaunchInfo(false);
+            AppPreferences.saveLaunchInfo(true);
             startActivity(new Intent(this, ActivityIntro.class));
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
         }
         finish();
     }

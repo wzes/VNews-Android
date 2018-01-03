@@ -62,8 +62,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void loadLastLoginUser() {
-        if (!AppPreferences.getVersion().equals("0")) {
-            loginFragment.showUserImage(AppPreferences.getVersion());
+        if (!AppPreferences.getLastUserImage().equals("")) {
+            loginFragment.showUserImage(AppPreferences.getLastUserImage());
         }
     }
 }

@@ -1,11 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        vnews {
+            keyAlias 'vnews'
+            keyPassword 'jyjycxt19960427'
+            storeFile file('/d1/vnews.jks')
+            storePassword 'jyjycxt19960427'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.mobile.vnews"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 23
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,11 +27,16 @@ android {
                 optimizeCode false
                 proguardFile 'proguard-rules.pro'
             }
+            signingConfig signingConfigs.vnews
+        }
+        debug {
         }
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 

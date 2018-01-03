@@ -41,4 +41,49 @@
     <string name="register_input_phone">请输入号码</string>
     <string name="word_collect">收藏</string>
     <string name="prompt_phone">请输入手机号</string>
+    <string name="news_brief">President Donald Trump has announced that the US now recognises Jerusalem.</string>
+    <string name="news_title">President Donald Trump has announced that the US now recognises Jerusalem.</string>
+    <string name="news_likes">喜欢</string>
+    <string name="news_views">浏览</string>
+    <string name="sheet_word">support</string>
+
+
+    <string name="news_category">世界</string>
+    <string name="news_level">CET-6</string>
+
+    <string name="news_comments">评论</string>
+    <string name="message_from">Phoenix</string>
+    <string name="message_action">评论了</string>
+    <string name="message_to">Hadoop</string>
+    <string name="message_content">这篇文章太有道理了, 写的很好, 给作者打Call~~~~~~~~~~</string>
+    <string name="message_date">昨天12:00</string>
+    <string name="message_bottom">没有更多新闻了</string>
+    <string name="sheet_means">vt.	采取; 拿，取; 接受（礼物等）; 耗费（时间等）;\nvi.	拿; 获得;</string>
+    <string name="word_voice">[teɪk]</string>
+    <string name="word_title">conservation</string>
+    <string name="word_means">n. 保存，防止流失，保护自然资源</string>
+    <string name="news_detail_source_title">中国日报</string>
+    <string name="news_detail_description">Tearing up long-standing convention President Trump says the US recognises Jerusalem as Israel's capital</string>
+    <string name="news_detail_source">来源:</string>
+    <string name="news_detail_content">President Donald Trump has announced that the US now recognises Jerusalem as Israel's </string>
+    <string name="news_detail_date">昨天10:20</string>
+    <string name="sheet_word_detail">查看详情</string>
+    <string name="comment_date">一天前</string>
+    <string name="comment_reply">回复</string>
+    <string name="comment_like_num">12</string>
+    <string name="comment">评论</string>
+    <string name="comment_no_more">No more comments</string>
+    <string name="me_username">Phoenix</string>
+    <string name="me_motto">为战而生, 至死方休</string>
+    <string name="me_login">登录</string>
+    <string name="me_collect">我的收藏</string>
+    <string name="me_comment">我的评论</string>
+    <string name="me_settings">通用设置</string>
+    <string name="word_search">搜索单词</string>
+    <string name="title_activity_word_detail">WordDetailActivity</string>
+    <string name="word_book_title">收藏</string>
+    <string name="fragment_collect">没有更多单词了</string>
+    <string name="me_track">我的足迹</string>
+    <string name="word_unknown">生词</string>
+    <string name="word_know">熟记</string>
 </resources>
