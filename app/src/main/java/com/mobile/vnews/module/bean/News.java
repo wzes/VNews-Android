@@ -35,14 +35,14 @@ public class News {
     private int viewCount;
     private int likeCount;
     private int commentCount;
-    private boolean isLike;
+    private boolean like;
 
-    public boolean isLike() {
-        return isLike;
+    public boolean getLike() {
+        return like;
     }
 
     public void setLike(boolean like) {
-        isLike = like;
+        this.like = like;
     }
 
     public int getId() {

@@ -212,7 +212,7 @@ public interface ApiService {
      */
     @Headers({"Accept: application/json",
             "Cache-Control: public, max-age=86400"})
-    @DELETE("comment/{user_id}/dislike/{comment_id}")
+    @GET("comment/{user_id}/dislike/{comment_id}")
     Observable<BasicResponse<String>> cancelLikeComment(@Path("user_id") String user_id,
                                                      @Path("comment_id") int comment_id);
     /**

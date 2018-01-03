@@ -152,7 +152,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 .setIndicatorGravity(7)
                 .setOnBannerListener(position -> {
                     Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-                    intent.putExtra("newsID", mList.get(position).getId());
+                    intent.putExtra("newsID", list.get(position).getId());
                     startActivity(intent);
                 })
                 .setImageLoader(new GlideImageLoader())

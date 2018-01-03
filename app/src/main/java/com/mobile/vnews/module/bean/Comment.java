@@ -1,6 +1,5 @@
 package com.mobile.vnews.module.bean;
 
-import java.security.Timestamp;
 
 /**
  *
@@ -36,14 +35,14 @@ public class Comment {
     private String fromUsername;
     private String toImage;
     private String toUsername;
-    private boolean isLike;
+    private boolean like;
 
-    public boolean isLike() {
-        return isLike;
+    public boolean getLike() {
+        return like;
     }
 
     public void setLike(boolean like) {
-        isLike = like;
+        this.like = like;
     }
 
     public int getLikeCount() {

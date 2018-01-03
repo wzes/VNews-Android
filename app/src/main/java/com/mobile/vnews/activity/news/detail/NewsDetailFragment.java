@@ -323,7 +323,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                 switch (view.getId()) {
                     case R.id.comment_item_like:
                         try {
-                            if (mList.get(position).isLike()) {
+                            if (mList.get(position).getLike()) {
                                 mPresenter.dislikeComment(AppPreferences.getLoginUserID(),
                                         mList.get(position).getId());
                                 mList.get(position).setLike(false);
@@ -422,7 +422,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
             return;
         }
         try {
-            if (news.isLike()) {
+            if (news.getLike()) {
                 news.setLike(false);
                 mPresenter.dislikeNews(AppPreferences.getLoginUserID(), newsID);
                 news.setLikeCount(news.getLikeCount() - 1);

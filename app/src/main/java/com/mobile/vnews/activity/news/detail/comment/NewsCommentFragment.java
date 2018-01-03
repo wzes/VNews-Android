@@ -134,7 +134,7 @@ public class NewsCommentFragment extends Fragment implements NewsCommentContract
                     switch (view.getId()) {
                         case R.id.comment_item_like:
                             try {
-                                if (mList.get(position).isLike()) {
+                                if (mList.get(position).getLike()) {
                                     mPresenter.dislikeComment(AppPreferences.getLoginUserID(),
                                             mList.get(position).getId());
                                     mList.get(position).setLike(false);
