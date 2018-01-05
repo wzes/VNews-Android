@@ -331,32 +331,47 @@ public class InfoSettingFragment extends Fragment implements InfoSettingContract
         builder.setView(edit);
         if (info.equals("email")) {
             builder.setTitle("请输入邮箱");
-            edit.setText(mUser.getEmail());
-            edit.setSelection(mUser.getEmail().length());
+            if (!TextUtils.isEmpty(mUser.getEmail())) {
+                edit.setText(mUser.getEmail());
+                edit.setSelection(mUser.getEmail().length());
+            }
         } else if (info.equals("phone")) {
             builder.setTitle("请输入电话");
-            edit.setText(mUser.getTelephone());
-            edit.setSelection(mUser.getTelephone().length());
+            if (!TextUtils.isEmpty(mUser.getTelephone())) {
+                edit.setText(mUser.getTelephone());
+                edit.setSelection(mUser.getTelephone().length());
+            }
+
         } else if (info.equals("birthday")) {
             builder.setTitle("请输入生日");
-            edit.setText(mUser.getBirthday());
-            edit.setSelection(mUser.getBirthday().length());
+            if (!TextUtils.isEmpty(mUser.getBirthday())) {
+                edit.setText(mUser.getBirthday());
+                edit.setSelection(mUser.getBirthday().length());
+            }
         } else if (info.equals("motto")) {
             builder.setTitle("请输入个性签名");
-            edit.setText(mUser.getMotto());
-            edit.setSelection(mUser.getMotto().length());
+            if (!TextUtils.isEmpty(mUser.getMotto())) {
+                edit.setText(mUser.getMotto());
+                edit.setSelection(mUser.getMotto().length());
+            }
         } else if (info.equals("brief")) {
             builder.setTitle("请输入简介");
-            edit.setText(mUser.getInfo());
-            edit.setSelection(mUser.getInfo().length());
+            if (!TextUtils.isEmpty(mUser.getInfo())) {
+                edit.setText(mUser.getInfo());
+                edit.setSelection(mUser.getInfo().length());
+            }
         } else if (info.equals("sex")) {
             builder.setTitle("请输入性别");
-            edit.setText(mUser.getSex());
-            edit.setSelection(mUser.getSex().length());
+            if (!TextUtils.isEmpty(mUser.getSex())) {
+                edit.setText(mUser.getSex());
+                edit.setSelection(mUser.getSex().length());
+            }
         } else if (info.equals("username")) {
             builder.setTitle("请输入用户名");
-            edit.setText(mUser.getUsername());
-            edit.setSelection(mUser.getUsername().length());
+            if (!TextUtils.isEmpty(mUser.getUsername())) {
+                edit.setText(mUser.getUsername());
+                edit.setSelection(mUser.getUsername().length());
+            }
         }
         builder.setPositiveButton("确认", (dialog, which) -> {
             if (info.equals("email")) {

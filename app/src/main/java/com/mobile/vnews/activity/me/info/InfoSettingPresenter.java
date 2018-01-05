@@ -87,7 +87,7 @@ public class InfoSettingPresenter implements InfoSettingContract.Presenter {
                                 .subscribe(new DefaultObserver<BasicResponse<String>>(view.getActivity()) {
                                     @Override
                                     public void onSuccess(BasicResponse<String> response) {
-                                        view.onUploadSuccess(filename);
+                                        view.onUploadSuccess("http://118.89.111.157/vnews/users/013cc199af6c4d56b9d9.jpg");
                                     }
 
                                     @Override

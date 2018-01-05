@@ -69,4 +69,6 @@
     <string name="me_track">Track</string>
     <string name="word_unknown">Unknown</string>
     <string name="word_know">Know</string>
+    <string name="no_more_message">No more message</string>
+    <string name="me_comments">My Comments</string>
 </resources>

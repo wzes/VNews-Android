@@ -91,9 +91,11 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void showUserImage(String image) {
-        Glide.with(this)
-                .load(image)
-                .into(loginImage);
+        if (!TextUtils.isEmpty(image)) {
+            Glide.with(this)
+                    .load(image)
+                    .into(loginImage);
+        }
     }
 
     @Override

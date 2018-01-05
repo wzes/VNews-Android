@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:text="@string/message_bottom"
+                    android:text="@string/no_more_message"
                     android:textColor="@color/colorAccent"
                     android:textAlignment="center"/>
             </LinearLayout>
