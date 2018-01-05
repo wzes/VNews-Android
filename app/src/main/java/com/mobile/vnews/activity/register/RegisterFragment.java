@@ -67,6 +67,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         activity.setSupportActionBar(mRegisterToolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        setHasOptionsMenu(true);
         return view;
     }
 

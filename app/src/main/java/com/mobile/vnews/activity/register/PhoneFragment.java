@@ -74,6 +74,7 @@ public class PhoneFragment extends Fragment implements PhoneContract.View {
         activity.setSupportActionBar(mRegisterTelephoneToolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -119,14 +120,18 @@ public class PhoneFragment extends Fragment implements PhoneContract.View {
     @Override
     public void onPause() {
         super.onPause();
-        mTimer.cancel();
+        if (mTimer != null) {
+            mTimer.cancel();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        mTimer.cancel();
+        if (mTimer != null) {
+            mTimer.cancel();
+        }
     }
     private Timer mTimer;
 
