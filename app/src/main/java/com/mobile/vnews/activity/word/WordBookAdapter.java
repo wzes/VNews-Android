@@ -22,6 +22,24 @@ public class WordBookAdapter extends BaseItemDraggableAdapter<String, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.word_book_item_title, item);
+        helper.setText(R.id.word_book_item_title, getString(item));
+    }
+
+    /**
+     *
+     * @param source
+     * @return
+     */
+    public int getString(String source) {
+        switch (source) {
+            case "收藏":
+                return R.string.word_book_title;
+            case "生词":
+                return R.string.word_unknown;
+            case "熟记":
+                return R.string.word_know;
+            default:
+                return R.string.word_book_title;
+        }
     }
 }

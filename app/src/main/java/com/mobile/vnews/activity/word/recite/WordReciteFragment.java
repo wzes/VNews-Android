@@ -235,6 +235,6 @@ public class WordReciteFragment extends Fragment implements WordReciteContract.V
 
     @Override
     public void onShowFail() {
-        Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.load_error, Toast.LENGTH_SHORT).show();
     }
 }

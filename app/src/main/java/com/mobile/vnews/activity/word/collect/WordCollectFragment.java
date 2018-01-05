@@ -90,7 +90,7 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         setHasOptionsMenu(true);
-        mFragmentWordCollectToolbar.setTitle(word);
+        mFragmentWordCollectToolbar.setTitle(getString(word));
         mFragmentWordCollectToolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_open_recite:
@@ -111,6 +111,23 @@ public class WordCollectFragment extends Fragment implements WordCollectContract
             getActivity().onBackPressed();
         }
         return true;
+    }
+    /**
+     *
+     * @param source
+     * @return
+     */
+    public int getString(String source) {
+        switch (source) {
+            case "收藏":
+                return R.string.word_book_title;
+            case "生词":
+                return R.string.word_unknown;
+            case "熟记":
+                return R.string.word_know;
+            default:
+                return R.string.word_book_title;
+        }
     }
 
     @Override
