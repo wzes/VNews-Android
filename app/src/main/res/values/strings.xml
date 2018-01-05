@@ -71,4 +71,15 @@
     <string name="word_know">Know</string>
     <string name="no_more_message">No more message</string>
     <string name="me_comments">My Comments</string>
+    <string name="word_detail">Word Details</string>
+    <string name="news_detail">News Details</string>
+    <string name="word_recite">Recite</string>
+    <string name="me_info">My Information</string>
+    <string name="settings">Settings</string>
+    <string name="Notifications">Notification</string>
+    <string name="image_loading">Load Image</string>
+    <string name="about_me">About mine</string>
+    <string name="update_version">Update</string>
+    <string name="clear_cache">Clean</string>
+    <string name="login_out">Login Out</string>
 </resources>

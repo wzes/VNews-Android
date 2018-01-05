@@ -21,7 +21,7 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="单词详情"
+            app:title="@string/word_detail"
             app:titleTextColor="@color/colorPrimaryText"/>
     </android.support.design.widget.AppBarLayout>
     <android.support.v7.widget.AppCompatTextView
@@ -132,7 +132,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ripple_word_detail_collect"
             android:layout_centerHorizontal="true"
-            android:text="收藏"
+            android:text="@string/word_collect"
             android:layout_marginBottom="@dimen/dp_24"/>
 
         <android.support.v7.widget.AppCompatButton

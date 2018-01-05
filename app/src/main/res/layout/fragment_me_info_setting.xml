@@ -18,7 +18,7 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="个人信息"
+            app:title="@string/me_info"
             app:titleTextColor="@color/colorPrimaryText"/>
 
     </android.support.design.widget.AppBarLayout>

@@ -21,7 +21,7 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="设置"
+            app:title="@string/settings"
             app:titleTextColor="@color/colorPrimaryText"/>
     </android.support.design.widget.AppBarLayout>
     <LinearLayout
@@ -47,7 +47,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="消息和提醒" />
+                        android:text="@string/Notifications" />
                 </LinearLayout>
                 <android.support.v7.widget.SwitchCompat
                     android:gravity="center_vertical"
@@ -78,7 +78,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="图片加载" />
+                        android:text="@string/image_loading" />
                 </LinearLayout>
                 <android.support.v7.widget.SwitchCompat
                     android:gravity="center_vertical"
@@ -109,7 +109,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="关于我们" />
+                        android:text="@string/about_me" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -134,7 +134,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="版本更新" />
+                        android:text="@string/update_version" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -157,7 +157,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="清除缓存" />
+                        android:text="@string/clear_cache" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -181,7 +181,7 @@
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="退出登录" />
+                        android:text="@string/login_out" />
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

@@ -88,4 +88,15 @@
     <string name="word_know">熟记</string>
     <string name="no_more_message">没有消息~</string>
     <string name="me_comments">我的评论</string>
+    <string name="word_detail">单词详情</string>
+    <string name="news_detail">新闻详情</string>
+    <string name="word_recite">记单词</string>
+    <string name="me_info">个人信息</string>
+    <string name="settings">设置</string>
+    <string name="Notifications">消息和提醒</string>
+    <string name="image_loading">图片加载</string>
+    <string name="about_me">关于我们</string>
+    <string name="update_version">版本更新</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="login_out">退出登录</string>
 </resources>

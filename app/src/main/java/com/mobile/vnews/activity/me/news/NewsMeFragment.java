@@ -74,9 +74,9 @@ public class NewsMeFragment extends Fragment implements NewsMeContract.View {
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         setHasOptionsMenu(true);
         if (title.equals("like")) {
-            mFragmentNewsMeToolbar.setTitle("喜欢");
+            mFragmentNewsMeToolbar.setTitle(R.string.news_likes);
         } else {
-            mFragmentNewsMeToolbar.setTitle("浏览");
+            mFragmentNewsMeToolbar.setTitle(R.string.news_views);
         }
 
         mNewsMeRefreshLayout.setOnRefreshListener(() -> {
