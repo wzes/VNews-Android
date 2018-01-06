@@ -1,7 +1,6 @@
 package com.mobile.vnews.application;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -40,14 +39,8 @@ public class MyApplication extends Application {
             AppPreferences.saveLoginUserID(IdUtils.getUUID());
         }
 
-        String version = AppPreferences.getVersion();
-
-        test();
-
-        // update db or initialize db
-        if (version.compareTo(currentVersion) < 0) {
-            initDatabase();
-        }
+        // Active
+        activeDatabase();
 
         // For MyCrashHandler
         MyCrashHandler.getInstance(this);
@@ -62,9 +55,9 @@ public class MyApplication extends Application {
     }
 
     /**
-     *
+     * Active Room Database
      */
-    private void test() {
+    private void activeDatabase() {
         new Thread(() -> {
             AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
             WordDao wordDao = appDatabase.getWordDao();
@@ -75,30 +68,4 @@ public class MyApplication extends Application {
             }
         }).start();
     }
-
-    /**
-     * Initialize database
-     */
-    private void initDatabase() {
-        new Thread(() -> {
-            AssetManager assetManager = getAssets();
-            int totalSize;
-            BlockingQueue<Integer> writeQueue = null;
-            BlockingQueue<Integer> readQueue = null;
-            try {
-                totalSize = FileUtils.getTotalSize(assetManager.open("initSize.dat"));
-                writeQueue = FileUtils.getQueueFromFile(assetManager.open("initSize.dat"), "write");
-                readQueue = FileUtils.getQueueFromFile(assetManager.open("sliceSize.dat"), "read");
-
-                // write to data
-                FileUtils.writeToFileBySlice(getApplicationContext(), "word", "/data/data/" + getPackageName() + "/databases/word.db",
-                        totalSize, readQueue, writeQueue);
-                AppPreferences.saveVersion("1");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-
 }
