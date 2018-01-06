@@ -1,11 +1,5 @@
 package com.mobile.vnews.util.select;
 
-/**
- * Created by _SOLID
- * Date:2016/11/10
- * Time:14:10
- * Desc:
- */
 
 public class WordInfo {
     private int start;

@@ -20,14 +20,8 @@ import com.mobile.vnews.R;
 import java.util.List;
 
 /**
- * Created by _SOLID
- * Date:2016/11/9
- * Time:11:02
- * <p>
- * Desc:A TextView that can get every word in content.
- * </p>
+ * WordSelectedView
  */
-
 public class WordSelectedTextView extends TextView {
 
     private static final int DEFAULT_SELECTED_COLOR = Color.parseColor( "#757575");

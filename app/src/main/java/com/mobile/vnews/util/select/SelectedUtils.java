@@ -7,26 +7,22 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by _SOLID
- * Date:2016/11/10
- * Time:12:43
- * Desc:util for GetWordTextView
- */
 
 class SelectedUtils {
 
     private static List<Character> sPunctuations;
 
     static {
-        Character[] arr = new Character[]{',', '.', ';', '!', '"', '，', '。', '！', '；', '、', '：', '“', '”','?','？'};
+        Character[] arr = new Character[]{',', '.', ';', '!', '"',
+                '，', '。', '！', '；', '、', '：', '“', '”','?','？'};
         sPunctuations = Arrays.asList(arr);
     }
 
-    static boolean isChinese(char ch) {
-        return !sPunctuations.contains(ch);
-    }
-
+    /**
+     * Get Word Index From content
+     * @param content
+     * @return
+     */
     @NonNull
     static List<WordInfo> getEnglishWordIndices(String content) {
         List<Integer> separatorIndices = getSeparatorIndices(content, ' ');
