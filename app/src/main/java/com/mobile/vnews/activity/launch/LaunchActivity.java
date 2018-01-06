@@ -1,15 +1,10 @@
 package com.mobile.vnews.activity.launch;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 
-import com.mobile.vnews.R;
-import com.mobile.vnews.activity.BaseActivity;
 import com.mobile.vnews.activity.intro.ActivityIntro;
 import com.mobile.vnews.activity.main.MainActivity;
 import com.mobile.vnews.application.AppPreferences;
@@ -55,7 +50,8 @@ public class LaunchActivity extends AppCompatActivity {
                     // write to data
                     FileUtils.writeToFileBySlice(getApplicationContext(), "word", "/data/data/" + getPackageName() + "/databases/word.db",
                             totalSize, readQueue, writeQueue);
-                    AppPreferences.saveVersion("1");
+                    // update version
+                    AppPreferences.saveVersion(MyApplication.currentVersion);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
