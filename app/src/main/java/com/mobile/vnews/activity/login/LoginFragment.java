@@ -99,11 +99,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void showMessage(String message) {
-
-    }
-
-    @Override
     public void onSuccess(User user) {
         // save something
         AppPreferences.saveLoginUserID(user.getId());

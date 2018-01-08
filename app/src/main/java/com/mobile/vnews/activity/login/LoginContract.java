@@ -9,7 +9,6 @@ public interface LoginContract {
 
     interface View extends BaseView<Presenter> {
         void showUserImage(String image);
-        void showMessage(String message);
         void onSuccess(User user);
         void onFail();
     }

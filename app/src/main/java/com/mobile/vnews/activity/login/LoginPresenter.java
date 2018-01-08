@@ -34,14 +34,11 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String username, String password) {
-//        RequestBody formBody = new FormBody.Builder()
-//                .add("username", username)
-//                .add("password", password)
-//                .build();
         HashMap<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("password", password);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(map));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                JSON.toJSONString(map));
         Api.getApiService()
                 .login(requestBody )
                 .subscribeOn(Schedulers.io())
