@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,9 +82,7 @@ public class WordFragment extends Fragment implements WordContract.View {
     public void onResume() {
         super.onResume();
         // check
-        if (AppPreferences.getLoginState()) {
-            presenter.load(AppPreferences.getLoginUserID());
-        }
+        presenter.load(AppPreferences.getLoginUserID());
     }
 
     @Override
@@ -99,6 +98,7 @@ public class WordFragment extends Fragment implements WordContract.View {
         }
         mBooks.clear();
         mBooks.addAll(books);
+        Log.i("TAG", "showBooks: " + books.size());
         if (mWordBookAdapter == null) {
             mWordBookAdapter = new WordBookAdapter(R.layout.word_book_item, mBooks);
             mFragmentWordRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
