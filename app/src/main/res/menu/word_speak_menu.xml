@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.word.recite.WordReciteActivity">
-    <item android:id="@+id/action_open_recite"
-        android:title="@string/word_recite"
+    <item android:id="@+id/action_open_speak"
+        android:title="@string/word_speak"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_timelapse_black_24dp"
+        android:icon="@drawable/ic_volume_up_black_24dp"
         app:showAsAction="ifRoom"/>
 </menu>

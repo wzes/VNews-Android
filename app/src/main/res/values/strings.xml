@@ -83,4 +83,7 @@
     <string name="clear_cache">Clean</string>
     <string name="login_out">Login Out</string>
     <string name="load_error">Load Error</string>
+    <string name="word_speak">Speak Schema</string>
+    <string name="word_collect_success">Collect Success</string>
+    <string name="word_collect_fail">Collect Fail</string>
 </resources>

@@ -69,12 +69,8 @@ public class WordDetailPresenter implements WordDetailContract.Presenter {
             //Log.i(TAG, "search result: " + words.size() + " " + word);
             if (words.size() != 0) {
                 try {
-//                    Log.i(TAG, "search: ---------------"  + word + " " + words.size() + "\n"
-//                            + JSON.toJSONString(words.get(0)) + "\n" +
-//                    words.get(0).getVoice());
                     WordParser wordParser = new WordParser();
                     mWord = wordParser.parse(words);
-                    //Log.i(TAG, "search: " + JSON.toJSONString(mWord));
                 } catch (Exception e) {
                     handler.sendEmptyMessage(1);
                     return;

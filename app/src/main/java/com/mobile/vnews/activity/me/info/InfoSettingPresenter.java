@@ -51,7 +51,6 @@ public class InfoSettingPresenter implements InfoSettingContract.Presenter {
                 .subscribe(new DefaultObserver<BasicResponse<User>>(view.getActivity()) {
                     @Override
                     public void onSuccess(BasicResponse<User> response) {
-//                        Log.i(TAG, "onSuccess: " + response.getContent().size());
                         view.showResults(response.getContent());
                     }
 

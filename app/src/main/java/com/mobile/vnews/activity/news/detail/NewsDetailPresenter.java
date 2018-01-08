@@ -242,13 +242,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     public void comment(Message message) {
         try {
             MessageService.getMessageClient().sendMessage(message);
-//            new Thread(() -> {
-//                AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
-//                MessageDao messageDao = appDatabase.getMessageDao();
-//                int size = messageDao.getSize();
-//                message.setId(size + 1);
-//                messageDao.addMessage(message);
-//            }).start();
             mFragment.onCommentSuccess(message);
         } catch (Exception e) {
             e.printStackTrace();

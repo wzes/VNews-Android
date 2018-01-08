@@ -3,6 +3,7 @@ package com.mobile.vnews.activity.news.detail;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -21,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,7 @@ import com.mobile.vnews.util.select.WordSelectedTextView;
 import com.mobile.vnews.util.wordplayer.WordPlayer;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,16 +120,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     private News news;
     private NewsDetailContract.Presenter mPresenter;
     private static int newsID;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // TODO
-        // get username
-        mPresenter.view(AppPreferences.getLoginUserID(), newsID);
-        mPresenter.load(newsID);
-    }
+    private TextToSpeech mTextToSpeech;
+    private boolean isSpeak = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,7 +140,76 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         mNewsDetailsToolbar.setOnClickListener(v -> mNewsDetailsNestedScrollView.smoothScrollTo(0, 0));
         mNewsDetailCommentLayout.setVisibility(View.GONE);
         setHasOptionsMenu(true);
+        // speak news
+        mNewsDetailsToolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_open_speak:
+                    if (!isSpeak) {
+                        isSpeak = true;
+                        sayTts(news.getContent());
+                    } else {
+                        stopTts();
+                        isSpeak = false;
+                    }
+
+                    break;
+            }
+            return true;
+        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // get username
+        mPresenter.view(AppPreferences.getLoginUserID(), newsID);
+        mPresenter.load(newsID);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopTts();
+    }
+
+    /**
+     *
+     * @param text
+     */
+    private void sayTts(String text){
+        // speak
+        mTextToSpeech = new TextToSpeech(getActivity(), i -> {
+            if (i == TextToSpeech.SUCCESS) {
+                int result = mTextToSpeech.setLanguage(Locale.US);
+                if (result == TextToSpeech.LANG_MISSING_DATA ||
+                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
+
+                }
+                int len = text.length();
+                for (int index = 0; index < len; index += 100) {
+                    String sText = text.substring(index, len - index > 100 ? index + 100 : len);
+                    mTextToSpeech.speak(sText, TextToSpeech.QUEUE_ADD, null);
+                }
+            } else {
+                Toast.makeText(getActivity(), "Not support", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    private void stopTts() {
+        if (mTextToSpeech != null) {
+            mTextToSpeech.shutdown();
+            mTextToSpeech.stop();
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.word_speak_menu, menu);
     }
 
     public static NewsDetailFragment newInstance(int newsID) {
@@ -255,6 +320,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         // collect word
         mSheetWordCollect.setOnClickListener(view1 -> {
             try {
+                // new Collect
                 WordCollect wordCollect = new WordCollect();
                 wordCollect.setId(word.getId());
                 wordCollect.setMeans(word.getPosList().get(0).getSymbol() + " " +
@@ -264,9 +330,9 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                 wordCollect.setTimestamp(System.currentTimeMillis());
                 mPresenter.addWordCollect(wordCollect);
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Collect Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.word_collect_fail, Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(getContext(), "Collect Success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.word_collect_success, Toast.LENGTH_SHORT).show();
         });
         mSheetWordVoiceStart.setOnClickListener(view12 -> {
             try {
@@ -361,7 +427,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                                 }
                             });
                         }
-                        mCommentText.setHint("回复" + mList.get(position).getFromUsername());
+                        mCommentText.setHint(R.string.comment_reply + mList.get(position).getFromUsername());
                         mCommentDialog.show();
                         break;
                 }
@@ -404,7 +470,6 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
     @Override
     public void onReplySuccess(Message message) {
-        Log.i("TAG", "onReplySuccess: " + JSON.toJSONString(message));
         mCommentDialog.dismiss();
     }
 

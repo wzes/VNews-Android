@@ -115,7 +115,6 @@ public class WordParser {
 
         try {
             // parser
-            Log.i(TAG, "voiceConvert: " + voice);
             JSONObject jsonObject = new JSONObject(voice);
             String phEn = jsonObject.getString("ph_en");
             String phAm = jsonObject.getString("ph_am");
@@ -154,7 +153,6 @@ public class WordParser {
                 Word.Pos pos = mWord.new Pos(word.getPos(), word.getPosmeans(),
                         WordParser.meansConvert(word.getMeans()));
                 posList.add(pos);
-                Log.i(TAG, "posConvert: " + JSON.toJSONString(pos));
             } catch (Exception e) {
                 e.printStackTrace();
             }

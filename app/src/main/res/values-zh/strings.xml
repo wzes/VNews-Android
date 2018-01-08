@@ -100,4 +100,7 @@
     <string name="clear_cache">清除缓存</string>
     <string name="login_out">退出登录</string>
     <string name="load_error">加载失败</string>
+    <string name="word_speak">阅读模式</string>
+    <string name="word_collect_success">收藏成功</string>
+    <string name="word_collect_fail">收藏失败</string>
 </resources>

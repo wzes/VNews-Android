@@ -123,7 +123,6 @@
                 android:textSize="@dimen/sp_18"
                 android:textAlignment="gravity"
                 android:lineSpacingExtra="4dp"
-                app:highlightText="that"
                 android:text="@string/news_detail_content"/>
 
             <LinearLayout
