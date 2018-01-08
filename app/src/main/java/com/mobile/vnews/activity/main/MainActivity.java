@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         if (AppPreferences.getLoginState()) {
             startService(new Intent(this, MessageService.class));
         }
-        Log.i("MainActivity", "onCreate: " + System.currentTimeMillis());
         // Initialize the fragments
         initFragments(savedInstanceState);
 
@@ -132,16 +131,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 });
     }
-
-//    @Override
-//    protected int getLayoutId() {
-//        return R.layout.activity_main;
-//    }
-//
-//    @Override
-//    protected void init(Bundle savedInstanceState) {
-//
-//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
