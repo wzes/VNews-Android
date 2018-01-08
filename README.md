@@ -1,138 +1,85 @@
-# VNews-Android
+# VNews
 
-#### 系统架构
-![系统架构](image/6.png) 
-#### MVP 架构
-![系统架构](image/5.png) 
-#### 数据库设计
-E-R图
-![E-R](image/1.png) 
-SQL Script
-```
-<!-- 新闻实体数据 -->
-CREATE TABLE IF NOT EXISTS news (
-    ID          INT AUTO_INCREMENT,
-    title       VARCHAR(255)   NOT NULL ,
-    author      VARCHAR(50),
-    description VARCHAR(255),
-    image       VARCHAR(255) COMMENT 'image url',
-    publishedAt DATETIME     COMMENT 'publish date',
-    source      VARCHAR(50),
-    content     TEXT           NOT NULL COMMENT 'the content of news',
-    level       VARCHAR(50),
-    type        VARCHAR(50),
-    PRIMARY KEY (ID)
-)ENGINE = INNODB DEFAULT CHARSET = utf8
-<!-- 单词实体数据 -->
-CREATE TABLE IF NOT EXISTS words (
-  ID       INT(20) AUTO_INCREMENT
-    PRIMARY KEY,
-  word     VARCHAR(100)        NOT NULL,
-  exchange VARCHAR(1000)       NULL,
-  voice    VARCHAR(1000)       NULL,
-  times    INT(20) DEFAULT '1' NULL
-);
-CREATE TABLE IF NOT EXISTS pos (
-  ID    INT(2) AUTO_INCREMENT
-    PRIMARY KEY,
-  name  VARCHAR(20) NULL,
-  means VARCHAR(45) NULL
-);
-CREATE TABLE IF NOT EXISTS means (
-  wordID INT(20)       NOT NULL,
-  posID  INT(2)        NOT NULL,
-  means  VARCHAR(1000) NULL,
-  CONSTRAINT fk_means_1
-  FOREIGN KEY (wordID) REFERENCES words (ID),
-  CONSTRAINT fk_means_2
-  FOREIGN KEY (posID) REFERENCES pos (ID)
-);
+### Introduction
+​	我们的 App 以英语新闻阅读为主，我们会为用户提供高质量的英语新闻文章，用户不仅可以锻炼自己的英语阅读能力，也可以从中了解时事政治，或者是有趣的文章。围绕着这一主题，我们还可以实现单词查询，发音，摇一摇背单词，以及单词文章标记收藏、回顾等功能，当然，用户还可以通过评论进行互动。
 
-CREATE INDEX fk_means_1_idx
-  ON means (posID);
+### Use case Diagram
 
-CREATE INDEX fk_means_1_idx1
-  ON means (wordID);
+![](images/1.png)
 
-CREATE TABLE IF NOT EXISTS missing (
-    ID   INT(20) AUTO_INCREMENT
-      PRIMARY KEY,
-    word VARCHAR(200) NOT NULL
-);
-<!-- 用户实体数据 -->
-CREATE TABLE IF NOT EXISTS user (
-  ID        VARCHAR(20)   NOT NULL,
-  username  VARCHAR(50)   NOT NULL,
-  password  VARCHAR(255)  NOT NULL,
-  email     VARCHAR(50)   NOT NULL,
-  sex       VARCHAR(4)    NULL,
-  birthday  DATE          NULL,
-  image     VARCHAR(255)  NULL,
-  telephone VARCHAR(11)   NULL,
-  motto     VARCHAR(100)  NULL,
-  info      TEXT NULL,
-  PRIMARY KEY(ID)
-)ENGINE = INNODB DEFAULT CHARSET = utf8;
-<!-- 新闻评论实体数据 -->
-CREATE TABLE IF NOT EXISTS comment (
-  ID        INT           AUTO_INCREMENT PRIMARY KEY,
-  fromID    INT           REFERENCES user(ID),
-  toID      INT           REFERENCES user(ID),
-  content   TEXT          NOT NULL,
-  timestamp TIMESTAMP     NOT NULL,
-  newsID    INT           REFERENCES news(ID)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-<!-- 新闻通知实体数据 -->
-CREATE TABLE IF NOT EXISTS notice (
-  ID        INT           AUTO_INCREMENT PRIMARY KEY,
-  newsID    INT           REFERENCES news(ID),
-  fromID    INT           REFERENCES user(ID),
-  toID      INT           REFERENCES user(ID),
-  content   TEXT          NOT NULL,
-  timestamp TIMESTAMP     NOT NULL
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+### Contents
 
-<!-- 新闻类型实体数据 -->
-CREATE TABLE IF NOT EXISTS type (
-  ID        INT           AUTO_INCREMENT PRIMARY KEY,
-  name      VARCHAR(50)   NOT NULL
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-<!-- 用户偏好数据 -->
-CREATE TABLE IF NOT EXISTS user_preference (
-  userID        VARCHAR(20)      REFERENCES user(ID),
-  typeID        INT              REFERENCES type(ID),
-  preference    INT              DEFAULT 0,
-  PRIMARY KEY (userID, typeID)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-<!-- 新闻点赞数据 -->
-CREATE TABLE IF NOT EXISTS like_news (
-  userID        VARCHAR(20)      REFERENCES user(ID),
-  newsID        INT              REFERENCES news(ID),
-  timestamp     TIMESTAMP        NOT NULL,
-  PRIMARY KEY (userID, newsID)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-<!--收藏单词记录-->
-CREATE TABLE IF NOT EXISTS collect_words (
-  userID        VARCHAR(20)      REFERENCES user(ID),
-  wordID        INT              REFERENCES words(ID),
-  tag           VARCHAR(50)      NOT NULL,
-  timestamp     TIMESTAMP        NOT NULL,
-  PRIMARY KEY (userID, wordID)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-<!--评论点赞记录-->
-CREATE TABLE IF NOT EXISTS like_comment (
-  userID        VARCHAR(20)      REFERENCES user(ID),
-  commentID     INT              REFERENCES comment(ID),
-  timestamp     TIMESTAMP        NOT NULL,
-  PRIMARY KEY (userID, commentID)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-<!-- 新闻浏览记录-->
-CREATE TABLE IF NOT EXISTS view_news (
-  newsID        INT        REFERENCES news(ID),
-  count         INT,
-  PRIMARY KEY (newsID)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+- 新闻
+  - 浏览 
+  - 收藏
+  - 评论
+  - 阅读
+- 单词
+  - 查询
+  - 详情
+  - 收藏
+  - 复习
+- 通知
+  - 评论
+- 用户
+  - 注册 
+  - 登录
+  - 足迹
+  - 设置
 
-```
-#### Netty评论系统
-![](image/4.png)
+### Architecture
+- **Framework**  
+  ![](images/4.png)
+- **Android**  
+  ![](images/3.png)
+- **Message**  
+  ![](images/2.png)
+### Features
+- 文章取词
+- 单词词库
+- 即时通讯
+### Develop Guide
+
+- MVP模式 => 安卓
+- Retrofit + RxJava2 => 网络
+- Spring-Boot => 后端
+- Netty => 即时通讯
+
+### Deployment
+
+- 后端 : API Service + Message System
+- Android : Release APK
+
+### Prospect
+
+- 用户个性化推荐
+- 数据库优化
+
+### Projects Address
+
+- [Android](https://github.com/wzes/VNews-Android)
+- [Service](https://github.com/wzes/VMovie-SpringBoot)
+- [Message](https://github.com/wzes/VNew-Netty)
+
+### Thanks
+
+- [Netty](https://github.com/netty/netty)
+- [Retrofit2](https://github.com/square/retrofit)
+- [RxJava2](https://github.com/ReactiveX/RxJava)
+- [Room](https://developer.android.google.cn/training/data-storage/room/index.html)
+- [Glide](https://github.com/bumptech/glide)
+- [Banner](https://github.com/youth5201314/banner)
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView)
+- [AppIntro](https://github.com/apl-devs/AppIntro)
+- [Leakcanary](https://github.com/square/leakcanary)
+- [Lz4](https://github.com/lz4/lz4-java)
+- [Butterknife](https://github.com/JakeWharton/butterknife)
+- [FastJson](https://github.com/alibaba/fastjson)
+- [GalleryPick](https://github.com/YancyYe/GalleryPick)
+- [MaterialSearchView](https://github.com/MiguelCatalan/MaterialSearchView)
+- [Luban](https://github.com/Curzibn/Luban)
+
+### Contributor
+- 寸宣堂
+- 师凯杰
+- 杜若衡
