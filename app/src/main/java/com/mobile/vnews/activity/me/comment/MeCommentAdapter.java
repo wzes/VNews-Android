@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mobile.vnews.R;
 import com.mobile.vnews.module.bean.Comment;
+import com.mobile.vnews.util.DateUtils;
 import com.mobile.vnews.util.TimeUtils;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class MeCommentAdapter extends BaseItemDraggableAdapter<Comment, BaseView
         // If the content length more than 30 chars, then show 30 chars
         helper.setText(R.id.comment_item_like_num, String.valueOf(item.getLikeCount()));
         // more than 0 then visible
-        helper.setText(R.id.comment_item_date, TimeUtils.millis2String(item.getTimestamp()));
+        helper.setText(R.id.comment_item_date, DateUtils.getChatTime(item.getTimestamp()));
 
         helper.setText(R.id.message_item_content, item.getContent());
         // image
