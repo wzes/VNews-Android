@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     tools:context=".activity.login.LoginFragment">
 
     <LinearLayout
@@ -34,7 +36,9 @@
             android:id="@+id/login_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            app:civ_border_color="@color/gallery_white"
+            app:civ_border_width="@dimen/dp_1"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_username"
+                    android:textColor="@color/gallery_white"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -61,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:hint="@string/prompt_password"
+                    android:text="@string/word_recite"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
             <Button

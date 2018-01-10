@@ -86,4 +86,6 @@
     <string name="word_speak">Speak Schema</string>
     <string name="word_collect_success">Collect Success</string>
     <string name="word_collect_fail">Collect Fail</string>
+    <string name="please_login">Please Login</string>
+    <string name="error">Error</string>
 </resources>

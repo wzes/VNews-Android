@@ -103,4 +103,6 @@
     <string name="word_speak">阅读模式</string>
     <string name="word_collect_success">收藏成功</string>
     <string name="word_collect_fail">收藏失败</string>
+    <string name="please_login">请先登录</string>
+    <string name="error">错误</string>
 </resources>
