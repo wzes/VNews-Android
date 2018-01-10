@@ -12,6 +12,7 @@ import com.mobile.vnews.R;
 import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
+import com.mobile.vnews.util.DateUtils;
 import com.mobile.vnews.util.TimeUtils;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class MessageAdapter extends BaseItemDraggableAdapter<Message, BaseViewHo
                     item.getTitle().substring(0, 10) : item.getTitle());
         }
 
-        helper.setText(R.id.message_item_date, TimeUtils.millis2String(item.getTimestamp()));
+        helper.setText(R.id.message_item_date, DateUtils.getChatTime(item.getTimestamp()));
         helper.setText(R.id.message_item_content, item.getContent());
 
         Glide.with(mContext).load(item.getFromImage()).into((ImageView) helper.getView(R.id.message_item_image));
