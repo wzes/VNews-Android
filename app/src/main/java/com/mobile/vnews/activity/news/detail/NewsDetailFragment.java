@@ -113,10 +113,14 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     private BottomSheetDialog mCommentDialog;
     private TextInputEditText mCommentText;
     private AppCompatButton mCommentSend;
+    private View mCommentView;
 
+    private BottomSheetDialog mReplyDialog;
+    private TextInputEditText mReplyText;
+    private AppCompatButton mReplySend;
+    private View mReplyView;
 
     private View mWordView;
-    private View mCommentView;
     private News news;
     private NewsDetailContract.Presenter mPresenter;
     private static int newsID;
@@ -260,7 +264,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         // send text
         mNewsDetailComment.setOnClickListener(view -> {
             if (!AppPreferences.getLoginState()) {
-                Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.please_login, Toast.LENGTH_SHORT).show();
                 return;
             }
             if (mCommentDialog == null) {
@@ -288,7 +292,8 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                     }
                 });
             }
-            mCommentText.setHint("评论");
+            mCommentText.setText("");
+            mCommentText.setHint(getActivity().getString(R.string.comment));
             mCommentDialog.show();
         });
         mNewsDetailContent.setOnWordSelectedClickListener(word -> mPresenter.search(word));
@@ -356,7 +361,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
     @Override
     public void onSearchFail() {
-        // Toast.makeText(getActivity(), "没找到～～", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -402,18 +407,18 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                             }
                             mCommentAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.error, Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.comment_item_reply:
-                        if (mCommentDialog == null) {
-                            mCommentDialog = new BottomSheetDialog(getActivity());
-                            mCommentView = getActivity().getLayoutInflater().inflate(R.layout.sheet_comment, null);
-                            mCommentText = mCommentView.findViewById(R.id.sheet_comment_text);
-                            mCommentSend = mCommentView.findViewById(R.id.sheet_comment_send);
-                            mCommentDialog.setContentView(mCommentView);
-                            mCommentSend.setOnClickListener(view1 -> {
-                                if (!TextUtils.isEmpty(mCommentText.getText())) {
+                        if (mReplyDialog == null) {
+                            mReplyDialog = new BottomSheetDialog(getActivity());
+                            mReplyView = getActivity().getLayoutInflater().inflate(R.layout.sheet_comment, null);
+                            mReplyText = mReplyView.findViewById(R.id.sheet_comment_text);
+                            mReplySend = mReplyView.findViewById(R.id.sheet_comment_send);
+                            mReplyDialog.setContentView(mReplyView);
+                            mReplySend.setOnClickListener(view1 -> {
+                                if (!TextUtils.isEmpty(mReplyText.getText())) {
                                     Message message = new Message();
                                     message.setId(mList.size());
                                     message.setNewsID(String.valueOf(newsID));
@@ -422,13 +427,16 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                                     message.setFromImage(AppPreferences.getLoginUserImage());
                                     message.setFromUsername(AppPreferences.getLoginUsername());
                                     message.setToID(mList.get(position).getFromID());
-                                    message.setContent(mCommentText.getText().toString());
+                                    message.setContent(mReplyText.getText().toString());
                                     mPresenter.reply(message);
                                 }
                             });
                         }
-                        mCommentText.setHint(R.string.comment_reply + mList.get(position).getFromUsername());
-                        mCommentDialog.show();
+                        // show reply who
+                        mReplyText.setText("");
+                        mReplyText.setHint(getActivity().getResources().getString(R.string.comment_reply)
+                                + "@" + mList.get(position).getFromUsername());
+                        mReplyDialog.show();
                         break;
                 }
             });
@@ -444,7 +452,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
     @Override
     public void onCommentFail() {
-        Toast.makeText(getActivity(), "Server is error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.error, Toast.LENGTH_SHORT).show();
         mCommentDialog.dismiss();
     }
 
@@ -483,7 +491,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
     @OnClick(R.id.news_detail_like)
     public void onViewClicked() {
         if (!AppPreferences.getLoginState()) {
-            Toast.makeText(getActivity(), "Please Login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.please_login, Toast.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -496,7 +504,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                 news.setLikeCount(news.getLikeCount() + 1);
                 mPresenter.like(AppPreferences.getLoginUserID(), newsID);
             }
-            mNewsDetailLikeNum.setText(news.getLikeCount() + "");
+            mNewsDetailLikeNum.setText(String.format("%d", news.getLikeCount()));
         } catch (Exception e) {
             e.printStackTrace();
         }
