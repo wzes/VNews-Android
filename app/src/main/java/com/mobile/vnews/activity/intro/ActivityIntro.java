@@ -20,13 +20,13 @@ public class ActivityIntro extends AppIntro {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addSlide(AppIntroFragment.newInstance(createSliderPage("title1", "desc1",
-                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.background, getResources().getColor(R.color.colorPrimary))));
         addSlide(AppIntroFragment.newInstance(createSliderPage("title2", "desc2",
-                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.background, getResources().getColor(R.color.colorPrimary))));
         addSlide(AppIntroFragment.newInstance(createSliderPage("title3", "desc3",
-                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.background, getResources().getColor(R.color.colorPrimary))));
         addSlide(AppIntroFragment.newInstance(createSliderPage("title4", "desc4",
-                R.drawable.placeholder, getResources().getColor(R.color.colorPrimary))));
+                R.drawable.background, getResources().getColor(R.color.colorPrimary))));
 
         // OPTIONAL METHODS
         // Override bar/separator color.
