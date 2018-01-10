@@ -479,7 +479,12 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
 
     @Override
     public void onReplySuccess(Message message) {
-        mCommentDialog.dismiss();
+        mReplyDialog.dismiss();
+    }
+
+    @Override
+    public void onReplyFail() {
+        mReplyDialog.dismiss();
     }
 
     @Override

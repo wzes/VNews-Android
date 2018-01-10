@@ -29,6 +29,7 @@ public class NewsDetailContract {
         void onCommentSuccess(Message message);
         void onLogin();
         void onReplySuccess(Message message);
+        void onReplyFail();
     }
 
     interface Presenter extends BasePresenter {

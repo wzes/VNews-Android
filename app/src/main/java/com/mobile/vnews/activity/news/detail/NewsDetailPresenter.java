@@ -256,7 +256,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
             mFragment.onReplySuccess(message);
         } catch (Exception e) {
             e.printStackTrace();
-            mFragment.onCommentFail();
+            mFragment.onReplyFail();
         }
     }
 
