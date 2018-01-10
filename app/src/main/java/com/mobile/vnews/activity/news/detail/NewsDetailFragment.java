@@ -43,6 +43,7 @@ import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
+import com.mobile.vnews.util.DateUtils;
 import com.mobile.vnews.util.TimeUtils;
 import com.mobile.vnews.util.select.WordSelectedTextView;
 import com.mobile.vnews.util.wordplayer.WordPlayer;
@@ -255,7 +256,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
         mNewsDetailContent.setText(news.getContent(), TextView.BufferType.SPANNABLE);
         mNewsDetailSource.setText(news.getSource());
         mNewsDetailDescription.setText(news.getDescription());
-        mNewsDetailDate.setText(TimeUtils.millis2String(news.getPublishedAt()));
+        mNewsDetailDate.setText(DateUtils.getChatTime(news.getPublishedAt()));
         mNewsDetailLikeNum.setText(news.getLikeCount() + "");
         Glide.with(getActivity()).load(news.getImage()).into(mNewsDetailsImage);
 
