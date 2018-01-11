@@ -79,15 +79,16 @@ public class SettingActivity extends AppCompatActivity {
      * Clear login info
      */
     private void clearLoginInfo() {
+        AppPreferences.saveLoginUserID("");
         AppPreferences.saveLoginState(false);
         AppPreferences.saveLastUserImage(AppPreferences.getLoginUserImage());
         // Clear Messages
-        new Thread(() -> {
-            AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
-            appDatabase.getOpenHelper()
-                    .getWritableDatabase()
-                    .execSQL("DELETE FROM message");
-            finish();
-        }).start();
+//        new Thread(() -> {
+//            AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
+//            appDatabase.getOpenHelper()
+//                    .getWritableDatabase()
+//                    .execSQL("DELETE FROM message");
+//            finish();
+//        }).start();
     }
 }
