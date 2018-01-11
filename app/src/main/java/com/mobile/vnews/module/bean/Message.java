@@ -22,6 +22,7 @@ public class Message {
     private String toID;
     private String content;
     private long timestamp;
+    private String userID;
 
     public String getFloor() {
         return floor;
@@ -29,6 +30,14 @@ public class Message {
 
     public void setFloor(String floor) {
         this.floor = floor;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     private String floor;

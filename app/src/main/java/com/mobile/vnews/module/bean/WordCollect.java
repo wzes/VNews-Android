@@ -15,6 +15,15 @@ public class WordCollect {
     private String means;
     private String tag;
     private long timestamp;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;
