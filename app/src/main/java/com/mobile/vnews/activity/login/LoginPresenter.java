@@ -40,7 +40,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                 JSON.toJSONString(map));
         Api.getApiService()
-                .login(requestBody )
+                .login(requestBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultObserver<BasicResponse<User>>(loginFragment.getActivity()) {

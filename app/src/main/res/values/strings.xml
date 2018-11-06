@@ -88,4 +88,7 @@
     <string name="word_collect_fail">Collect Fail</string>
     <string name="please_login">Please Login</string>
     <string name="error">Error</string>
+    <string name="message_reply">replyed</string>
+    <string name="message_comment">Commtented</string>
+    <string name="message_me">I</string>
 </resources>

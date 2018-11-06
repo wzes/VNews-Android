@@ -15,14 +15,14 @@ public class WordCollect {
     private String means;
     private String tag;
     private long timestamp;
-    private String userId;
+    private String userID;
 
-    public String getUserId() {
-        return userId;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public int getId() {

@@ -7,6 +7,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -79,10 +80,27 @@ public class SettingActivity extends AppCompatActivity {
      * Clear login info
      */
     private void clearLoginInfo() {
-        AppPreferences.saveLoginUserID("");
-        AppPreferences.saveLoginState(false);
         AppPreferences.saveLastUserImage(AppPreferences.getLoginUserImage());
         // Clear Messages
+        if (!AppPreferences.getLoginState()) {
+            try {
+                new Thread(() -> {
+                    AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
+                    appDatabase.getOpenHelper()
+                            .getWritableDatabase()
+                            .execSQL("DELETE FROM message WHERE userID = \"" + AppPreferences.getLoginUserID() + "\"");
+                    Log.i("TAG", "clearLoginInfo: " + AppPreferences.getLoginUserID());
+                    AppPreferences.saveLoginUserID("");
+                    AppPreferences.saveLoginState(false);
+                    finish();
+                }).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppPreferences.saveLoginUserID("");
+            AppPreferences.saveLoginState(false);
+        }
 //        new Thread(() -> {
 //            AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
 //            appDatabase.getOpenHelper()

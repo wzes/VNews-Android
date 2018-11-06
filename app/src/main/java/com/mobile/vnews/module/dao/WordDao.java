@@ -47,14 +47,14 @@ public interface WordDao {
             "WHERE words.ID = :ID AND pos.ID = means.posID AND words.ID = means.wordID")
     List<Word> getWordsByID(int ID);
 
-    @Query("SELECT * FROM word_collect WHERE userId = :userID AND tag = :tag")
-    List<WordCollect> getWordCollectsByTag(String userId, String tag);
+    @Query("SELECT * FROM word_collect WHERE userID = :userID AND tag = :tag")
+    List<WordCollect> getWordCollectsByTag(String userID, String tag);
 
-    @Query("SELECT * FROM word_collect WHERE userId = :userID")
-    List<WordCollect> getWordCollects(String userId);
+    @Query("SELECT * FROM word_collect WHERE userID = :userID")
+    List<WordCollect> getWordCollects(String userID);
 
-    @Query("SELECT distinct(tag) FROM word_collect WHERE userId = :userID ")
-    List<String> getWordCollectType(String userId);
+    @Query("SELECT distinct(tag) FROM word_collect WHERE userID = :userID ")
+    List<String> getWordCollectType(String userID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addWordCollect(WordCollect wordCollect);

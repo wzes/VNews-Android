@@ -42,7 +42,7 @@ public class WordPresenter implements WordContract.Presenter {
             AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
             WordDao wordDao = appDatabase.getWordDao();
             try {
-                mBooks = wordDao.getWordCollectType();
+                mBooks = wordDao.getWordCollectType(user_id);
                 handler.sendEmptyMessage(0);
             } catch (Exception e) {
                 handler.sendEmptyMessage(1);

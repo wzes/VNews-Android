@@ -19,11 +19,11 @@ import java.util.List;
 @Dao
 public interface MessageDao {
 
-    @Query("SELECT * FROM message WHERE userId = :userID ORDER BY timestamp DESC")
-    List<Message> getMessage(String userId);
+    @Query("SELECT * FROM message WHERE userID = :userID ORDER BY timestamp DESC")
+    List<Message> getMessage(String userID);
 
-    @Query("SELECT count(*) FROM message WHERE userId = :userID")
-    int getSize(String userId);
+    @Query("SELECT count(*) FROM message WHERE userID = :userID")
+    int getSize(String userID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addMessage(Message message);

@@ -105,4 +105,7 @@
     <string name="word_collect_fail">收藏失败</string>
     <string name="please_login">请先登录</string>
     <string name="error">错误</string>
+    <string name="message_reply">回复了</string>
+    <string name="message_comment">评论了</string>
+    <string name="message_me">I</string>
 </resources>

@@ -3,6 +3,7 @@ package com.mobile.vnews.activity.word.recite;
 import android.annotation.SuppressLint;
 import android.os.Message;
 
+import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.dao.WordDao;
 import com.mobile.vnews.module.database.AppDatabase;
@@ -49,7 +50,8 @@ public class WordRecitePresenter implements WordReciteContract.Presenter {
             AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
             WordDao wordDao = appDatabase.getWordDao();
 
-            List<WordCollect> wordCollects = wordDao.getWordCollectsByTag(tag);
+            List<WordCollect> wordCollects = wordDao.getWordCollectsByTag(
+                    AppPreferences.getLoginUserID(), tag);
             if (wordCollects != null) {
                 mList = wordCollects;
                 handler.sendEmptyMessage(0);

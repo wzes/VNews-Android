@@ -48,7 +48,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by xuantang on 11/27/17.
  */
 
-public class MessageFragment extends Fragment implements MessageContract.View {
+public class
+MessageFragment extends Fragment implements MessageContract.View {
 
     @BindView(R.id.fragment_message_toolbar)
     Toolbar mFragmentMessageToolbar;

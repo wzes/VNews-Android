@@ -101,10 +101,10 @@ public class MessagePresenter implements MessageContract.Presenter {
                 MessageDao messageDao = appDatabase.getMessageDao();
                 // add local database
                 for (Message message : messages) {
+                    message.setUserID(AppPreferences.getLoginUserID());
                     messageDao.addMessage(message);
-                    Log.i(TAG, "addMessage: " + message.getId());
                 }
-                messages = messageDao.getMessage();
+                messages = messageDao.getMessage(AppPreferences.getLoginUserID());
                 handler.sendEmptyMessage(0);
             }).start();
         } catch (Exception e) {

@@ -34,16 +34,20 @@ public class MessageAdapter extends BaseItemDraggableAdapter<Message, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, Message item) {
         if (AppPreferences.getLoginUserID().equals(item.getFromID())) {
-            helper.setText(R.id.message_item_from, "我");
+            helper.setText(R.id.message_item_from, R.string.message_me);
         } else {
             helper.setText(R.id.message_item_from, item.getFromUsername());
         }
         // judge
         if (!TextUtils.isEmpty(item.getToID())) {
-            helper.setText(R.id.message_item_action, "回复了");
-            helper.setText(R.id.message_item_to, item.getToUsername());
+            helper.setText(R.id.message_item_action, R.string.message_reply);
+            if (AppPreferences.getLoginUserID().equals(item.getToUsername())) {
+                helper.setText(R.id.message_item_to, R.string.message_me);
+            } else {
+                helper.setText(R.id.message_item_to, item.getToUsername());
+            }
         } else {
-            helper.setText(R.id.message_item_action, "评论了");
+            helper.setText(R.id.message_item_action, R.string.message_comment);
             helper.setText(R.id.message_item_to, item.getTitle().length() > 10 ?
                     item.getTitle().substring(0, 10) : item.getTitle());
         }

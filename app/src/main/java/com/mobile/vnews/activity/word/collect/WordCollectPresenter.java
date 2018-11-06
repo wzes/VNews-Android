@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.os.Message;
 import android.support.annotation.NonNull;
 
+import com.mobile.vnews.application.AppPreferences;
 import com.mobile.vnews.module.bean.Word;
 import com.mobile.vnews.module.bean.WordCollect;
 import com.mobile.vnews.module.dao.WordDao;
@@ -58,7 +59,8 @@ public class WordCollectPresenter implements WordCollectContract.Presenter {
             AppDatabase appDatabase = AppDatabase.getDatabase(Utils.getContext());
             WordDao wordDao = appDatabase.getWordDao();
 
-            List<WordCollect> wordCollects = wordDao.getWordCollectsByTag(tag);
+            List<WordCollect> wordCollects = wordDao.getWordCollectsByTag(
+                    AppPreferences.getLoginUserID(), tag);
             if (wordCollects != null) {
                 mList = wordCollects;
                 handler.sendEmptyMessage(0);

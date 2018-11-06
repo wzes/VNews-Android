@@ -332,6 +332,7 @@ public class NewsDetailFragment extends Fragment implements NewsDetailContract.V
                 wordCollect.setMeans(word.getPosList().get(0).getSymbol() + " " +
                         word.getPosList().get(0).getMeans());
                 wordCollect.setTag("收藏");
+                wordCollect.setUserID(AppPreferences.getLoginUserID());
                 wordCollect.setWord(word.getWord());
                 wordCollect.setTimestamp(System.currentTimeMillis());
                 mPresenter.addWordCollect(wordCollect);

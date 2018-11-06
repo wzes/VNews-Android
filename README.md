@@ -38,7 +38,7 @@
 - 文章取词
 - 单词词库
 - 即时通讯
-- 多语言
+- 多语言、多用户
 ### Develop Guide
 
 - MVP模式 => 安卓
@@ -61,6 +61,7 @@
 - [Android](https://github.com/wzes/VNews-Android)
 - [Service](https://github.com/wzes/VMovie-SpringBoot)
 - [Message](https://github.com/wzes/VNew-Netty)
+- [vnews](https://github.com/vnews-mobile)
 
 ### Thanks
 

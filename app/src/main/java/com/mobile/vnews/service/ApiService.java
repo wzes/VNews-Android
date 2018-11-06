@@ -5,18 +5,14 @@ import com.mobile.vnews.module.bean.Comment;
 import com.mobile.vnews.module.bean.Message;
 import com.mobile.vnews.module.bean.News;
 import com.mobile.vnews.module.bean.User;
-import com.mobile.vnews.module.bean.Word;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.internal.operators.observable.ObservableError;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
